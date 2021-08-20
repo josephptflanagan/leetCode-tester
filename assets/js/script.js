@@ -134,9 +134,9 @@ ROMAN TO INTEGER END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST COMMON PREFIX START */
+/* LONGEST COMMON PREFIX START
 
-var longestCommonPrefix = function (strs) {
+let longestCommonPrefix = function (strs) {
 
     let least = '';
 
@@ -211,6 +211,21 @@ let strs = [["cir","car"],["abca","aba","aaab"],["dog","racecar","car"],["flower
 answerExplainationEl.textContent = "The longest common prefix of the given strings is: "
 answerEl.textContent = longestCommonPrefix(strs[4]);
 
-/* LONGEST COMMON PREFIX END */
+ LONGEST COMMON PREFIX END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/*VALID PARENTHESES START*/
+
+let isValid = function(s) {
+    
+};
+
+let s = ["()", "()[]{}", "(]", "([)]", "{[]}"];
+
+answerExplainationEl.textContent = "The parentheses in the given string are valid: "
+answerEl.textContent = isValid(s[0]);
+
+/*VALID PARENTHESES END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
