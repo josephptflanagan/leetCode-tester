@@ -82,7 +82,7 @@ IS PALINDROME ALGORITHM END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ROMAN TO INTEGER START */
+/* ROMAN TO INTEGER START 
 
 let romanToInt = function(s) {
     
@@ -130,6 +130,87 @@ let s = 'MCMXC';
 answerExplainationEl.textContent = "The integer form of the given roman numeral is: "
 answerEl.textContent = romanToInt(s);
 
-/* ROMAN TO INTEGER END */
+ROMAN TO INTEGER END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST COMMON PREFIX START */
+
+var longestCommonPrefix = function (strs) {
+
+    let least = '';
+
+    if (strs && strs.length > 1) {
+
+
+        let tempStrs = strs.slice();
+        let j = 0;
+        let shortest = 0;
+        let temp = '';
+
+        //find the shortest string in the array
+        for (i = 0; i < tempStrs.length; i++) {
+
+            if (shortest == 0) {
+                shortest = tempStrs[i].length;
+            } else if (tempStrs[i].length < shortest) {
+                shortest = tempStrs[i].length
+            }
+
+        }
+
+        //reduce all strings to the shortest length
+        for (i = 0; i < tempStrs.length; i++) {
+            tempStrs[i] = tempStrs[i].slice(0, shortest);
+        }
+
+        //compare individual characters in each string to each other
+        for (i = 0; i < tempStrs.length; i++) {
+
+            //if it's the first character, use it as the comparison maker
+            if (temp == '') {
+
+                temp = tempStrs[i][j];
+
+            //otherwise, compare to the comparison maker
+            } else {
+                
+                //if the comparison maker and the char being compared don't match, exit the loop
+                if (temp != tempStrs[i][j]) {
+
+                    break
+
+                //if they do match, and the loop has compared the same character in each word, and it hasn't yet compared all of the characters in the words
+                } else if (temp == tempStrs[i][j] && i == tempStrs.length-1 && j < shortest){
+                    
+                    //restart the loop on the next letter
+                    i = -1;
+                    j += 1;
+
+                    //add the matching letter to the least common prefix
+                    least += temp;
+
+                    //reset the comparison making character
+                    temp = '';
+
+                }
+                //if the above conditions are not met, move to the next comparison
+            }
+        }
+    //if there is only one element in the array, it's the least common prefix    
+    }else if(strs.length == 1){
+        least = strs[0];
+    }
+
+    return least;
+
+};
+
+let strs = [["cir","car"],["abca","aba","aaab"],["dog","racecar","car"],["flower","flow","flight"], ['a']];
+
+answerExplainationEl.textContent = "The longest common prefix of the given strings is: "
+answerEl.textContent = longestCommonPrefix(strs[4]);
+
+/* LONGEST COMMON PREFIX END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
