@@ -217,14 +217,92 @@ answerEl.textContent = longestCommonPrefix(strs[4]);
 
 /*VALID PARENTHESES START*/
 
-let isValid = function(s) {
-    
+let isValid = function (s) {
+
+    let dict = { ')' : '(', '}' : '{', ']' : '[' };
+    let count = [0, 0, 0];
+
+    let activeContainer = ""; //active container tracking string
+    let aci = 0; //active container index
+
+    if (!s) {
+        return true;
+    }
+    else {
+
+        for (let i = 0; i < s.length; i++) {
+
+            if (activeContainer == ""){
+
+                activeContainer += s[i];
+                aci = 0;
+
+            } else if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+
+                activeContainer += s[i];
+                aci += 1;
+
+            } else {
+
+                console.log('activeContainer: ',activeContainer);
+                console.log('aci: ',  aci)
+                console.log('s[i]: ', s[i]);
+                console.log('dict[s[i]]: ', dict[s[i]]);
+                
+                if (activeContainer[aci] == dict[s[i]]){
+
+                    activeContainer = activeContainer.slice(0,activeContainer.length-1)
+                    aci -= 1;
+
+                } else {
+
+                    return false;
+
+                }
+            }
+
+            switch (s[i]) {
+                case '(':
+                    count[0] += 1
+                    break;
+                case ')':
+                    count[0] -= 1
+                    break;
+                case '[':
+                    count[1] += 1
+                    break;
+                case ']':
+                    count[1] -= 1
+                    break;
+                case '{':
+                    count[2] += 1
+                    break;
+                case '}':
+                    count[2] -= 1
+                    break;
+                default:
+                    console.log('Oops, error in switch')
+                    break;
+            }
+
+        }
+
+        if (count[0] != 0 || count[1] != 0 || count[2] != 0){
+
+            return false;
+            
+        } 
+
+    }
+
+    return true;
+
 };
 
-let s = ["()", "()[]{}", "(]", "([)]", "{[]}"];
+let s = ["()", "()[]{}", "(]", "([)]", "{[]}", "([{}])", "([]{()}[{()}])", "(){}}{", '){', "[([]])"]; //valid, valid, invalid, invalid, valid, valid, valid, invalid, invalid
 
 answerExplainationEl.textContent = "The parentheses in the given string are valid: "
-answerEl.textContent = isValid(s[0]);
+answerEl.textContent = isValid(s[7]);
 
 /*VALID PARENTHESES END*/
 
