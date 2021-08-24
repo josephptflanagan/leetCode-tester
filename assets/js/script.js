@@ -388,7 +388,7 @@ VALID PARENTHESES END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MERGE TO SORTED LISTS START*/
+/* MERGE TO SORTED LISTS START
 
 function ListNode(val, next) {
     this.val = (val === undefined ? 0 : val)
@@ -492,7 +492,54 @@ for (let i = 0; i < l1.length; i++) {
 
 }
 
+ MERGE TWO SORTED LISTS END*/
 
-/* MERGE TWO SORTED LISTS END*/
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE DUPLICATES START*/
+
+var removeDuplicates = function (nums) {
+
+    let last = null;
+    let k = 1;
+
+    for (let i = 0; i < nums.length; i++) {
+
+        console.log('nums:',nums);
+
+            if (i == 0) {
+                last = nums[i]
+                k += 1;
+            }        
+            else if(nums[i] == '_'){
+                break;
+            }
+            else if (nums[i] == last) {
+                nums.splice(nums.length, 0, "_")
+                nums.splice(i-1, 1);
+                removeDuplicates(nums);
+            }
+            else {
+                last = nums[i]
+                k += 1;
+            }
+            console.log('k: ', k)
+    }
+
+    return k;
+
+};
+
+let x = [[1, 1, 2], [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]];
+
+answerExplainationEl.textContent = "Given a series of ordered arrays with potential duplicated elements, the duplicates are removed and the first superfluous index returned ";
+
+for (let i = 0; i < x.length; i++) {
+    let listEl = document.createElement('li');
+    listEl.textContent = "Given " + x[i] + ', the first superflous index with all duplicates removed is ' + removeDuplicates(x[i]);
+    answerListEl.appendChild(listEl);
+}
+
+/* REMOVE DUPLICATES END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
