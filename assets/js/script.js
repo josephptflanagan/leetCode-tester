@@ -1,7 +1,7 @@
 let answerExplainationEl = document.querySelector('#explaination')
-let answerEl = document.querySelector('#answer');
+let answerListEl = document.querySelector('#answerList');
 
-/* TWO SUM ALGORITHM START
+/* TWO SUM ALGORITHM START */
 
 let twoSum = function(nums, target) {
     
@@ -17,13 +17,23 @@ let twoSum = function(nums, target) {
 
 };
 
-let nums = [1,2,3,12,13];
-let target = 25;
+let nums = [[1,2,3,12,13], [1,2,3], [4,5,6]];
+let target = [25, 5, 9];
 
 answerExplainationEl.textContent = "The Indicies that correspond to the addends that compose the target sum are: ";
-answerEl.textContent = twoSum(nums, target);
 
-TWO SUM ALGORITHM END*/
+for(let i = 0; i < nums.length;i++){
+
+    let listEl = document.createElement('li');
+    let ansString = twoSum(nums[i], target[i]).join(" and ");
+
+    listEl.textContent = "The indecies of the array elements in " + nums[i] + " that sum to the target " + target[i] + " are " + ansString;
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* TWO SUM ALGORITHM END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -48,12 +58,28 @@ let reverse = function(x) {
     
 };
 
-let x = -123
+answerExplainationEl.textContent = "Given the input integer, its reverse is: ";
 
-answerExplainationEl.textContent = "Given the input integer, its reverse is: "
-answerEl.textContent = reverse(x);
+let x = [-123, 234, 81234234123122, -565, 123123, 6754];
 
-REVERSE INTEGER ALGORITHM END*/
+for(let i = 0; i < x.length;i++){
+
+    let listEl = document.createElement('li');
+    let reversed = reverse(x[i]);
+    let coloring = ' is ' + reversed;
+    
+    if(reversed == 0){
+
+        coloring = " is too large to fit the memory of an integer";
+
+    }
+
+    listEl.textContent = "The reverse of " + x[i] + coloring;
+    answerListEl.appendChild(listEl);
+
+}
+
+REVERSE INTEGER ALGORITHM END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -73,12 +99,28 @@ let isPalindrome = function(x) {
 
 };
 
-let x = 10;
+answerExplainationEl.textContent = "Given values and an explaination of if they are palindromes or not"
 
-answerExplainationEl.textContent = "The given number a palindrome:"
-answerEl.textContent = isPalindrome(x);
+let x = [10, 121, 3456, 7645467, -121];
 
-IS PALINDROME ALGORITHM END*/
+for(let i = 0; i < x.length;i++){
+
+    let listEl = document.createElement('li');
+    let palindrome = isPalindrome(x[i]);
+    let coloring = " is not a palindrome"
+    
+    if(palindrome){
+
+        coloring = " is a palindrome";
+
+    }
+
+    listEl.textContent = x[i] + coloring;
+    answerListEl.appendChild(listEl);
+
+}
+
+IS PALINDROME ALGORITHM END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -125,10 +167,19 @@ return intS;
 
 };
 
-let s = 'MCMXC';
+let s = ['MCMXC', 'III', 'IV', 'MMXXI', 'XLVII', "MDCLVIII" ];
 
-answerExplainationEl.textContent = "The integer form of the given roman numeral is: "
-answerEl.textContent = romanToInt(s);
+answerExplainationEl.textContent = "The following is a series of strings of roman numerals and their integer form: ";
+
+for(let i = 0; i < s.length;i++){
+
+    let listEl = document.createElement('li');
+
+    listEl.textContent = s[i] + " is equivalent to " + romanToInt(s[i]);
+
+    answerListEl.appendChild(listEl);
+
+}
 
 ROMAN TO INTEGER END */
 
@@ -208,14 +259,30 @@ let longestCommonPrefix = function (strs) {
 
 let strs = [["cir","car"],["abca","aba","aaab"],["dog","racecar","car"],["flower","flow","flight"], ['a']];
 
-answerExplainationEl.textContent = "The longest common prefix of the given strings is: "
-answerEl.textContent = longestCommonPrefix(strs[4]);
+answerExplainationEl.textContent = "The following is a series of strings, and the longest common prefix among them: ";
 
- LONGEST COMMON PREFIX END */
+for(let i = 0; i < strs.length;i++){
+
+    let listEl = document.createElement('li');
+
+    strsString = strs[i].join(", ");
+
+    if(longestCommonPrefix(strs[i])){
+    listEl.textContent = longestCommonPrefix(strs[i]) + " is the longest prefix among " + strsString;
+    }
+    else{
+        listEl.textContent = "There is no common prefix among " + strsString;
+    }
+
+    answerListEl.appendChild(listEl);
+
+}
+
+LONGEST COMMON PREFIX END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/*VALID PARENTHESES START*/
+/*VALID PARENTHESES START
 
 let isValid = function (s) {
 
@@ -243,11 +310,6 @@ let isValid = function (s) {
                 aci += 1;
 
             } else {
-
-                console.log('activeContainer: ',activeContainer);
-                console.log('aci: ',  aci)
-                console.log('s[i]: ', s[i]);
-                console.log('dict[s[i]]: ', dict[s[i]]);
                 
                 if (activeContainer[aci] == dict[s[i]]){
 
@@ -285,6 +347,10 @@ let isValid = function (s) {
                     break;
             }
 
+            if(count[0] < 0 || count[1] < 0 || count[2] < 0){
+                return false;
+            }
+
         }
 
         if (count[0] != 0 || count[1] != 0 || count[2] != 0){
@@ -299,11 +365,26 @@ let isValid = function (s) {
 
 };
 
+answerExplainationEl.textContent = "The following is a series of strings of parentheses, braces and brackets and an examination of their validity: ";
+
 let s = ["()", "()[]{}", "(]", "([)]", "{[]}", "([{}])", "([]{()}[{()}])", "(){}}{", '){', "[([]])"]; //valid, valid, invalid, invalid, valid, valid, valid, invalid, invalid
 
-answerExplainationEl.textContent = "The parentheses in the given string are valid: "
-answerEl.textContent = isValid(s[7]);
+for(let i = 0; i < s.length;i++){
 
-/*VALID PARENTHESES END*/
+    let listEl = document.createElement('li');
+    let validString = " is not a valid set of parentheses, braces, and brackets";
+
+    if(isValid(s[i])){
+
+        validString = " is a valid set of parentheses, braces, and brackets";
+
+    }
+
+    listEl.textContent = s[i] + validString;
+    answerListEl.appendChild(listEl);
+
+}
+
+VALID PARENTHESES END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
