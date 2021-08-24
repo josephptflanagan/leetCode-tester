@@ -1,7 +1,7 @@
 let answerExplainationEl = document.querySelector('#explaination')
 let answerListEl = document.querySelector('#answerList');
 
-/* TWO SUM ALGORITHM START */
+/* TWO SUM ALGORITHM START
 
 let twoSum = function(nums, target) {
     
@@ -32,8 +32,7 @@ for(let i = 0; i < nums.length;i++){
 
 }
 
-
-/* TWO SUM ALGORITHM END*/
+TWO SUM ALGORITHM END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -386,5 +385,114 @@ for(let i = 0; i < s.length;i++){
 }
 
 VALID PARENTHESES END*/
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MERGE TO SORTED LISTS START*/
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }    
+}
+
+let insertNodeAtTail = function (head, data) {
+
+    let newNode = new ListNode(data);
+    if(head === null){
+        head = newNode;
+    }else if (head.next === null){
+        head.next = newNode;
+    }else{
+        insertNodeAtTail(head.next, data);
+    }
+    return head;
+
+}
+
+let listConstructor = function (array) {
+
+    let list = new LinkedList();
+
+    for (i = 0; i < array.length; i++) {
+
+        list.head = insertNodeAtTail(list.head, array[i])
+
+    }
+
+    return list;
+
+}
+
+var mergeTwoLists = function (l1, l2) {
+
+let l3 = new ListNode(null,null);
+let prev = l3;
+
+while (l1 !== null && l2 !== null){
+    if (l1.val <= l2.val){
+        prev.next = l1;
+        l1 = l1.next;
+    } else {
+        prev.next = l2;
+        l2 = l2.next;
+    }
+    prev = prev.next;
+}
+
+if (l1 === null){
+    prev.next = l2;
+}
+if (l2 === null){
+    prev.next = l1;
+}
+
+return l3.next;
+
+};
+
+let l1 = [[], [], [1, 2, 4], [2, 4, 6, 9]];
+let l2 = [[], [0], [1, 3, 4], [1, 3, 5, 7, 8]];
+
+answerExplainationEl.textContent = "The following is a series of linked lists and a merged combination of the two: ";
+
+for (let i = 0; i < l1.length; i++) {
+
+    console.log('listConstructor for l1: ',listConstructor(l1[i]).head);
+    console.log('listConstrictor for l2: ',listConstructor(l2[i]).head);
+
+    let listEl = document.createElement('li');
+    let mergedList = mergeTwoLists(listConstructor(l1[i]).head, listConstructor(l2[i]).head);
+    let listArray = [];
+    let listString = "";
+    console.log('mergedList: ',mergedList)
+    
+    if(mergedList === null){
+        listEl.textContent = "lists are empty";
+    }
+    else{
+
+        while(mergedList.next !== null){
+            listArray.push(mergedList.val);
+            mergedList = mergedList.next;
+        }
+        listString = listArray.join(", ");
+
+
+        listEl.textContent = "Merging " + l1[i] + " with " + l2[i] + " yields: " + listString;
+    }
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* MERGE TWO SORTED LISTS END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
