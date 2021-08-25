@@ -671,7 +671,7 @@ SEARCH INSERT POSITION END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM SUBARRAY START - EASY */
+/* MAXIMUM SUBARRAY START - EASY 
 
 //Given an integer array nums, find the contiguous subarray (containing at least one number) which 
 //has the largest sum and return its sum.
@@ -720,7 +720,7 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 
 }
-/* MAXIMUM SUBARRAY END - EASY */
+ MAXIMUM SUBARRAY END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -729,9 +729,45 @@ for (let i = 0; i < x.length; i++) {
 //Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
 
 var judgeSquareSum = function(c) {
-    
+
+    let rootC = Math.floor(Math.sqrt(c));
+    let iterator = 0;
+    let valid = false;
+
+    while(iterator <= rootC){
+        let sum = iterator * iterator + rootC * rootC;
+        if(sum === c){
+            valid = true;
+            break;
+        } else if (sum < c){
+            iterator++;
+        } else {
+            rootC --
+        }
+    }
+
+    return valid;
+
 };
 
-//let x = [5,3,4,2,1] //true, false, true, true, true(?)
+let x = [100,99,25,5,3,4,2,1] //true, false, true, true, true
+
+answerExplainationEl.textContent = "Given a number 'c', determine if it can be found as the sum of two squares (a^2 + b^2 = c)";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let sumOfSquares = judgeSquareSum(x[i]);
+    let coloring = " cannot be found as the sum of squares.";
+
+    if (sumOfSquares){
+        coloring = " can be found as the sum of squares.";
+    }
+
+    listEl.textContent = x[i] + coloring;
+
+    answerListEl.appendChild(listEl);
+
+}
 
 /* SUM OF SQUARE NUMBERS END */
