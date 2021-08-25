@@ -1,7 +1,7 @@
 let answerExplainationEl = document.querySelector('#explaination')
 let answerListEl = document.querySelector('#answerList');
 
-/* TWO SUM ALGORITHM START
+/* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
     
@@ -32,11 +32,11 @@ for(let i = 0; i < nums.length;i++){
 
 }
 
-TWO SUM ALGORITHM END*/
+TWO SUM ALGORITHM END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REVERSE INTEGER ALGORITHM START
+/* REVERSE INTEGER ALGORITHM START - EASY
 
 let reverse = function(x) {
     
@@ -78,11 +78,11 @@ for(let i = 0; i < x.length;i++){
 
 }
 
-REVERSE INTEGER ALGORITHM END */
+REVERSE INTEGER ALGORITHM END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IS PALINDROME ALGORITHM START
+/* IS PALINDROME ALGORITHM START - EASY
 
 let isPalindrome = function(x) {
     
@@ -119,11 +119,11 @@ for(let i = 0; i < x.length;i++){
 
 }
 
-IS PALINDROME ALGORITHM END */
+IS PALINDROME ALGORITHM END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ROMAN TO INTEGER START 
+/* ROMAN TO INTEGER START - EASY 
 
 let romanToInt = function(s) {
     
@@ -180,11 +180,11 @@ for(let i = 0; i < s.length;i++){
 
 }
 
-ROMAN TO INTEGER END */
+ROMAN TO INTEGER END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST COMMON PREFIX START
+/* LONGEST COMMON PREFIX START - EASY
 
 let longestCommonPrefix = function (strs) {
 
@@ -277,11 +277,11 @@ for(let i = 0; i < strs.length;i++){
 
 }
 
-LONGEST COMMON PREFIX END */
+LONGEST COMMON PREFIX END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/*VALID PARENTHESES START
+/*VALID PARENTHESES START - EASY
 
 let isValid = function (s) {
 
@@ -384,11 +384,11 @@ for(let i = 0; i < s.length;i++){
 
 }
 
-VALID PARENTHESES END*/
+VALID PARENTHESES END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MERGE TO SORTED LISTS START
+/* MERGE TO SORTED LISTS START - EASY
 
 function ListNode(val, next) {
     this.val = (val === undefined ? 0 : val)
@@ -492,11 +492,11 @@ for (let i = 0; i < l1.length; i++) {
 
 }
 
- MERGE TWO SORTED LISTS END*/
+ MERGE TWO SORTED LISTS END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE DUPLICATES START
+/* REMOVE DUPLICATES START - EASY
 
 var removeDuplicates = function (nums) {
 
@@ -537,11 +537,11 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 }
 
-REMOVE DUPLICATES END*/
+REMOVE DUPLICATES END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE ELEMENT START
+/* REMOVE ELEMENT START - EASY
 
 var removeElement = function(nums, val) {
 
@@ -580,11 +580,11 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 }
 
-REMOVE ELEMENT END */
+REMOVE ELEMENT END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IMPLEMENT strStr() START
+/* IMPLEMENT strStr() START - EASY
 
 var strStr = function (haystack, needle) {
 
@@ -625,11 +625,11 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-IMPLEMENT strStr() END */
+IMPLEMENT strStr() END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SEARCH INSERT POSITION START */
+/* SEARCH INSERT POSITION START - EASY 
 
 // Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, 
 // return the index where it would be if it were inserted in order.
@@ -667,6 +667,71 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SEARCH INSERT POSITION END */
+SEARCH INSERT POSITION END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM SUBARRAY START - EASY */
+
+//Given an integer array nums, find the contiguous subarray (containing at least one number) which 
+//has the largest sum and return its sum.
+
+//A subarray is a contiguous part of an array.
+
+var maxSubArray = function(nums) {
+
+        let tempSum = 0;
+        let maxSum = nums[0];
+
+        if(nums.length == 0){
+            maxSum = 0;
+        }
+
+        for (let i = 0; i < nums.length; i++){
+            if (nums[i] > nums[i] + tempSum){
+                tempSum = nums[i];
+            } else {
+                tempSum = nums[i] + tempSum;
+            }
+
+            if (tempSum > maxSum){
+                maxSum = tempSum;
+            }
+
+        }
+
+        return maxSum;
+    
+};
+
+let x = [[-2,1,-3,4,-1,2,1,-5,4], [1], [5,4,-1,7,8]]; //6, 1, 23
+
+answerExplainationEl.textContent = "Given an array of numbers find the subarray that sums to the greatest number";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let sum = maxSubArray(x[i]);
+
+    let strArray = x[i].join(', ');
+
+    listEl.textContent = "The greatest sum of the elements of a sub array of [" + strArray + "] is " + sum + ".";
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MAXIMUM SUBARRAY END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SUM OF SQUARE NUMBERS START */
+
+//Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
+
+var judgeSquareSum = function(c) {
+    
+};
+
+//let x = [5,3,4,2,1] //true, false, true, true, true(?)
+
+/* SUM OF SQUARE NUMBERS END */
