@@ -496,7 +496,7 @@ for (let i = 0; i < l1.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE DUPLICATES START*/
+/* REMOVE DUPLICATES START
 
 var removeDuplicates = function (nums) {
 
@@ -537,6 +537,49 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 }
 
-/* REMOVE DUPLICATES END*/
+REMOVE DUPLICATES END*/
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE ELEMENT START */
+
+var removeElement = function(nums, val) {
+
+    removals = [];
+    let k = 0;
+
+    nums.sort();
+
+    for (i=0;i<nums.length;i++){
+
+        if (nums[i] == val){
+            removals.push(i)
+        }
+
+    }
+
+    k = nums.length - removals.length;
+    nums.splice(removals[0],removals.length);
+
+    for(i=0;i<k;i++){
+        nums.push('_');
+    }
+
+    return k;
+        
+};
+
+let x = [[3,2,2,3],[0,1,2,2,3,0,4,2]];
+let y = [3,2];
+
+answerExplainationEl.textContent = "Given an array of numbers, remove all elements matching a given value in place, maintain the length of the array with '_' and return the number of removed elements";
+
+for (let i = 0; i < x.length; i++) {
+    let listEl = document.createElement('li');
+    listEl.textContent = "Given " + x[i] + ", the first superflous index with all " + y[i]+ "'s removed is " + removeElement(x[i], y[i]);
+    answerListEl.appendChild(listEl);
+}
+
+/* REMOVE ELEMENT END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
