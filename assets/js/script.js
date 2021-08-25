@@ -541,7 +541,7 @@ REMOVE DUPLICATES END*/
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE ELEMENT START */
+/* REMOVE ELEMENT START
 
 var removeElement = function(nums, val) {
 
@@ -580,6 +580,53 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 }
 
-/* REMOVE ELEMENT END */
+REMOVE ELEMENT END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* IMPLEMENT strStr() START */
+
+var strStr = function (haystack, needle) {
+
+    let answer = "";
+
+    if (!haystack && !needle) {
+
+            answer = 0;
+
+    } else {
+
+        answer = haystack.indexOf(needle);
+
+    }
+
+    return answer
+
+};
+
+let x = ['hello', 'aaaaa', '', ''];
+let y = ['ll', 'bba', '', 'a'];
+
+
+answerExplainationEl.textContent = "Given a 'haystack' string and a 'needle' string, and searching for the needle in the haystack, return the first index of it if it's in the string, -1 if it's not, and 0 if the haystack is empty";
+
+for (let i = 0; i < x.length; i++) {
+    let listEl = document.createElement('li');
+    let location = strStr(x[i], y[i]);
+
+    if (location == -1) {
+        listEl.textContent = "The haystack '" + x[i] + "' does not contain the needle '" + y[i] + "'";
+    } else if (location == 0) {
+        listEl.textContent = "The haystack is empty" ;
+    } else {
+        listEl.textContent = "The haystack '" + x[i] + "' contains the needle '" + y[i] + "' at index " + location;
+    }
+
+   
+    answerListEl.appendChild(listEl);
+
+}
+
+/* IMPLEMENT strStr() END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
