@@ -816,7 +816,7 @@ LENGTH OF LAST WORD END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PLUS ONE START - EASY */
+/* PLUS ONE START - EASY 
 
 //Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
 
@@ -872,6 +872,115 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* PLUS ONE END - EASY */
+ PLUS ONE END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ADD BINARY START - EASY */
+
+//Given two binary strings a and b, return their sum as a binary string.
+
+var addBinary = function(a, b) {
+
+    /*Unforunately this can't handle very large numbers
+    let tenA = parseInt(a,2);
+    let tenB = parseInt(b,2);
+    let binarySum = (tenA+tenB).toString(2);
+
+    return binarySum;*/
+
+    let zfill = function(str,len){
+
+        let strArray = str.split("");
+        strArray = strArray.reverse();
+
+        for(let i = 0; i<len-str.length;i++){
+            strArray.push('0');
+        }
+
+        strArray = strArray.reverse();
+
+        let newStr = strArray.join("");
+
+        return newStr;
+
+    }
+
+    let reverseString = function (str){
+
+        str = str.split('').reverse().join('');
+
+        return str;
+        
+
+    }
+
+    let result = "";
+    let carry = 0;
+    let maxLength = 0;
+    
+    if(a.length > b.length){
+        b = zfill(b, a.length);
+        maxLength = a.length;
+    } else {
+        a = zfill(a, b.length);
+        maxLength = b.length;
+    }
+
+    a = reverseString(a);
+    b = reverseString(b);
+
+    for (let i = 0;i<maxLength;i++){
+
+        let r = carry;
+
+        if(a[i] == '1'){
+            r += 1;
+        }
+        if(b[i] == '1'){
+            r += 1;
+        }
+
+        if(r%2 ==1){
+            result = '1' + result;
+        } else {
+            result = '0' + result;
+        }
+
+        if(r < 2){
+            carry = 0
+        } else {
+            carry = 1;
+        }
+
+        if(carry != 0){
+            result = '1' + result;
+        }
+    }
+
+    //result = reverseString(result);
+    result = zfill(result, maxLength);
+
+    return result;
+
+};
+
+//100 10101
+let x = ["11", "1010"]; 
+let y = ["1", "1011"];
+
+answerExplainationEl.textContent = "Given two binary strings a and b, return their sum as a binary string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    listEl.textContent = x[i] + " + " + y[i] + " = " + addBinary(x[i], y[i]);
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ADD BINARY END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
