@@ -724,7 +724,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SUM OF SQUARE NUMBERS START 
+/* SUM OF SQUARE NUMBERS START - DAILY CHALLENGE - MEDIUM
 
 //Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
 
@@ -770,11 +770,11 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-SUM OF SQUARE NUMBERS END */
+SUM OF SQUARE NUMBERS END - DAILY CHALLENGE - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LENGTH OF LAST WORD START */
+/* LENGTH OF LAST WORD START - EASY
 
 //Given a string s consisting of some words separated by some number of spaces, return the length of the last word in the string.
 
@@ -791,7 +791,7 @@ var lengthOfLastWord = function(s) {
             wordArray.push(sArray[i]);
             
         }
-        
+
     }
 
     return wordArray[wordArray.length-1].length;
@@ -812,6 +812,66 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
+LENGTH OF LAST WORD END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PLUS ONE START - EASY */
+
+//Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.
+
+//The digits are stored such that the most significant digit is at the head of the list, and each element in the array contains a single digit.
+
+//You may assume the integer does not contain any leading zero, except the number 0 itself.
+
+var plusOne = function (digits) {
+
+    let reversed = digits.reverse();
+    let concluded = false;
+
+    let i = 0;
+
+    while (!concluded){
+
+        reversed[i] = reversed[i] +=1;
+
+        if(i == reversed.length-1 && reversed[i] > 9){
+
+            reversed[i] = 0;
+            reversed.push(1);
+            concluded = true;
+            
+        } else if (reversed[i] > 9){
+            reversed[i] = 0;
+        } else{
+            concluded = true;
+        }
+        i++;
+    }
+
+    reversed = reversed.reverse();
+
+    return reversed;
+
+};
+
+let x = [[1, 2, 3], [4, 3, 2, 1], [0], [9], [6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3]] //[1,2,4], [4,3,2,2], [1]
+
+answerExplainationEl.textContent = "Given a non-empty array of decimal digits representing a non-negative integer, increment one to the integer.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let unincremented = x[i].join(", ");
+    let incremented = plusOne(x[i]).join(", ");
 
 
-/* LENGTH OF LAST WORD END */
+    listEl.textContent = "Given the original array of '[" + unincremented + "]', the incremented array appears as '[" + incremented + "]'";
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PLUS ONE END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
