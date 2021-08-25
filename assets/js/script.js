@@ -724,7 +724,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SUM OF SQUARE NUMBERS START */
+/* SUM OF SQUARE NUMBERS START 
 
 //Given a non-negative integer c, decide whether there're two integers a and b such that a2 + b2 = c.
 
@@ -770,4 +770,48 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SUM OF SQUARE NUMBERS END */
+SUM OF SQUARE NUMBERS END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LENGTH OF LAST WORD START */
+
+//Given a string s consisting of some words separated by some number of spaces, return the length of the last word in the string.
+
+//A word is a maximal substring consisting of non-space characters only.
+
+var lengthOfLastWord = function(s) {
+    let sArray = s.split(" ");
+    let wordArray = [];
+
+    for(let i = 0; i<sArray.length;i++){
+
+        if(sArray[i] !== ""){
+
+            wordArray.push(sArray[i]);
+            
+        }
+        
+    }
+
+    return wordArray[wordArray.length-1].length;
+};
+
+let x = ["Hello World","   fly me   to   the moon  ","luffy is still joyboy"] //5,4,6
+
+answerExplainationEl.textContent = "Given a string s consisting of some words separated by some number of spaces, return the length of the last word in the string.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let length = lengthOfLastWord(x[i]);
+
+    listEl.textContent = "The last word of '" + x[i] + "' is " + length + " letters in length";
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+
+/* LENGTH OF LAST WORD END */
