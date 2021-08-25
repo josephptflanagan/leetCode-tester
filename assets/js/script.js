@@ -584,7 +584,7 @@ REMOVE ELEMENT END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IMPLEMENT strStr() START */
+/* IMPLEMENT strStr() START
 
 var strStr = function (haystack, needle) {
 
@@ -607,7 +607,6 @@ var strStr = function (haystack, needle) {
 let x = ['hello', 'aaaaa', '', ''];
 let y = ['ll', 'bba', '', 'a'];
 
-
 answerExplainationEl.textContent = "Given a 'haystack' string and a 'needle' string, and searching for the needle in the haystack, return the first index of it if it's in the string, -1 if it's not, and 0 if the haystack is empty";
 
 for (let i = 0; i < x.length; i++) {
@@ -621,12 +620,53 @@ for (let i = 0; i < x.length; i++) {
     } else {
         listEl.textContent = "The haystack '" + x[i] + "' contains the needle '" + y[i] + "' at index " + location;
     }
-
    
     answerListEl.appendChild(listEl);
 
 }
 
-/* IMPLEMENT strStr() END */
+IMPLEMENT strStr() END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SEARCH INSERT POSITION START */
+
+// Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, 
+// return the index where it would be if it were inserted in order.
+
+// You must write an algorithm with O(log n) runtime complexity. 
+
+var searchInsert = function(nums, target) {
+
+    for (let i = 0; i < nums.length; i++){
+
+        if (nums[i] >= target){
+            return i;
+        }
+        else if (i == nums.length - 1){
+            return nums.length;
+        }
+
+    }
+    
+};
+
+let x = [[1,3,5,6], [1,3,5,6], [1,3,5,6], [1,3,5,6], [1]];
+let y = [5,2,7,0,0];
+
+answerExplainationEl.textContent = "Given an array of numbers and a target number, find the target in the array, or the index where it should be entered";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let location = searchInsert(x[i], y[i]);
+
+    listEl.textContent = "'" + y[i] + "' is located at, or could be located at index " + location + " within '" + x[i] + "'" ;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SEARCH INSERT POSITION END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
