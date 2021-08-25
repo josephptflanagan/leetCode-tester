@@ -501,36 +501,33 @@ for (let i = 0; i < l1.length; i++) {
 var removeDuplicates = function (nums) {
 
     let last = null;
-    let k = 1;
+    let removals = [];
+    let k = 0;
 
     for (let i = 0; i < nums.length; i++) {
 
-        console.log('nums:',nums);
+        if (nums[i] == last){
+            removals.push(i);
+        }
+        last = nums[i];
 
-            if (i == 0) {
-                last = nums[i]
-                k += 1;
-            }        
-            else if(nums[i] == '_'){
-                break;
-            }
-            else if (nums[i] == last) {
-                nums.splice(nums.length, 0, "_")
-                nums.splice(i-1, 1);
-                removeDuplicates(nums);
-            }
-            else {
-                last = nums[i]
-                k += 1;
-            }
-            console.log('k: ', k)
+    }
+
+    removals = removals.reverse();
+    k = nums.length - removals.length;
+
+    for (let i = 0; i < removals.length; i++) {
+
+        nums.splice(removals[i], 1);
+        nums.push('_');
+
     }
 
     return k;
 
 };
 
-let x = [[1, 1, 2], [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]];
+let x = [[1, 1, 2], [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],[1,1]];
 
 answerExplainationEl.textContent = "Given a series of ordered arrays with potential duplicated elements, the duplicates are removed and the first superfluous index returned ";
 
