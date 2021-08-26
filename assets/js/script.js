@@ -880,7 +880,41 @@ for (let i = 0; i < x.length; i++) {
 
 //Given two binary strings a and b, return their sum as a binary string.
 
-var addBinary = function(a, b) {
+let zfill = function (str, len) {
+
+    let strArray = str.split("");
+    strArray = strArray.reverse();
+
+    for (let i = 0; i < len - str.length; i++) {
+        strArray.push('0');
+    }
+
+    strArray = strArray.reverse();
+
+    let newStr = strArray.join("");
+
+    return newStr;
+
+}
+
+let reverseString = function (str) {
+
+    str = str.split('').reverse().join('');
+
+    return str;
+
+}
+
+let max = function (numA, numB) {
+
+    let maxNum = 0;
+
+    maxNum = (numA >= numB ? numA : numB);
+
+    return maxNum;
+}
+
+var addBinary = function (a, b) {
 
     /*Unforunately this can't handle very large numbers
     let tenA = parseInt(a,2);
@@ -889,84 +923,36 @@ var addBinary = function(a, b) {
 
     return binarySum;*/
 
-    let zfill = function(str,len){
-
-        let strArray = str.split("");
-        strArray = strArray.reverse();
-
-        for(let i = 0; i<len-str.length;i++){
-            strArray.push('0');
-        }
-
-        strArray = strArray.reverse();
-
-        let newStr = strArray.join("");
-
-        return newStr;
-
-    }
-
-    let reverseString = function (str){
-
-        str = str.split('').reverse().join('');
-
-        return str;
-        
-
-    }
-
     let result = "";
     let carry = 0;
-    let maxLength = 0;
-    
-    if(a.length > b.length){
-        b = zfill(b, a.length);
-        maxLength = a.length;
-    } else {
-        a = zfill(a, b.length);
-        maxLength = b.length;
-    }
+    let max_len = max(a.length, b.length);
+
+    a = zfill(a, max_len);
+    b = zfill(b, max_len);
 
     a = reverseString(a);
     b = reverseString(b);
 
-    for (let i = 0;i<maxLength;i++){
-
+    for (let i = 0; i < max_len; i++){
         let r = carry;
-
-        if(a[i] == '1'){
-            r += 1;
-        }
-        if(b[i] == '1'){
-            r += 1;
-        }
-
-        if(r%2 ==1){
-            result = '1' + result;
-        } else {
-            result = '0' + result;
-        }
-
-        if(r < 2){
-            carry = 0
-        } else {
-            carry = 1;
-        }
-
-        if(carry != 0){
-            result = '1' + result;
-        }
+        r+= (a[i] == '1' ? 1 : 0);
+        r+= (b[i] == '1' ? 1 : 0);
+        result = (r % 2 == 1 ? '1' : '0') + result;
+        carry = (r < 2 ? 0 : 1);
     }
 
-    //result = reverseString(result);
-    result = zfill(result, maxLength);
+    if(carry != 0){
+        result = '1' + result
+    }
+
+    result = zfill(result, max_len);
 
     return result;
 
 };
 
 //100 10101
-let x = ["11", "1010"]; 
+let x = ["11", "1010"];
 let y = ["1", "1011"];
 
 answerExplainationEl.textContent = "Given two binary strings a and b, return their sum as a binary string";
