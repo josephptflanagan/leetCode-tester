@@ -876,7 +876,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ADD BINARY START - EASY */
+/* ADD BINARY START - EASY 
 
 //Given two binary strings a and b, return their sum as a binary string.
 
@@ -916,12 +916,12 @@ let max = function (numA, numB) {
 
 var addBinary = function (a, b) {
 
-    /*Unforunately this can't handle very large numbers
-    let tenA = parseInt(a,2);
-    let tenB = parseInt(b,2);
-    let binarySum = (tenA+tenB).toString(2);
+    //Unforunately this can't handle very large numbers
+    //let tenA = parseInt(a,2);
+    //let tenB = parseInt(b,2);
+    //let binarySum = (tenA+tenB).toString(2);
 
-    return binarySum;*/
+    return binarySum;
 
     let result = "";
     let carry = 0;
@@ -967,6 +967,81 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* ADD BINARY END - EASY */
+ ADD BINARY END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ADD TWO NUMBERS - START - MEDIUM */
+
+//You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, 
+//and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+//You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }    
+}
+
+let insertNodeAtTail = function (head, data) {
+
+    let newNode = new ListNode(data);
+    if(head === null){
+        head = newNode;
+    }else if (head.next === null){
+        head.next = newNode;
+    }else{
+        insertNodeAtTail(head.next, data);
+    }
+    return head;
+
+}
+
+let listConstructor = function (array) {
+
+    let list = new LinkedList();
+
+    for (i = 0; i < array.length; i++) {
+
+        list.head = insertNodeAtTail(list.head, array[i])
+
+    }
+
+    return list;
+
+}
+
+//[7,0,8](342 + 465 = 807), [0], [8,9,9,9,0,0,0,1]
+let x = [[2,4,3],[0],[9,9,9,9,9,9,9]];
+let y = [[5,6,4],[0],[9,9,9,9]]
+
+var addTwoNumbers = function(l1, l2) {
+    
+};
+
+answerExplainationEl.textContent = "Given two single linked lists, return their sum as a third single linked list";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    console.log("listConstructor(x[i]): ", listConstructor(x[i]))
+
+    //let sum = addTwoNumbers(listConstructor(x[i]), listConstructor(y[i]))
+
+    //listEl.textContent = x[i] + " + " + y[i] + " = " + sum;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ADD TWO NUMBERS - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
