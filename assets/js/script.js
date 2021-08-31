@@ -1018,11 +1018,100 @@ let listConstructor = function (array) {
 
 }
 
-//[7,0,8](342 + 465 = 807), [0], [8,9,9,9,0,0,0,1]
-let x = [[2,4,3],[0],[9,9,9,9,9,9,9]];
-let y = [[5,6,4],[0],[9,9,9,9]]
+let listToArray = function (list) {
+
+    let array = [];
+
+    while(list.head != null){
+        array.push(list.head.val);
+        list.head = list.head.next;
+
+    }
+
+    return array;
+
+}
+
+let zfill = function (str, len) {
+
+    let strArray = str.split("");
+    strArray = strArray.reverse();
+
+    for (let i = 0; i < len - str.length; i++) {
+        strArray.push('0');
+    }
+
+    strArray = strArray.reverse();
+
+    let newStr = strArray.join("");
+
+    return newStr;
+
+}
+
+let reverseString = function (str) {
+
+    str = str.split('').reverse().join('');
+
+    return str;
+
+}
+
+let max = function (numA, numB) {
+
+    let maxNum = 0;
+
+    maxNum = (numA >= numB ? numA : numB);
+
+    return maxNum;
+}
+
+
+//[7,0,8](342 + 465 = 807), [0], [8,9,9,9,0,0,0,1], [7,0,4,0,1], [6,6,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+let x = [[2,4,3],[0],[9,9,9,9,9,9,9],[2,4,9],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]];
+let y = [[5,6,4],[0],[9,9,9,9],[5,6,4,9],[5,6,4]]
+let correct = [[7,0,8], [0], [8,9,9,9,0,0,0,1], [7,0,4,0,1], [6,6,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]];
 
 var addTwoNumbers = function(l1, l2) {
+
+    let result = "";
+    let str1 = listToArray(l1).join('');
+    let str2 = listToArray(l2).join('');
+
+    let carry = 0;
+    let max_len = max(str1.length, str2.length);
+
+    str1 = reverseString(str1);
+    str2 = reverseString(str2);
+
+    str1 = zfill(str1, max_len);
+    str2 = zfill(str2, max_len);
+
+    str1 = reverseString(str1);
+    str2 = reverseString(str2);
+
+    for (let i = 0; i < max_len; i++){
+        let r = carry;
+        r+= parseInt(str1[i]);
+        r+= parseInt(str2[i]);
+        result = (r >= 10 ? (r-10).toString() : r.toString()) + result;
+        carry = (r >= 10 ? 1 : 0);
+    }
+
+    if(carry != 0){
+        result = '1' + result
+    }
+
+    let resultArray = result.split('').reverse(0);
+    let resultIntArray = [];
+
+    for (let i = 0; i < resultArray.length; i++){
+        resultIntArray.push(parseInt(resultArray[i]));
+    }
+    
+    let sumList = listConstructor(resultIntArray);
+
+    return sumList;
     
 };
 
@@ -1031,12 +1120,17 @@ answerExplainationEl.textContent = "Given two single linked lists, return their 
 for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
+    let listX = listConstructor(x[i]);
+    let listY = listConstructor(y[i]);
 
-    console.log("listConstructor(x[i]): ", listConstructor(x[i]))
+    let arrayX = listToArray(listX);
+    let arrayY = listToArray(listY);
 
-    //let sum = addTwoNumbers(listConstructor(x[i]), listConstructor(y[i]))
+    let sum = addTwoNumbers(listConstructor(x[i]), listConstructor(y[i]))
 
-    //listEl.textContent = x[i] + " + " + y[i] + " = " + sum;
+    let displaySum = listToArray(sum);
+
+    listEl.textContent = "[" + arrayX + "] + [" + arrayY + "] = [" + displaySum + "]";
 
     answerListEl.appendChild(listEl);
 
