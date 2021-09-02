@@ -1140,7 +1140,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ADD TWO NUMBERS - START - MEDIUM*/
+/* LENGTH OF LONGEST SUBSCRIPT - START - MEDIUM*/
 
 //Given a string s, find the length of the longest substring without repeating characters.
 
@@ -1192,6 +1192,6 @@ for (let i = 0; i < x.length; i++) {
 }
 
 
-/*ADD TWO NUMBERS - END - MEDIUM */
+/*LENGTH OF LONGEST SUBSCRIPT - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
