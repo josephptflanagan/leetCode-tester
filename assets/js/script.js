@@ -1170,7 +1170,6 @@ var lengthOfLongestSubstring = function(s) {
 
     return maxString.length;
 
-
 };
 
 let x = ["abcabcbb","bbbbb", "pwwkew", "", " ", "au", "dvdf"];
@@ -1190,7 +1189,6 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 
 }
-
 
 /*LENGTH OF LONGEST SUBSCRIPT - END - MEDIUM */
 
