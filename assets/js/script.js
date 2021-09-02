@@ -971,7 +971,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ADD TWO NUMBERS - START - MEDIUM */
+/* ADD TWO NUMBERS - START - MEDIUM 
 
 //You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, 
 //and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
@@ -1136,6 +1136,62 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* ADD TWO NUMBERS - END - MEDIUM */
+ ADD TWO NUMBERS - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ADD TWO NUMBERS - START - MEDIUM*/
+
+//Given a string s, find the length of the longest substring without repeating characters.
+
+var lengthOfLongestSubstring = function(s) {
+
+    let tempString = "";
+    let maxString = (s.length ? s[0] : "");
+
+    if(s){
+
+        for(let i = 0; i < s.length; i++){
+
+            if(!tempString.includes(s[i])){ 
+
+                tempString += s[i];
+
+            } else {                
+
+                tempString = tempString.slice(tempString.indexOf(s[i])+1) + s[i];  
+
+            }
+
+            maxString = (tempString.length > maxString.length ? tempString : maxString);
+
+        }
+    }
+
+    return maxString.length;
+
+
+};
+
+let x = ["abcabcbb","bbbbb", "pwwkew", "", " ", "au", "dvdf"];
+let correct = [3,1,3,0,1,2,3] //"abc, b, wke, none, , "au", "vdf"
+
+answerExplainationEl.textContent = "Given a string s, find the length of the longest subString without repeating characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let xLeng = lengthOfLongestSubstring(x[i])
+
+    let proper = (xLeng == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "The longest sub string in '" + x[i] + "' is: " + xLeng + " characters long, " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/*ADD TWO NUMBERS - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
