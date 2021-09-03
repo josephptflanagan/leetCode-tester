@@ -1140,7 +1140,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LENGTH OF LONGEST SUBSCRIPT - START - MEDIUM*/
+/* LENGTH OF LONGEST SUBSCRIPT - START - MEDIUM
 
 //Given a string s, find the length of the longest substring without repeating characters.
 
@@ -1190,6 +1190,52 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/*LENGTH OF LONGEST SUBSCRIPT - END - MEDIUM */
+ LENGTH OF LONGEST SUBSCRIPT - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MEDIAN OF TWO SORTED ARRAYS - START - HARD */
+
+//Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+
+//The overall run time complexity should be O(log (m+n)).
+
+var findMedianSortedArrays = function(nums1, nums2) {
+
+    let combinedArray = nums1.concat(nums2).sort(function(a,b){return a - b});
+    let medianIndex = Math.floor((combinedArray.length-1)/2);
+
+    if(combinedArray.length % 2 != 0){
+
+        return  combinedArray[medianIndex].toFixed(5);
+
+    } else{
+
+        return  ((combinedArray[medianIndex] + combinedArray[medianIndex+1]) / 2).toFixed(5);
+
+    }
+    
+};
+
+let x = [[1,3],[1,2],[0,0],[],[2],[3],[100000]];
+let y = [[2],[3,4],[0,0],[1],[],[-2,-1],[100001]];
+let correct = [2.00000,2.50000,0.00000,1.00000,2.00000,-1.00000,100000.50000]
+answerExplainationEl.textContent = "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays..";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let median = findMedianSortedArrays(x[i],y[i]);
+
+    let proper = (median == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "The median of array [" + x[i] + "] and [" + y[i] + "] is " + median + ", " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* MEDIAN OF TWO SORTED ARRAYS - END - HARD */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
