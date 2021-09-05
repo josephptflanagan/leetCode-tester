@@ -1194,7 +1194,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MEDIAN OF TWO SORTED ARRAYS - START - HARD */
+/* MEDIAN OF TWO SORTED ARRAYS - START - HARD 
 
 //Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
 
@@ -1236,6 +1236,68 @@ for (let i = 0; i < x.length; i++) {
 }
 
 
-/* MEDIAN OF TWO SORTED ARRAYS - END - HARD */
+ MEDIAN OF TWO SORTED ARRAYS - END - HARD */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST PALINDROMIC SUBSTRING - START - MEDIUM */
+
+//Given a string s, return the longest palindromic substring in s.
+
+let isPalindrome = function(x) {
+    
+    let palindrome = false;
+    let stringX = x.toString();
+    let reverseX = x.toString().split('').reverse().join('');
+
+    if(stringX == reverseX){
+        palindrome = true;
+    }
+
+    return palindrome;
+
+};
+
+var longestPalindrome = function(s) {
+
+    let longest = '';
+    
+    for (let i=0; i<s.length; i++){
+        expandCheck(i, i);
+        expandCheck(i, i+1);
+    }
+    
+    function expandCheck(l, r){
+        while (l>=0 && r<s.length && s[l]===s[r]){
+            if (r-l+1 > longest.length){
+                longest = s.slice(l, r+1);
+            }
+            l--;
+            r++;
+        }
+    }
+    
+    return longest;
+
+};
+
+let x = ["babad","cbbd","a","ac"];
+let correct = ["bab", "bb", "a", "a"];
+answerExplainationEl.textContent = "Given a string s, return the longest palindromic substring in s.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let greatestPalindrome = longestPalindrome(x[i]);
+
+    let proper = (greatestPalindrome == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "Given the string '" + x[i] + "' the longest palindrome is '" + greatestPalindrome + "', " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST PALINDROMIC SUBSTRING - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
