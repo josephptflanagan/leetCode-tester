@@ -1240,7 +1240,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST PALINDROMIC SUBSTRING - START - MEDIUM */
+/* LONGEST PALINDROMIC SUBSTRING - START - MEDIUM 
 
 //Given a string s, return the longest palindromic substring in s.
 
@@ -1298,6 +1298,105 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* LONGEST PALINDROMIC SUBSTRING - END - MEDIUM */
+ LONGEST PALINDROMIC SUBSTRING - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ZIG ZAG CONVERSATION - START - MEDIUM */
+
+/*The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+  P   A   H   N
+  A P L S I I G
+  Y   I   R
+
+  And then read line by line: "PAHNAPLSIIGYIR"
+
+  Write the code that will take a string and make this conversion given a number of rows:
+*/
+
+var convert = function(s, numRows) {
+
+    let rows = [];
+    let position = 0;
+    let direction = true; //false = up, true = down
+
+    if(numRows == 1){
+        return s;
+    }
+
+    for(i = 0; i < numRows; i++){
+        rows.push([]);
+    }
+
+    for(i = 0; i < s.length; i++){
+
+        if(direction){
+
+            rows[position].push(s[i]);
+
+            if(position == numRows - 1){
+
+                direction = false;
+                position--;
+
+            } else { 
+
+            position++;
+
+            } 
+
+        } else {
+
+            rows[position].push(s[i]);
+
+            if(position > 0){
+
+            position--;
+
+            } else {
+
+                direction = true;
+                position++;
+
+            }
+            
+        }
+    }
+
+    for (let i = 0; i < rows.length; i++){  
+        rows[i] = rows[i].join("");
+    }
+
+    return rows.join("");
+    
+};
+
+let x = ["PAYPALISHIRING","PAYPALISHIRING","A"];
+let y = [3, 4, 1]
+let correct = ["PAHNAPLSIIGYIR","PINALSIGYAHRPI","A"];
+/*
+example 2 explaination
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+*/
+answerExplainationEl.textContent = "Given a String and a number of rows to arrange the string into a zig zag pattern, the resulting string is.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let converted = convert(x[i], y[i]);
+
+    let proper = (converted == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "Arrainging the string '" + x[i] + "', in a zigzag pattern in " + y[i] + " row(s), yields " + converted + ", " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ZIG ZAG CONVERSATION - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
