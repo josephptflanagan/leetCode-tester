@@ -1302,18 +1302,18 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ZIG ZAG CONVERSATION - START - MEDIUM */
+/* ZIG ZAG CONVERSATION - START - MEDIUM 
 
-/*The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+//The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 
-  P   A   H   N
-  A P L S I I G
-  Y   I   R
+//  P   A   H   N
+//  A P L S I I G
+//  Y   I   R
 
-  And then read line by line: "PAHNAPLSIIGYIR"
+//  And then read line by line: "PAHNAPLSIIGYIR"
 
-  Write the code that will take a string and make this conversion given a number of rows:
-*/
+//  Write the code that will take a string and make this conversion given a number of rows:
+
 
 var convert = function(s, numRows) {
 
@@ -1375,13 +1375,13 @@ var convert = function(s, numRows) {
 let x = ["PAYPALISHIRING","PAYPALISHIRING","A"];
 let y = [3, 4, 1]
 let correct = ["PAHNAPLSIIGYIR","PINALSIGYAHRPI","A"];
-/*
-example 2 explaination
-P     I    N
-A   L S  I G
-Y A   H R
-P     I
-*/
+
+//example 2 explaination
+//P     I    N
+//A   L S  I G
+//Y A   H R
+//P     I
+
 answerExplainationEl.textContent = "Given a String and a number of rows to arrange the string into a zig zag pattern, the resulting string is.";
 
 for (let i = 0; i < x.length; i++) {
@@ -1392,6 +1392,93 @@ for (let i = 0; i < x.length; i++) {
     let proper = (converted == correct[i] ? "this is correct" : "this is wrong");
 
     listEl.textContent = "Arrainging the string '" + x[i] + "', in a zigzag pattern in " + y[i] + " row(s), yields " + converted + ", " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+ ZIG ZAG CONVERSATION - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ZIG ZAG CONVERSATION - START - MEDIUM*/
+
+//Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
+
+//The algorithm for myAtoi(string s) is as follows:
+
+//Read in and ignore any leading whitespace.
+//Check if the next character (if not already at the end of the string) is '-' or '+'. Read this character in if it is either. This determines if the final result is negative or positive respectively. 
+//Assume the result is positive if neither is present.
+//Read in next the characters until the next non-digit charcter or the end of the input is reached. The rest of the string is ignored.
+//Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).
+//If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then clamp the integer so that it remains in the range. Specifically, integers less than -231 should be clamped to -231, 
+//and integers greater than 231 - 1 should be clamped to 231 - 1.
+//Return the integer as the final result.
+//Note:
+
+//Only the space character ' ' is considered a whitespace character.
+//Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.
+
+var myAtoi = function (s) {
+
+    if (!s) {
+        return 0;
+    }
+
+    let stringInProgress = s.slice();
+
+    let unusable = /[a-z\.+-\s]/;
+
+    workable = false;
+    
+    while(!workable){
+
+        if (stringInProgress[0] == " "){
+            stringInProgress = stringInProgress.slice(1);
+        }
+        else {
+            workable = true;
+        }
+    }
+
+    if (stringInProgress[0] == '-') {
+        stringInProgress = stringInProgress.slice(1);
+    } else if (stringInProgress[0] == '+') {
+        stringInProgress = stringInProgress.slice(1);
+    }
+
+    if (!stringInProgress || stringInProgress[0].match(unusable)) {
+        return 0;
+    }
+
+    let integer = s;
+
+    integer = parseInt(integer);
+
+    if (integer > 2147483647) {
+        integer = 2147483647;
+    } else if (integer < -2147483648) {
+        integer = -2147483648;
+    }
+
+    return integer;
+
+};
+
+let x = ["42", "   -42", "4193 with words", "words and 987", "-91283472332", "21474836460", "00000-42a1234", "+-12","  +  413"];
+let correct = [42, -42, 4193, 0, -2147483648, 2147483647, 0, 0, 0];
+
+answerExplainationEl.textContent = "This algorithm converts strings to integers like c/c++'s atoi function";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let converted = myAtoi(x[i]);
+
+    let proper = (converted == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "The string '" + x[i] + "', becomes " + converted + " using myAtoi function, " + proper;
 
     answerListEl.appendChild(listEl);
 
