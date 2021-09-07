@@ -1401,7 +1401,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ZIG ZAG CONVERSATION - START - MEDIUM*/
+/* ZIG ZAG CONVERSATION - START - MEDIUM
 
 //Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
 
@@ -1484,6 +1484,47 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* ZIG ZAG CONVERSATION - END - MEDIUM */
+ ZIG ZAG CONVERSATION - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REGULAR EXPRESSION MATCHING - START - HARD */
+
+//Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+
+//'.' Matches any single character.​​​​
+//'*' Matches zero or more of the preceding element.
+
+//The matching should cover the entire input string (not partial).
+
+var isMatch = function (s, p) {
+
+    let regex = new RegExp(p);
+    
+    return s == s.match(regex);
+
+};
+
+let x = ["aa", "aa", "ab", "aab", "mississippi"];
+let y = ["a", "a*", ".*", "c*a*b", "mis*is*p*."];
+let correct = [false, true, true, true, false];
+
+answerExplainationEl.textContent = "Given a string and a pattern, determine if the string matches the pattern";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let matches = isMatch(x[i],y[i]);
+    let matchColor = (matches ? "' does not match the string '" : "' does match the string ");
+
+    let proper = (matches == correct[i] ? ",' this is correct" : ",' this is wrong");
+
+    listEl.textContent = "The pattern '" + y[i] + matchColor + x[i] + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REGULAR EXPRESSION MATCHING - END - HARD */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
