@@ -1500,7 +1500,7 @@ for (let i = 0; i < x.length; i++) {
 var isMatch = function (s, p) {
 
     let regex = new RegExp(p);
-    
+
     return s == s.match(regex);
 
 };
@@ -1515,7 +1515,7 @@ for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
     let matches = isMatch(x[i],y[i]);
-    let matchColor = (matches ? "' does not match the string '" : "' does match the string ");
+    let matchColor = (matches ? "' does match the string '" : "' does not match the string ");
 
     let proper = (matches == correct[i] ? ",' this is correct" : ",' this is wrong");
 
