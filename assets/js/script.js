@@ -1488,7 +1488,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REGULAR EXPRESSION MATCHING - START - HARD */
+/* REGULAR EXPRESSION MATCHING - START - HARD 
 
 //Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
 
@@ -1525,6 +1525,66 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* REGULAR EXPRESSION MATCHING - END - HARD */
+ REGULAR EXPRESSION MATCHING - END - HARD */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONTAINER WITH THE MOST WATER - START - MEDIUM */
+
+// Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn
+// such that the two endpoints of the line i is at (i, ai) and (i, 0). Find two lines, which, together with the x-axis forms a 
+// container, such that the container contains the most water.
+
+//  Notice that you may not slant the container.
+
+var maxArea = function(height) {
+
+    if (height.length < 2){
+        return 0;
+    }
+
+    let i = 0;
+    let j = height.length-1;
+    let tempArea = 0;
+    let maxArea = 0;
+
+    while (i != j){
+        
+        if (height[i] > height[j]){
+            tempArea = height[j] * (j - i)
+            j--;
+        } else {
+            tempArea = height[i] * (j - i);
+            i++;
+        }
+
+        maxArea = (tempArea > maxArea ? tempArea : maxArea);
+
+    }
+    
+    return maxArea;
+
+};
+
+let x = [[1,8,6,2,5,4,8,3,7], [1,1], [4,3,2,1,4], [1,2,1]];
+let correct = [49,1,16,2];
+
+answerExplainationEl.textContent = "Given an array of heights, find the greatest area of water that could fit between two points";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let area = maxArea(x[i]);
+
+    let proper = (area == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "Given the array [" + x[i] + "], the greatest area that can exist between two of those points is " + area + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONTAINER WITH THE MOST WATER - END - MEDIUM */
+
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
