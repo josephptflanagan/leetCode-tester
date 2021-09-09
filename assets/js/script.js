@@ -1529,7 +1529,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CONTAINER WITH THE MOST WATER - START - MEDIUM */
+/* CONTAINER WITH THE MOST WATER - START - MEDIUM 
 
 // Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn
 // such that the two endpoints of the line i is at (i, ai) and (i, 0). Find two lines, which, together with the x-axis forms a 
@@ -1584,7 +1584,83 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* CONTAINER WITH THE MOST WATER - END - MEDIUM */
+ CONTAINER WITH THE MOST WATER - END - MEDIUM */
 
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INTEGER TO ROMAN - START - MEDIUM */
+
+var intToRoman = function (num) {
+
+    let mun = num.toString().split("").reverse().join(""); //reverse num
+    let length = mun.length;
+    let romanNum = "";
+    let fives = ["V", "L", "D"];
+    let nines = ["IX", "XC", "CM"];
+    let dicts = [{ 1: 'I', 2: 'II', 3: 'III', 4: 'IV'}, { 1 : 'X', 2 : 'XX', 3 : 'XXX', 4 : 'XL'}, { 1 : 'C', 2 : 'CC', 3 : 'CCC', 4 : 'CD'}];
+
+    for (let i = 0; i < length; i++) {
+
+        let cNum = parseInt(mun[i]); //current num
+        let tNum = ""; //temp num      
+
+        if (i < 3) {
+
+            cNum -= 5;
+            
+            if (cNum >= 0){
+                tNum = fives[i];
+            } else {
+                cNum +=5;
+            }
+
+            if (cNum){
+                if(tNum && cNum == 4){
+                    tNum = nines[i];
+                } else {
+                    tNum += dicts[i][cNum]
+                }
+            }
+
+        } else {
+
+            let remainder = parseInt(mun.slice(3).split("").reverse().join(""));
+
+            while (remainder > 0){
+                tNum += 'M'
+                remainder --;
+            }
+
+            i = length - 1;
+
+        }
+
+        romanNum = tNum + romanNum;
+
+    }
+
+    return romanNum;
+
+};
+
+let x = [3, 4, 9, 58, 1994, 10994];
+let correct = ["III", "IV", "IX", "LVIII", "MCMXCIV", "MMMMMMMMMMCMXCIV"];
+
+answerExplainationEl.textContent = "Given an integer, convert it to a roman numeral.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let roman = intToRoman(x[i]);
+
+    let proper = (roman == correct[i] ? ",' this is correct" : ",' this is wrong");
+
+    listEl.textContent = "The integer '" + x[i] + ",' converts to the roman numeral '" + roman + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INTEGER TO ROMAN - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
