@@ -1588,7 +1588,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* INTEGER TO ROMAN - START - MEDIUM */
+/* INTEGER TO ROMAN - START - MEDIUM 
 
 var intToRoman = function (num) {
 
@@ -1661,6 +1661,97 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* INTEGER TO ROMAN - END - MEDIUM */
+ INTEGER TO ROMAN - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* 3SUM - START - MEDIUM */
+
+//Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, 
+//and nums[i] + nums[j] + nums[k] == 0.
+
+//Notice that the solution set must not contain duplicate triplets.
+
+var threeSum = function(nums) {
+
+    let trip = [];
+
+    if(nums.length < 3){
+        return trip;
+    }
+
+    nums.sort((a,b)=>a-b);
+
+    for (let i=0; i<nums.length-2; i++){
+
+        if (nums[i]==nums[i-1]){
+            continue
+        };
+
+        let subTarget = 0 - nums[i];
+        let left = i+1;
+        let right = nums.length-1;
+        
+        while (left < right){
+
+            let sum = nums[left] + nums[right];
+
+            if (sum===subTarget){
+
+                trip.push([nums[i], nums[left], nums[right]]);
+
+                while (nums[left]==nums[left+1]){
+                     left++;
+                }
+                while (nums[right]==nums[right-1]){
+                    right--;
+                }
+
+                left++;
+                right--;
+
+            } else if (sum < subTarget) {
+
+                left++;
+
+            } else {
+
+                right--;
+            }
+        }
+    }
+
+    return trip;
+    
+};
+
+let x = [[-1,0,1,2,-1,-4], [], [0]];
+let correct = [[[-1,-1,2],[-1,0,1]], [], []];
+
+answerExplainationEl.textContent = "Given an integer array nums, return all the triplets.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let triplets = threeSum(x[i]);
+
+    let colorText = (triplets.length != 0 ? "] contains the triplets [" + triplets + "]" : "] does not contain any triplets");
+
+    let proper = " ";
+
+    if ( triplets.length == 0){
+        proper = (correct[i].length == 0 ? ", this is correct." : ", this is wrong.");
+    } else {
+                
+            console.log ('index ' + i + ', evaluate on a case by case basis');
+        }    
+
+    listEl.textContent = "The array [" + x[i] + colorText + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* 3SUM - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
