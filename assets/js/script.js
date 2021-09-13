@@ -1665,7 +1665,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* 3SUM - START - MEDIUM */
+/* 3SUM - START - MEDIUM 
 
 //Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, 
 //and nums[i] + nums[j] + nums[k] == 0.
@@ -1752,6 +1752,91 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* 3SUM - END - MEDIUM */
+ 3SUM - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* 3SUM CLOSEST - START - MEDIUM */
+
+//Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+//Return the sum of the three integers.
+
+//You may assume that each input would have exactly one solution.
+
+var threeSumClosest = function (nums, target) {
+
+    nums.sort((a, b) => a - b);
+
+    let sumArray = [];
+
+    for (let i = 0; i < nums.length - 2; i++) {
+
+      let j = i + 1;
+      let k = nums.length - 1;
+
+      while (j < k) {
+
+        let sum = nums[i] + nums[j] + nums[k];
+
+        if (sum === target) {
+
+          return sum;
+
+        } else if (sum < target) {
+
+          j++;
+
+        } else if (sum > target) {
+
+          k--;
+
+        }
+
+        sumArray.push(sum);
+
+      }
+    }
+
+    let result = sumArray[0];
+    let closet = Math.abs(target - sumArray[0]);
+
+    for (let i = 0; i < sumArray.length; i++) {
+
+        let closeCheck = Math.abs(target - sumArray[i]);
+
+      if (closeCheck < closet) {
+
+        closet = closeCheck;
+        result = sumArray[i];
+
+      }
+
+    }
+   
+    return result;
+    
+  };
+
+let x = [[-1,2,1,-4], [0,0,0]];
+let y = [1,1]
+let correct = [2,0];
+
+answerExplainationEl.textContent = "Given an integer array nums, and an integer target, return the sum of the three elements in the array closest to the target.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let closest = threeSumClosest(x[i], y[i]);
+
+    let proper = (closest == correct[i] ? ",' this is correct" : ",' this is wrong");
+
+    listEl.textContent = "The closest sum to the target " + y[i] + " is " + closest + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* 3SUM CLOSEST - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
