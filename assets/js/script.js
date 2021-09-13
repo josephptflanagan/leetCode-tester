@@ -1756,7 +1756,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* 3SUM CLOSEST - START - MEDIUM */
+/* 3SUM CLOSEST - START - MEDIUM 
 
 //Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
 
@@ -1837,6 +1837,90 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* 3SUM CLOSEST - END - MEDIUM */
+ 3SUM CLOSEST - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM NUMBER OF BALLOONS - START - EASY */
+
+//Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
+
+//You can use each character in text at most once. Return the maximum number of instances that can be formed.
+
+var maxNumberOfBalloons = function (text) {
+
+    const bChars = [1, 1, 2, 2, 1]//b a ll oo n
+    let bCharCount = [0, 0, 0, 0, 0];//b a l o n
+    let bCount = 0; //balloon count
+    let stillPossible = true;
+
+    for (let i = 0; i < text.length; i++) {
+
+        switch (text[i]) {
+            case 'b':
+                bCharCount[0]++;
+                break;
+            case 'a':
+                bCharCount[1]++;
+                break;
+            case 'l':
+                bCharCount[2]++;
+                break;
+            case 'o':
+                bCharCount[3]++;
+                break;
+            case 'n':
+                bCharCount[4]++;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    while (stillPossible) {
+
+        for (let i = 0; i < 5; i++) {
+
+            if(bCharCount[i] - bChars[i] > -1){
+
+                bCharCount[i] -= bChars[i];
+
+                if(i == 4){
+                    bCount++;
+                }
+
+            } else {
+
+                stillPossible = false;
+                break;
+
+            }
+        }
+    }
+
+    return bCount;
+
+};
+
+let x = ["nlaebolko", "loonbalxballpoon", "leetcode", "balon"];
+let correct = [1, 2, 0, 0];
+
+answerExplainationEl.textContent = "Given string of text, return the number of times that the word balloon can be spelled from the characters within the sting.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let count = maxNumberOfBalloons(x[i]);
+
+    let proper = (count == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "The number of times the letters of 'balloon' appear in '" + x[i] + ",' is " + count + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAXIMUM NUMBER OF BALLOONS - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
