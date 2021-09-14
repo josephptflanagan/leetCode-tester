@@ -1841,7 +1841,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM NUMBER OF BALLOONS - START - EASY */
+/* MAXIMUM NUMBER OF BALLOONS - START - EASY
 
 //Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
 
@@ -1921,6 +1921,73 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* MAXIMUM NUMBER OF BALLOONS - END - EASY */
+MAXIMUM NUMBER OF BALLOONS - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REVERSE ONLY LETTERS - START - EASY */
+
+//Given a string s, reverse the string according to the following rules:
+
+//All the characters that are not English letters remain in the same position.
+//All the English letters (lowercase or uppercase) should be reversed.
+
+//Return s after reversing it.
+
+var reverseOnlyLetters = function(s) {
+
+    let letters = [];     //array containing all the letters of string s
+    let nonLetters = [];  //array containing all the indices of non letters of string s
+
+    let reverseS = ""     // string s with only the letters reversed, the returned string
+
+    let nlr = /[0-9-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/; //non letter regex 
+
+    for (let i = 0; i < s.length; i++){
+
+       if (s[i].match(nlr)) {
+           nonLetters.push(i)
+       } else {
+           letters.push(s[i])
+       }
+    }
+
+    if (letters) letters.reverse();
+
+    for (let i = 0; i < s.length; i++){
+        if (nonLetters.includes(i)){
+            reverseS += s[i]
+        } else {
+            reverseS += letters[0];
+            if (letters.length > 1){
+                letters = letters.slice(1);
+            }
+            
+        }
+    }
+
+    return reverseS;
+    
+};
+
+let x = ["ab-cd", "a-bC-dEf-ghIj", "Test1ng-Leet=code-Q!", 's', '-', '123'];
+let correct = ["dc-ba", "j-Ih-gfE-dCba", "Qedo1ct-eeLg=ntse-T!", 's', '-', '123'];
+
+answerExplainationEl.textContent = "Given string of text, that string with only the letters reversed.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let reversed = reverseOnlyLetters(x[i]);
+
+    let proper = (reversed == correct[i] ? ",' this is correct" : ",' this is wrong");
+
+    listEl.textContent = "The string '" + x[i] + ",' with only the letters reversed is '" + reversed + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REVERSE ONLY LETTERS - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
