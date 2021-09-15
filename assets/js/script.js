@@ -1925,7 +1925,7 @@ MAXIMUM NUMBER OF BALLOONS - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REVERSE ONLY LETTERS - START - EASY */
+/* REVERSE ONLY LETTERS - START - EASY 
 
 //Given a string s, reverse the string according to the following rules:
 
@@ -1988,6 +1988,115 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* REVERSE ONLY LETTERS - END - EASY */
+ REVERSE ONLY LETTERS - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST TURBULENT SUBARRAY - START - MEDIUM */
+
+//Given an integer array arr, return the length of a maximum size turbulent subarray of arr.
+
+//A subarray is turbulent if the comparison sign flips between each adjacent pair of elements in the subarray.
+
+//More formally, a subarray [arr[i], arr[i + 1], ..., arr[j]] of arr is said to be turbulent if and only if:
+
+//For i <= k < j:
+//    arr[k] > arr[k + 1] when k is odd, and
+//    arr[k] < arr[k + 1] when k is even.
+//Or, for i <= k < j:
+//    arr[k] > arr[k + 1] when k is even, and
+//    arr[k] < arr[k + 1] when k is odd.
+
+var maxTurbulenceSize = function (arr) {
+
+    let longest = 0;
+    let tempLength = 0;
+    let last = 0;
+    let currentDirection = "none";
+
+    for (let i = 0; i < arr.length; i++) {
+
+        if (i == 0) {
+            last = arr[i];
+            tempLength = 1;
+        }
+        else if (currentDirection == "none") {
+
+            if (last > arr[i]) {
+                currentDirection = "up";
+            } else if (last < arr[i]) {
+                currentDirection = "down";
+            } else {
+                continue;
+            }
+
+            last = arr[i];
+            tempLength++;
+
+        } else if (currentDirection == "down") {
+
+            if (last > arr[i]) {
+                currentDirection = "up";
+                tempLength++;
+            } else {
+                longest = (tempLength > longest ? tempLength : longest);
+                if (last < arr[i]) {
+                    currentDirection = "down"
+                    tempLength = 2;
+                } else {
+                    currentDirection = "none"
+                    tempLength = 1;
+                }
+            }
+
+            last = arr[i];
+
+        } else if (currentDirection == "up") {
+
+            if (last < arr[i]) {
+                currentDirection = "down";
+                tempLength++;
+            } else {
+                longest = (tempLength > longest ? tempLength : longest);
+                if (last > arr[i]) {
+                    currentDirection = "up"
+                    tempLength = 2;
+                } else {
+                    currentDirection = "none"
+                    tempLength = 1;
+                }
+            }
+
+            last = arr[i];
+
+        }
+
+    }
+
+    longest = (tempLength > longest ? tempLength : longest);
+
+    return longest;
+
+};
+
+let x = [[9, 4, 2, 10, 7, 8, 8, 1, 9], [4, 8, 12, 16], [100], [1, 8, 4, 5, 3, 9, 5]];
+let correct = [5, 2, 1, 7];
+
+answerExplainationEl.textContent = "Given an integer array arr, return the length of a maximum size turbulent subarray of arr.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let subArraySize = maxTurbulenceSize(x[i]);
+
+    let proper = (subArraySize == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "The largest turbulent subarray of the array [" + x[i] + "], is " + subArraySize + " elements long" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST TURBULENT SUBARRAY - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
