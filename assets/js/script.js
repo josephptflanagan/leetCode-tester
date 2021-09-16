@@ -1992,7 +1992,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST TURBULENT SUBARRAY - START - MEDIUM */
+/* LONGEST TURBULENT SUBARRAY - START - MEDIUM 
 
 //Given an integer array arr, return the length of a maximum size turbulent subarray of arr.
 
@@ -2097,6 +2097,98 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* LONGEST TURBULENT SUBARRAY - END - MEDIUM */
+ LONGEST TURBULENT SUBARRAY - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SPIRAL MATRIX - START - MEDIUM */
+
+// Given an m x n matrix, return all elements of the matrix in spiral order.
+
+var spiralOrder = function (matrix) {
+
+    let xLength = matrix[0].length
+    let yLength = matrix.length;
+
+    let spiralArray = [];
+
+    let topRow = 0;
+    let bottomRow = yLength-1;
+    let leftCol = 0;
+    let rightCol = xLength-1;
+    let direction = "east";
+
+    while (topRow <= bottomRow && leftCol <= rightCol){
+
+        if (direction == "east"){
+            for (i=leftCol;i<rightCol+1;i++){
+                spiralArray.push(matrix[topRow][i]);
+            }
+
+            topRow++;
+            direction = "south";
+
+        } else if(direction == "south"){
+
+            for (i=topRow;i<bottomRow+1;i++){
+                spiralArray.push(matrix[i][rightCol]);
+            }
+
+            rightCol--;
+            direction = "west";            
+
+        } else if(direction == "west"){
+
+            for (i=rightCol;i>leftCol-1;i--){
+                spiralArray.push(matrix[bottomRow][i]);
+            }
+
+            bottomRow--;
+            direction = "north";            
+
+        }else if(direction == "north"){
+
+            for (i=bottomRow;i>topRow-1;i--){
+                spiralArray.push(matrix[i][leftCol]);
+            }
+
+            leftCol++;
+            direction = "east";            
+
+        }
+
+    }
+
+    return spiralArray;
+
+};
+
+let x = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]];
+let correct = [[1, 2, 3, 6, 9, 8, 7, 4, 5], [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]];
+
+answerExplainationEl.textContent = "Given an m x n matrix, return all elements of the matrix in spiral order.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let spiral = spiralOrder(x[i]);
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+        if (correct[i][j] != spiral[j]) {
+            right = false;
+            break;
+        }
+    }
+
+    let proper = (right ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "Given the matrix [" + x[i] + "], the order of elements when organized in a clockwise spiral is [" + spiral + "]" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SPIRAL MATRIX - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
