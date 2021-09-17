@@ -2101,7 +2101,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SPIRAL MATRIX - START - MEDIUM */
+/* SPIRAL MATRIX - START - MEDIUM 
 
 // Given an m x n matrix, return all elements of the matrix in spiral order.
 
@@ -2189,6 +2189,77 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SPIRAL MATRIX - END - MEDIUM */
+ SPIRAL MATRIX - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INTERSECTION OF TWO ARRAYS II - START - EASY */
+
+//Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many
+// times as it shows in both arrays and you may return the result in any order.
+
+var intersect = function(nums1, nums2) {
+
+    let shortArr = [];
+    let longArr = [];
+    let inter = [];
+
+    if (nums1.length < nums2.length){
+        shortArr = nums1.slice();
+        longArr = nums2.slice();
+    } else {
+        shortArr = nums2.slice();
+        longArr = nums1.slice();
+    }
+
+    let opIndex = 0;
+
+    for (let i = 0; i < shortArr.length; i++){
+
+        opIndex = longArr.indexOf(shortArr[i])
+        
+        if (opIndex != -1){
+            
+            inter.push(shortArr[i]);
+            longArr.splice(opIndex,1);
+            
+        }
+
+    }
+
+    return inter;
+    
+};
+
+let x = [[1,2,2,1], [4,9,5]];
+let y = [[2,2],[9,4,9,8,4]];
+let correct = [[2,2], [4,9]];
+
+answerExplainationEl.textContent = "Given two integer arrays nums1 and nums2, return an array of their intersection.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let intersection = intersect(x[i], y[i]);
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+
+        if (correct[i][j] != intersection[j]) {
+            right = false;
+            break;
+        }
+        
+    }
+
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "In intersection of the array [" + x[i] + "], and the array [" + y[i] + "], is [" + intersection + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INTERSECTION OF TWO ARRAYS II - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
