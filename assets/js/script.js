@@ -2193,7 +2193,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* INTERSECTION OF TWO ARRAYS II - START - EASY */
+/* INTERSECTION OF TWO ARRAYS II - START - EASY 
 
 //Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many
 // times as it shows in both arrays and you may return the result in any order.
@@ -2260,6 +2260,217 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* INTERSECTION OF TWO ARRAYS II - END - EASY */
+ INTERSECTION OF TWO ARRAYS II - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND WINNER ON A TIC TAC TOE GAME - START - EASY */
+
+var tictactoe = function (moves) {
+
+    // ATTEMPT 2
+
+    let avenues = [[0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0]]; 
+    let outcome = "Pending";
+
+    for (let i = 0;i < moves.length;i++){
+
+        let currentPlayer = (i % 2 == 1 ? 1 : 0);
+
+        if (moves[i][0] == 0 && moves[i][1] == 0){ // TOP LEFT
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][3]++;
+            avenues[currentPlayer][6]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 0){ // TOP MIDDLE
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][4]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 0){ // TOP RIGHT
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][5]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 0 && moves[i][1] == 1){ // MIDDLE LEFT
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][3]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 1){ // MIDDLE MIDDLE
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][4]++;
+            avenues[currentPlayer][6]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 1){ // MIDDLE RIGHT
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][5]++;
+
+        } else if (moves[i][0] == 0 && moves[i][1] == 2){ // BOTTOM LEFT
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][3]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 2){ // BOTTOM MIDDLE
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][4]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 2){ // BOTTOM RIGHT
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][5]++;
+            avenues[currentPlayer][6]++;
+
+        }
+
+        if (avenues[0].includes(3)){
+            outcome = "A";
+            break;
+        } else if (avenues[1].includes(3)){
+            outcome = "B";
+            break;
+        } else if (i == 8){
+            outcome = "Draw";
+        }
+
+    }
+
+    return outcome;
+
+    //ATTEMPT 1
+
+    // let outcome = ""
+    // let board = ["", "", "",
+    //     "", "", "",
+    //     "", "", ""];
+    // let boardPosition = null;
+
+    // if (moves.length < 5) {
+
+    //     outcome = "Pending"
+
+    // } else {
+
+    //     for (let i = 0; i < moves.length; i++) {
+
+    //         if (moves[i][1] == 0) {
+    //             boardPosition = moves[i][0];
+    //         } else if (moves[i][1] == 1) {
+    //             boardPosition = moves[i][0] + 3;
+    //         } else if (moves[i][1] == 2) {
+    //             boardPosition = moves[i][0] + 6;
+    //         }
+
+    //         board[boardPosition] = (i % 2 == 0 ? "A" : "B")
+
+    //     }
+
+    //     if (board[0] == board[1] && board[0] == board[2] && board[0]) { // TOP ROW
+
+    //         outcome = board[0];
+
+    //     } else if (board[3] == board[4] && board[3] == board[5] && board[3]) { // MIDDLE ROW
+
+    //         outcome = board[3];
+
+    //     } else if (board[6] == board[7] && board[6] == board[8] && board[6]) { // BOTTOM ROW
+
+    //         outcome = board[6];
+
+    //     } else if (board[0] == board[3] && board[0] == board[6] && board[0]) { // LEFT COLUMN
+
+    //         outcome = board[0];
+
+    //     } else if (board[1] == board[4] && board[1] == board[7] && board[1]) { // MIDDLE COLUMN
+
+    //         outcome = board[1];
+
+    //     } else if (board[2] == board[5] && board[2] == board[8] && board[2]) { //RIGHT COLUMN
+
+    //         outcome = board[2];
+
+    //     } else if (board[0] == board[4] && board[0] == board[8] && board[0]) { //TOP LEFT TO BOTTOM RIGHT
+
+    //         outcome = board[0];
+
+    //     } else if (board[2] == board[4] && board[2] == board[6] && board[2]) { //TOP RIGHT TO BOTTOM LEFT
+
+    //         outcome = board[2];
+
+    //     } else if (moves.length < 9) { // UNFINISHED, NO WINNER
+
+    //         outcome = "Pending"
+
+    //     } else if (i == moves.length - 1) { // ALL FULL, NO WINNER
+
+    //         outcome = "Draw"
+
+    //     }
+
+    // }
+
+    // return outcome;
+
+};
+
+let x = [[[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]],
+[[0, 0], [1, 1], [0, 1], [0, 2], [1, 0], [2, 0]],
+[[0, 0], [1, 1], [2, 0], [1, 0], [1, 2], [2, 1], [0, 1], [0, 2], [2, 2]],
+[[0, 0], [1, 1]],
+[[1, 0], [2, 2], [2, 0], [0, 1], [1, 1]],
+[[0, 2], [2, 0], [2, 1], [0, 1], [1, 2]],
+[],
+[[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1]]];
+
+let correct = ["A", "B", "Draw", "Pending", "Pending", "Pending", "Pending", "Pending"];
+
+answerExplainationEl.textContent = "Given a set of moves as coordinates on a tic-tac-toe grid, what is the outcome?";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let outcome = tictactoe(x[i]);
+
+    let proper = (outcome == correct[i] ? ", this is correct" : ", this is wrong");
+
+    let xString = "[";
+
+    for (let j = 0; j < x[i].length; j++) {
+
+        if (j < x[i].length - 1) {
+            xString += "[" + x[i][j] + "], ";
+        } else {
+            xString += "[" + x[i][j] + "]";
+        }
+    }
+
+    xString += "],";
+
+    let coloring = "";
+
+    if (outcome == "A" || outcome == "B") {
+        coloring = " the winner is ";
+    } else if (outcome == "Draw") {
+        coloring = " the game is a ";
+    } else {
+        coloring = " the game has not yet finished, the result is ";
+    }
+
+    coloring += outcome;
+
+    listEl.textContent = "Given the set of moves: " + xString + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIND WINNER ON A TIC TAC TOE GAME - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
