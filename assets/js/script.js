@@ -2264,6 +2264,82 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* LETTER COMBINATIONS OF A PHONE NUMBER - START - MEDIUM 
+
+//Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. 
+//Return the answer in any order.
+
+//A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+//2 = abc
+//3 = def
+//4 = ghi
+//5 = jkl
+//6 = mno
+//7 = pqrs
+//8 = tuv
+//9 = wxyz
+
+var letterCombinations = function (digits) {
+
+    let combinations = [];
+    let numsArr = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"], ["j", "k", "l"], ["m", "n", "o"], ["p", "q", "r", "s"], ["t", "u", "v"], ["w", "x", "y", "z"]];
+
+    if (digits.length > 0) {
+        for (let i = 0; i < numsArr[digits[0] - 2].length; i++) {
+            let tempCombo = numsArr[digits[0] - 2][i];
+            combinator(digits, numsArr, tempCombo, 1, combinations);
+        }
+    }
+
+    return combinations;
+
+};
+
+let combinator = function (digits, numsArr, tempCombo, location, combinations) {
+
+    if (digits.length - 1 < location) {
+        combinations.push(tempCombo);
+        return
+    }
+
+    for (let i = 0; i < numsArr[digits[location] - 2].length; i++) {
+        combinator(digits, numsArr, tempCombo + numsArr[digits[location] - 2][i], location + 1, combinations);
+    }
+
+}
+
+let x = ["23", "", "2"];
+let correct = [["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], [], ["a", "b", "c"]];
+
+answerExplainationEl.textContent = "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');   
+    let combos = letterCombinations(x[i]);
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+
+        if (correct[i][j] != combos[j]) {
+            right = false;
+            break;
+        }
+
+    }
+
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "In possible letter combinations from the array [" + x[i] + "] is [" + combos + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+LETTER COMBINATIONS OF A PHONE NUMBER - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
 /* FIND WINNER ON A TIC TAC TOE GAME - START - EASY */
 
 var tictactoe = function (moves) {
@@ -2436,9 +2512,12 @@ answerExplainationEl.textContent = "Given a set of moves as coordinates on a tic
 for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
+
     let outcome = tictactoe(x[i]);
 
     let proper = (outcome == correct[i] ? ", this is correct" : ", this is wrong");
+
+    let coloring = "";
 
     let xString = "[";
 
@@ -2453,8 +2532,6 @@ for (let i = 0; i < x.length; i++) {
 
     xString += "],";
 
-    let coloring = "";
-
     if (outcome == "A" || outcome == "B") {
         coloring = " the winner is ";
     } else if (outcome == "Draw") {
@@ -2467,10 +2544,9 @@ for (let i = 0; i < x.length; i++) {
 
     listEl.textContent = "Given the set of moves: " + xString + coloring + proper;
 
-    answerListEl.appendChild(listEl);
+answerListEl.appendChild(listEl);
 
 }
-
 /* FIND WINNER ON A TIC TAC TOE GAME - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
