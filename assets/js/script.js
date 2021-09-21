@@ -2340,7 +2340,7 @@ LETTER COMBINATIONS OF A PHONE NUMBER - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FIND WINNER ON A TIC TAC TOE GAME - START - EASY */
+/* FIND WINNER ON A TIC TAC TOE GAME - START - EASY 
 
 var tictactoe = function (moves) {
 
@@ -2547,6 +2547,53 @@ for (let i = 0; i < x.length; i++) {
 answerListEl.appendChild(listEl);
 
 }
-/* FIND WINNER ON A TIC TAC TOE GAME - END - EASY */
+ FIND WINNER ON A TIC TAC TOE GAME - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND MAX CONSECUTIVE ONES - START - EASY */
+
+var findMaxConsecutiveOnes = function (nums) {
+
+    let max = 0
+    let tempMax = 0;
+
+    for (let i = 0; i < nums.length; i++){
+        
+        if(nums[i] == 1){
+
+            tempMax++;
+            max = (tempMax > max ? tempMax : max);
+
+        } else {
+
+            tempMax = 0;
+            
+        }
+    }
+
+    return max
+
+};
+
+let x = [[1, 1, 0, 1, 1, 1], [1, 0, 1, 1, 0, 1]];
+let correct = [3, 2];
+
+answerExplainationEl.textContent = "Given a binary array nums, return the maximum number of consecutive 1's in the array.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let ones = findMaxConsecutiveOnes(x[i]);
+
+    let proper = (ones == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "In the binary number array [" + x[i] + "], the longest sequence of 1's is " + ones + " long" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIND MAX CONSECUTIVE ONES - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
