@@ -2551,7 +2551,7 @@ answerListEl.appendChild(listEl);
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FIND MAX CONSECUTIVE ONES - START - EASY */
+/* FIND MAX CONSECUTIVE ONES - START - EASY 
 
 var findMaxConsecutiveOnes = function (nums) {
 
@@ -2594,6 +2594,68 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* FIND MAX CONSECUTIVE ONES - END - EASY */
+ FIND MAX CONSECUTIVE ONES - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - START - MEDIUM */
+
+//Given an array of strings arr. String s is a concatenation of a sub-sequence of arr which have unique characters.
+
+//Return the maximum possible length of s.
+
+var maxLength = function (arr) {
+    return recursive(0, '', arr);
+};
+
+let recursive = function (index, string, arr) {
+    // termination condition
+
+    // if we reached the last element of the array
+    // we check if we have a valid string, return its length if yes,
+    // otherwise zero
+    if (index === arr.length) {
+        return isValid(string) ? string.length : 0;
+    }
+
+    // We can either pick the current word in the array, or we can leave it
+    // so there are two recursion path. We return then one that gives us the max
+    // value
+    let pick = recursive(index + 1, string + arr[index], arr);
+    let notPick = recursive(index + 1, string, arr);
+
+    return Math.max(pick, notPick);
+}
+
+let isValid = function (string) {
+    let hash = {};
+    for (let char of string) {
+        if (hash[char]) {
+            return false;
+        }
+        hash[char] = true;
+    }
+    return true;
+}
+
+let x = [["un", "iq", "ue"], ["cha", "r", "act", "ers"], ["abcdefghijklmnopqrstuvwxyz"], ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"], ["ab", "ba", "cd", "dc", "ef", "fe", "gh", "hg", "ij", "ji", "kl", "lk", "mn", "nm", "op", "po"]];
+let correct = [4, 6, 26, 16, 16];
+
+answerExplainationEl.textContent = " Given an array of strings arr, return the maximum possible length of a concatenated string containing only unique characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let max = maxLength(x[i]);
+
+    let proper = (max == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "When concatenating strings in the array [" + x[i] + "], the longest sequence of unique characters is " + max + " chars long" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
