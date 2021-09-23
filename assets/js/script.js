@@ -2598,11 +2598,14 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - START - MEDIUM */
+/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - START - MEDIUM 
 
 //Given an array of strings arr. String s is a concatenation of a sub-sequence of arr which have unique characters.
 
 //Return the maximum possible length of s.
+
+//After much consternation I found this answer to the question. I love it, and I plan to incorporate much of what I see here in
+//future algorithms
 
 var maxLength = function (arr) {
     return recursive(0, '', arr);
@@ -2629,7 +2632,7 @@ let recursive = function (index, string, arr) {
 
 let isValid = function (string) {
     let hash = {};
-    for (let char of string) {
+    for (let char of string) { // I love this form of for loop, I hadn't been exposed to this in JS before
         if (hash[char]) {
             return false;
         }
@@ -2656,6 +2659,145 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - END - EASY */
+ MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BREAK A PALINDROME - START - MEDIUM */
+
+//Given a palindromic string of lowercase English letters palindrome, replace exactly one character with any lowercase English
+// letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.
+
+//Return the resulting string. If there is no way to replace a character to make it not a palindrome, return an empty string.
+
+//A string a is lexicographically smaller than a string b (of the same length) if in the first position where a and b differ, a
+// has a character strictly smaller than the corresponding character in b. For example, "abcc" is lexicographically smaller
+// than "abcd" because the first position they differ is at the fourth character, and 'c' is smaller than 'd'.
+
+let isPalindrome = function (x) {
+
+    let palindrome = false;
+    let stringX = x.toString();
+    let reverseX = x.toString().split('').reverse().join('');
+
+    if (stringX == reverseX) {
+        palindrome = true;
+    }
+
+    return palindrome;
+
+};
+
+let isAllA = function (palindrome){
+
+    let aCount = 0;
+
+    for (let i = 0; i < palindrome.length; i++) {
+        if (palindrome[i] == 'a') aCount++;
+    }
+
+    return aCount == palindrome.length;
+
+}
+
+let allA = function (palindrome){
+
+    let nonPalindrome = "";
+
+    if (palindrome.length > 2) {
+
+        nonPalindrome = palindrome.slice(0, 1) + 'b' + palindrome.slice(2);
+
+        if (isPalindrome(nonPalindrome)) {
+
+            nonPalindrome = (palindrome.length == 3 ? palindrome.slice(0, 2) + 'b' : palindrome.slice(0, 2) + 'b' + palindrome.slice(3));
+        }
+
+    } else {
+
+        nonPalindrome = palindrome.slice(0, 1) + 'b'
+
+    }
+
+    return nonPalindrome;
+
+};
+
+var breakPalindrome = function (palindrome) {
+
+    let nonPalindrome = ""
+
+    if (palindrome.length > 1) {
+
+        let aCount = 0;
+
+        for (let i = 0; i < palindrome.length; i++) {
+            if (palindrome[i] == 'a') aCount++;
+        }
+
+        if (isAllA(palindrome)) {
+
+            nonPalindrome = allA(palindrome);
+
+        } else {
+
+            for (let i = 0; i < palindrome.length; i++) {
+
+                if (palindrome[i] != 'a') {
+
+                    if (i == 0) {
+
+                        nonPalindrome = 'a' + palindrome.slice(1);
+                        break;
+
+                    } else if (i > 0 && i < palindrome.length - 1) {
+
+                        nonPalindrome = palindrome.slice(0, i) + 'a' + palindrome.slice(i + 1);
+
+                        if (isAllA(nonPalindrome)) {
+
+                            nonPalindrome = palindrome.slice(0, palindrome.length-1) + 'b';
+                
+                        }
+
+                        break;
+
+                    } else {
+
+                        nonPalindrome = palindrome.slice(0, i) + 'a';
+                        break;
+
+                    }
+                }
+            }
+        }
+    }
+
+    return nonPalindrome;
+
+};
+
+let x = ["abccba", "a", "aa", "aba","bbb","aabaa"];
+let correct = ["aaccba", "", "ab", "abb","abb","aabab"];
+
+answerExplainationEl.textContent = " Given an palindromic string, break it in the least costly way possible.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let broken = breakPalindrome(x[i]);
+
+    let coloring = (broken == "" ? ",' cannot be broken because it is too short," : ",' can be broken to become '" + broken + ",'");
+
+
+    let proper = (broken == correct[i] ? " this is correct" : " this is wrong");
+
+    listEl.textContent = "The palindrome '" + x[i] + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BREAK A PALINDROME - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
