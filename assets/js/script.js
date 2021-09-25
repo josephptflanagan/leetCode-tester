@@ -2264,7 +2264,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LETTER COMBINATIONS OF A PHONE NUMBER - START - MEDIUM */
+/* LETTER COMBINATIONS OF A PHONE NUMBER - START - MEDIUM
 
 //Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. 
 //Return the answer in any order.
@@ -2285,10 +2285,14 @@ var letterCombinations = function (digits) {
     let numsArr = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"], ["j", "k", "l"], ["m", "n", "o"], ["p", "q", "r", "s"], ["t", "u", "v"], ["w", "x", "y", "z"]];
 
     if (digits.length > 0) {
+
         for (let i = 0; i < numsArr[digits[0] - 2].length; i++) {
+
             let tempCombo = numsArr[digits[0] - 2][i];
             combinator(digits, numsArr, tempCombo, 1, combinations);
+            
         }
+
     }
 
     return combinations;
@@ -2336,6 +2340,6 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* LETTER COMBINATIONS OF A PHONE NUMBER - END - MEDIUM */
+LETTER COMBINATIONS OF A PHONE NUMBER - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
