@@ -2264,7 +2264,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LETTER COMBINATIONS OF A PHONE NUMBER - START - MEDIUM
+/* LETTER COMBINATIONS OF A PHONE NUMBER - START - MEDIUM 
 
 //Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. 
 //Return the answer in any order.
@@ -2319,7 +2319,7 @@ answerExplainationEl.textContent = "Given a string containing digits from 2-9 in
 
 for (let i = 0; i < x.length; i++) {
 
-    let listEl = document.createElement('li');
+    let listEl = document.createElement('li');   
     let combos = letterCombinations(x[i]);
     let right = true;
 
@@ -2341,5 +2341,467 @@ for (let i = 0; i < x.length; i++) {
 }
 
 LETTER COMBINATIONS OF A PHONE NUMBER - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND WINNER ON A TIC TAC TOE GAME - START - EASY 
+
+var tictactoe = function (moves) {
+
+    // ATTEMPT 2
+
+    let avenues = [[0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0]]; 
+    let outcome = "Pending";
+
+    for (let i = 0;i < moves.length;i++){
+
+        let currentPlayer = (i % 2 == 1 ? 1 : 0);
+
+        if (moves[i][0] == 0 && moves[i][1] == 0){ // TOP LEFT
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][3]++;
+            avenues[currentPlayer][6]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 0){ // TOP MIDDLE
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][4]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 0){ // TOP RIGHT
+
+            avenues[currentPlayer][0]++;
+            avenues[currentPlayer][5]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 0 && moves[i][1] == 1){ // MIDDLE LEFT
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][3]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 1){ // MIDDLE MIDDLE
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][4]++;
+            avenues[currentPlayer][6]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 1){ // MIDDLE RIGHT
+
+            avenues[currentPlayer][1]++;
+            avenues[currentPlayer][5]++;
+
+        } else if (moves[i][0] == 0 && moves[i][1] == 2){ // BOTTOM LEFT
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][3]++;
+            avenues[currentPlayer][7]++;
+
+        } else if (moves[i][0] == 1 && moves[i][1] == 2){ // BOTTOM MIDDLE
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][4]++;
+
+        } else if (moves[i][0] == 2 && moves[i][1] == 2){ // BOTTOM RIGHT
+
+            avenues[currentPlayer][2]++;
+            avenues[currentPlayer][5]++;
+            avenues[currentPlayer][6]++;
+
+        }
+
+        if (avenues[0].includes(3)){
+            outcome = "A";
+            break;
+        } else if (avenues[1].includes(3)){
+            outcome = "B";
+            break;
+        } else if (i == 8){
+            outcome = "Draw";
+        }
+
+    }
+
+    return outcome;
+
+    //ATTEMPT 1
+
+    // let outcome = ""
+    // let board = ["", "", "",
+    //     "", "", "",
+    //     "", "", ""];
+    // let boardPosition = null;
+
+    // if (moves.length < 5) {
+
+    //     outcome = "Pending"
+
+    // } else {
+
+    //     for (let i = 0; i < moves.length; i++) {
+
+    //         if (moves[i][1] == 0) {
+    //             boardPosition = moves[i][0];
+    //         } else if (moves[i][1] == 1) {
+    //             boardPosition = moves[i][0] + 3;
+    //         } else if (moves[i][1] == 2) {
+    //             boardPosition = moves[i][0] + 6;
+    //         }
+
+    //         board[boardPosition] = (i % 2 == 0 ? "A" : "B")
+
+    //     }
+
+    //     if (board[0] == board[1] && board[0] == board[2] && board[0]) { // TOP ROW
+
+    //         outcome = board[0];
+
+    //     } else if (board[3] == board[4] && board[3] == board[5] && board[3]) { // MIDDLE ROW
+
+    //         outcome = board[3];
+
+    //     } else if (board[6] == board[7] && board[6] == board[8] && board[6]) { // BOTTOM ROW
+
+    //         outcome = board[6];
+
+    //     } else if (board[0] == board[3] && board[0] == board[6] && board[0]) { // LEFT COLUMN
+
+    //         outcome = board[0];
+
+    //     } else if (board[1] == board[4] && board[1] == board[7] && board[1]) { // MIDDLE COLUMN
+
+    //         outcome = board[1];
+
+    //     } else if (board[2] == board[5] && board[2] == board[8] && board[2]) { //RIGHT COLUMN
+
+    //         outcome = board[2];
+
+    //     } else if (board[0] == board[4] && board[0] == board[8] && board[0]) { //TOP LEFT TO BOTTOM RIGHT
+
+    //         outcome = board[0];
+
+    //     } else if (board[2] == board[4] && board[2] == board[6] && board[2]) { //TOP RIGHT TO BOTTOM LEFT
+
+    //         outcome = board[2];
+
+    //     } else if (moves.length < 9) { // UNFINISHED, NO WINNER
+
+    //         outcome = "Pending"
+
+    //     } else if (i == moves.length - 1) { // ALL FULL, NO WINNER
+
+    //         outcome = "Draw"
+
+    //     }
+
+    // }
+
+    // return outcome;
+
+};
+
+let x = [[[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]],
+[[0, 0], [1, 1], [0, 1], [0, 2], [1, 0], [2, 0]],
+[[0, 0], [1, 1], [2, 0], [1, 0], [1, 2], [2, 1], [0, 1], [0, 2], [2, 2]],
+[[0, 0], [1, 1]],
+[[1, 0], [2, 2], [2, 0], [0, 1], [1, 1]],
+[[0, 2], [2, 0], [2, 1], [0, 1], [1, 2]],
+[],
+[[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1]]];
+
+let correct = ["A", "B", "Draw", "Pending", "Pending", "Pending", "Pending", "Pending"];
+
+answerExplainationEl.textContent = "Given a set of moves as coordinates on a tic-tac-toe grid, what is the outcome?";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let outcome = tictactoe(x[i]);
+
+    let proper = (outcome == correct[i] ? ", this is correct" : ", this is wrong");
+
+    let coloring = "";
+
+    let xString = "[";
+
+    for (let j = 0; j < x[i].length; j++) {
+
+        if (j < x[i].length - 1) {
+            xString += "[" + x[i][j] + "], ";
+        } else {
+            xString += "[" + x[i][j] + "]";
+        }
+    }
+
+    xString += "],";
+
+    if (outcome == "A" || outcome == "B") {
+        coloring = " the winner is ";
+    } else if (outcome == "Draw") {
+        coloring = " the game is a ";
+    } else {
+        coloring = " the game has not yet finished, the result is ";
+    }
+
+    coloring += outcome;
+
+    listEl.textContent = "Given the set of moves: " + xString + coloring + proper;
+
+answerListEl.appendChild(listEl);
+
+}
+ FIND WINNER ON A TIC TAC TOE GAME - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND MAX CONSECUTIVE ONES - START - EASY 
+
+var findMaxConsecutiveOnes = function (nums) {
+
+    let max = 0
+    let tempMax = 0;
+
+    for (let i = 0; i < nums.length; i++){
+        
+        if(nums[i] == 1){
+
+            tempMax++;
+            max = (tempMax > max ? tempMax : max);
+
+        } else {
+
+            tempMax = 0;
+            
+        }
+    }
+
+    return max
+
+};
+
+let x = [[1, 1, 0, 1, 1, 1], [1, 0, 1, 1, 0, 1]];
+let correct = [3, 2];
+
+answerExplainationEl.textContent = "Given a binary array nums, return the maximum number of consecutive 1's in the array.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let ones = findMaxConsecutiveOnes(x[i]);
+
+    let proper = (ones == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "In the binary number array [" + x[i] + "], the longest sequence of 1's is " + ones + " long" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+ FIND MAX CONSECUTIVE ONES - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - START - MEDIUM 
+
+//Given an array of strings arr. String s is a concatenation of a sub-sequence of arr which have unique characters.
+
+//Return the maximum possible length of s.
+
+//After much consternation I found this answer to the question. I love it, and I plan to incorporate much of what I see here in
+//future algorithms
+
+var maxLength = function (arr) {
+    return recursive(0, '', arr);
+};
+
+let recursive = function (index, string, arr) {
+    // termination condition
+
+    // if we reached the last element of the array
+    // we check if we have a valid string, return its length if yes,
+    // otherwise zero
+    if (index === arr.length) {
+        return isValid(string) ? string.length : 0;
+    }
+
+    // We can either pick the current word in the array, or we can leave it
+    // so there are two recursion path. We return then one that gives us the max
+    // value
+    let pick = recursive(index + 1, string + arr[index], arr);
+    let notPick = recursive(index + 1, string, arr);
+
+    return Math.max(pick, notPick);
+}
+
+let isValid = function (string) {
+    let hash = {};
+    for (let char of string) { // I love this form of for loop, I hadn't been exposed to this in JS before
+        if (hash[char]) {
+            return false;
+        }
+        hash[char] = true;
+    }
+    return true;
+}
+
+let x = [["un", "iq", "ue"], ["cha", "r", "act", "ers"], ["abcdefghijklmnopqrstuvwxyz"], ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"], ["ab", "ba", "cd", "dc", "ef", "fe", "gh", "hg", "ij", "ji", "kl", "lk", "mn", "nm", "op", "po"]];
+let correct = [4, 6, 26, 16, 16];
+
+answerExplainationEl.textContent = " Given an array of strings arr, return the maximum possible length of a concatenated string containing only unique characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let max = maxLength(x[i]);
+
+    let proper = (max == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "When concatenating strings in the array [" + x[i] + "], the longest sequence of unique characters is " + max + " chars long" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+ MAXIMUM LENGTH OF A CONCATENATED STRING WITH UNIQUE CHARACTERS - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BREAK A PALINDROME - START - MEDIUM 
+
+//Given a palindromic string of lowercase English letters palindrome, replace exactly one character with any lowercase English
+// letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.
+
+//Return the resulting string. If there is no way to replace a character to make it not a palindrome, return an empty string.
+
+//A string a is lexicographically smaller than a string b (of the same length) if in the first position where a and b differ, a
+// has a character strictly smaller than the corresponding character in b. For example, "abcc" is lexicographically smaller
+// than "abcd" because the first position they differ is at the fourth character, and 'c' is smaller than 'd'.
+
+let isPalindrome = function (x) {
+
+    let palindrome = false;
+    let stringX = x.toString();
+    let reverseX = x.toString().split('').reverse().join('');
+
+    if (stringX == reverseX) {
+        palindrome = true;
+    }
+
+    return palindrome;
+
+};
+
+let isAllA = function (palindrome){
+
+    let aCount = 0;
+
+    for (let i = 0; i < palindrome.length; i++) {
+        if (palindrome[i] == 'a') aCount++;
+    }
+
+    return aCount == palindrome.length;
+
+}
+
+let allA = function (palindrome){
+
+    let nonPalindrome = "";
+
+    if (palindrome.length > 2) {
+
+        nonPalindrome = palindrome.slice(0, 1) + 'b' + palindrome.slice(2);
+
+        if (isPalindrome(nonPalindrome)) {
+
+            nonPalindrome = (palindrome.length == 3 ? palindrome.slice(0, 2) + 'b' : palindrome.slice(0, 2) + 'b' + palindrome.slice(3));
+        }
+
+    } else {
+
+        nonPalindrome = palindrome.slice(0, 1) + 'b'
+
+    }
+
+    return nonPalindrome;
+
+};
+
+var breakPalindrome = function (palindrome) {
+
+    let nonPalindrome = ""
+
+    if (palindrome.length > 1) {
+
+        let aCount = 0;
+
+        for (let i = 0; i < palindrome.length; i++) {
+            if (palindrome[i] == 'a') aCount++;
+        }
+
+        if (isAllA(palindrome)) {
+
+            nonPalindrome = allA(palindrome);
+
+        } else {
+
+            for (let i = 0; i < palindrome.length; i++) {
+
+                if (palindrome[i] != 'a') {
+
+                    if (i == 0) {
+
+                        nonPalindrome = 'a' + palindrome.slice(1);
+                        break;
+
+                    } else if (i > 0 && i < palindrome.length - 1) {
+
+                        nonPalindrome = palindrome.slice(0, i) + 'a' + palindrome.slice(i + 1);
+
+                        if (isAllA(nonPalindrome)) {
+
+                            nonPalindrome = palindrome.slice(0, palindrome.length-1) + 'b';
+                
+                        }
+
+                        break;
+
+                    } else {
+
+                        nonPalindrome = palindrome.slice(0, i) + 'a';
+                        break;
+
+                    }
+                }
+            }
+        }
+    }
+
+    return nonPalindrome;
+
+};
+
+let x = ["abccba", "a", "aa", "aba","bbb","aabaa"];
+let correct = ["aaccba", "", "ab", "abb","abb","aabab"];
+
+answerExplainationEl.textContent = " Given an palindromic string, break it in the least costly way possible.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let broken = breakPalindrome(x[i]);
+
+    let coloring = (broken == "" ? ",' cannot be broken because it is too short," : ",' can be broken to become '" + broken + ",'");
+
+
+    let proper = (broken == correct[i] ? " this is correct" : " this is wrong");
+
+    listEl.textContent = "The palindrome '" + x[i] + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+ BREAK A PALINDROME - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
