@@ -2805,3 +2805,356 @@ for (let i = 0; i < x.length; i++) {
  BREAK A PALINDROME - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ROTATE IMAGE - START - MEDIUM */
+
+//You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+
+//ou have to rotate the image in-place, which means you have to modify the input 2D matrix directly.
+//DO NOT allocate another 2D matrix and do the rotation.
+
+var spiralOrder = function (matrix) {
+
+    let xLength = matrix[0].length
+    let yLength = matrix.length;
+
+    let ringCount = Math.ceil(xLength / 2);
+
+    let spiralRingArray = [];
+
+    for (let i = 0; i < ringCount; i++) {
+        spiralRingArray.push([]);
+    }
+
+    let topRow = 0;
+    let bottomRow = yLength - 1;
+    let leftCol = 0;
+    let rightCol = xLength - 1;
+    let direction = "east";
+
+    let currArray = 0;
+
+    while (topRow <= bottomRow && leftCol <= rightCol) { //Grabbing each ring of the matrix
+
+        if (direction == "east") {
+            for (i = leftCol; i < rightCol + 1; i++) {
+                spiralRingArray[currArray].push(matrix[topRow][i]);
+            }
+
+            topRow++;
+            direction = "south";
+
+        } else if (direction == "south") {
+
+            for (i = topRow; i < bottomRow + 1; i++) {
+                spiralRingArray[currArray].push(matrix[i][rightCol]);
+            }
+
+            rightCol--;
+            direction = "west";
+
+        } else if (direction == "west") {
+
+            for (i = rightCol; i > leftCol - 1; i--) {
+                spiralRingArray[currArray].push(matrix[bottomRow][i]);
+            }
+
+            bottomRow--;
+            direction = "north";
+
+        } else if (direction == "north") {
+
+            for (i = bottomRow; i > topRow - 1; i--) {
+                spiralRingArray[currArray].push(matrix[i][leftCol]);
+            }
+
+            leftCol++;
+            currArray++;
+            direction = "east";
+
+        }
+
+    }
+
+    spiralRingArray.reverse();
+
+    for (let i = 0; i < spiralRingArray.length; i++) { //rotating the matrix rings
+
+        let rotatedSpiral = [];
+        let ringLength = spiralRingArray[i].length;
+        let rot = ringLength / 4;
+
+        if (ringLength == 1) {
+
+            rotatedSpiral = spiralRingArray[i];
+
+        } else {
+
+            for (let j = 0; j < ringLength; j++) {
+                rotatedSpiral.push(0);
+            }
+
+            for (let j = 0; j < ringLength; j++) {
+
+                let rotIndex = (j + rot >= ringLength ? j + rot - ringLength : j + rot);
+
+                rotatedSpiral[rotIndex] = spiralRingArray[i][j]
+
+            }
+
+        }
+
+        spiralRingArray[i] = rotatedSpiral
+
+    }
+
+    spiralRingArray.reverse();
+
+    topRow = 0;
+    bottomRow = yLength - 1;
+    leftCol = 0;
+    rightCol = xLength - 1;
+    direction = "east";
+
+    currArray = 0;
+    let currEl = 0;
+
+    while (topRow <= bottomRow && leftCol <= rightCol) { //replacing the elements of the matrix with the rotated versions
+
+        if (direction == "east") {
+            for (i = leftCol; i < rightCol + 1; i++) {
+                matrix[topRow][i] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            topRow++;
+            direction = "south";
+
+        } else if (direction == "south") {
+
+            for (i = topRow; i < bottomRow + 1; i++) {
+                matrix[i][rightCol] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            rightCol--;
+            direction = "west";
+
+        } else if (direction == "west") {
+
+            for (i = rightCol; i > leftCol - 1; i--) {
+                matrix[bottomRow][i] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            bottomRow--;
+            direction = "north";
+
+        } else if (direction == "north") {
+
+            for (i = bottomRow; i > topRow - 1; i--) {
+                matrix[i][leftCol] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            leftCol++;
+            currArray++;
+            currEl = 0;
+            direction = "east";
+
+        }
+
+
+    }
+
+
+    return matrix;
+
+};
+
+
+var rotate = function (matrix) {
+
+    let xLength = matrix[0].length
+    let yLength = matrix.length;
+
+    let ringCount = Math.ceil(xLength / 2);
+
+    let spiralRingArray = [];
+
+    for (let i = 0; i < ringCount; i++) {
+        spiralRingArray.push([]);
+    }
+
+    let topRow = 0;
+    let bottomRow = yLength - 1;
+    let leftCol = 0;
+    let rightCol = xLength - 1;
+    let direction = "east";
+
+    let currArray = 0;
+
+    while (topRow <= bottomRow && leftCol <= rightCol) { //Grabbing each ring of the matrix
+
+        if (direction == "east") {
+            for (i = leftCol; i < rightCol + 1; i++) {
+                spiralRingArray[currArray].push(matrix[topRow][i]);
+            }
+
+            topRow++;
+            direction = "south";
+
+        } else if (direction == "south") {
+
+            for (i = topRow; i < bottomRow + 1; i++) {
+                spiralRingArray[currArray].push(matrix[i][rightCol]);
+            }
+
+            rightCol--;
+            direction = "west";
+
+        } else if (direction == "west") {
+
+            for (i = rightCol; i > leftCol - 1; i--) {
+                spiralRingArray[currArray].push(matrix[bottomRow][i]);
+            }
+
+            bottomRow--;
+            direction = "north";
+
+        } else if (direction == "north") {
+
+            for (i = bottomRow; i > topRow - 1; i--) {
+                spiralRingArray[currArray].push(matrix[i][leftCol]);
+            }
+
+            leftCol++;
+            currArray++;
+            direction = "east";
+
+        }
+    }
+
+    spiralRingArray.reverse();
+
+    for (let i = 0; i < spiralRingArray.length; i++) { //rotating the matrix rings
+
+        let rotatedSpiral = [];
+        let ringLength = spiralRingArray[i].length;
+        let rot = ringLength / 4;
+
+        if (ringLength == 1) {
+
+            rotatedSpiral = spiralRingArray[i];
+
+        } else {
+
+            for (let j = 0; j < ringLength; j++) {
+                rotatedSpiral.push(0);
+            }
+
+            for (let j = 0; j < ringLength; j++) {
+
+                let rotIndex = (j + rot >= ringLength ? j + rot - ringLength : j + rot);
+
+                rotatedSpiral[rotIndex] = spiralRingArray[i][j]
+
+            }
+
+        }
+
+        spiralRingArray[i] = rotatedSpiral
+
+    }
+
+    spiralRingArray.reverse();
+
+    topRow = 0;
+    bottomRow = yLength - 1;
+    leftCol = 0;
+    rightCol = xLength - 1;
+    direction = "east";
+
+    currArray = 0;
+    let currEl = 0;
+
+    while (topRow <= bottomRow && leftCol <= rightCol) { //replacing the elements of the matrix with the rotated versions
+
+        if (direction == "east") {
+            for (i = leftCol; i < rightCol + 1; i++) {
+                matrix[topRow][i] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            topRow++;
+            direction = "south";
+
+        } else if (direction == "south") {
+
+            for (i = topRow; i < bottomRow + 1; i++) {
+                matrix[i][rightCol] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            rightCol--;
+            direction = "west";
+
+        } else if (direction == "west") {
+
+            for (i = rightCol; i > leftCol - 1; i--) {
+                matrix[bottomRow][i] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            bottomRow--;
+            direction = "north";
+
+        } else if (direction == "north") {
+
+            for (i = bottomRow; i > topRow - 1; i--) {
+                matrix[i][leftCol] = spiralRingArray[currArray][currEl];
+                currEl++;
+            }
+
+            leftCol++;
+            currArray++;
+            currEl = 0;
+            direction = "east";
+
+        }
+    }
+
+    return matrix;
+
+};
+
+let x = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]], [[1]], [[1, 2], [3, 4]]];
+let correct = [[[7, 4, 1], [8, 5, 2], [9, 6, 3]], [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]], [[1]], [[3, 1], [4, 2]]];
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let rotated = rotate(x[i]);
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+
+        if (correct[i][j] != rotated[j]) {
+            right = false;
+            break;
+        }
+
+    }
+
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "The array [" + x[i] + "], when rotated clockwise becomes [" + rotated + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ROTATE IMAGE - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
