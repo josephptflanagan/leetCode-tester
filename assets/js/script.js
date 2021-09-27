@@ -2806,7 +2806,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ROTATE IMAGE - START - MEDIUM */
+/* ROTATE IMAGE - START - MEDIUM 
 
 //You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
 
@@ -3154,7 +3154,70 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* ROTATE IMAGE - END - MEDIUM */
+ ROTATE IMAGE - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* UNIQUE EMAIL ADDRESSES - START - EASY */
+
+var numUniqueEmails = function (emails) {
+
+    let emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    let proper = 0;
+
+    for (let i = 0; i < emails.length; i++){
+
+        let atAddress = emails[i].indexOf('@');
+        let plusAddress = emails[i].indexOf('+');
+
+
+        if (plusAddress != -1 && plusAddress < atAddress){
+            emails[i] = emails[i].slice(0,plusAddress) + emails[i].slice(atAddress);
+        }
+
+        atAddress = emails[i].indexOf('@');
+
+        for (let j = 0; j < atAddress; j++){
+            if(emails[i][j]=="."){
+                emails[i] = emails[i].slice(0,j) + emails[i].slice(j+1);
+                    atAddress = emails[i].indexOf('@');
+                    j = 0;
+            }
+        }
+
+        console.log(emails[i])
+
+        if (emails[i].match(emailRegex)) proper++;
+
+    }
+
+    for (let i = 0; i < emails.length-1; i++){
+        if (emails.slice(i+1).indexOf(emails[i]) != -1) proper --;
+    }
+
+    return proper;
+
+};
+
+let x = [["test.email+alex@leetcode.com", "test.e.mail+bob.cathy@leetcode.com", "testemail+david@lee.tcode.com"], ["a@leetcode.com", "b@leetcode.com", "c@leetcode.com"]];
+let correct = [2, 3];
+
+answerExplainationEl.textContent = " Given a series of email addresses, return the quantity that conform to email address requirements.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let accurate = numUniqueEmails(x[i]);
+
+    let proper = (accurate == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "From the given email addresses, " + accurate + " are proper email addresses" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* UNIQUE EMAIL ADDRESSES - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
