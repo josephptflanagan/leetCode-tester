@@ -3158,7 +3158,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* UNIQUE EMAIL ADDRESSES - START - EASY */
+/* UNIQUE EMAIL ADDRESSES - START - EASY 
 
 var numUniqueEmails = function (emails) {
 
@@ -3217,7 +3217,84 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* UNIQUE EMAIL ADDRESSES - END - EASY */
+ UNIQUE EMAIL ADDRESSES - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SORT ARRAY BY PARITY II - START - EASY */
+
+//Given an array of integers nums, half of the integers in nums are odd, and the other half are even.
+
+//Sort the array so that whenever nums[i] is odd, i is odd, and whenever nums[i] is even, i is even.
+
+//Return any answer array that satisfies this condition.
+
+var sortArrayByParityII = function (nums) {
+
+    let odds = [];
+    let evens = [];
+    let sorted = [];
+    let oddI = 0;
+    let evenI = 0;
+
+    for (let i = 0; i < nums.length; i++){
+        if (nums[i] % 2 === 0){
+
+            evens.push(nums[i]);
+
+        } else {
+
+            odds.push(nums[i]);
+
+        }
+    }
+
+    for (let i = 0; i < nums.length; i++){
+
+        if (i % 2 === 0){
+            sorted.push(evens[evenI]);
+            evenI++;
+        } else {
+            sorted.push(odds[oddI]);
+            oddI++;
+        }
+
+    }
+
+    return sorted;
+
+};
+
+let x = [[4, 2, 5, 7], [2, 3]];
+let correct = [[4, 5, 2, 7], [2, 3]];
+
+answerExplainationEl.textContent = " Given an array of integers nums, sort the array so that whenever nums[i] is odd, i is odd, and whenever nums[i] is even, i is even.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let sorted = sortArrayByParityII(x[i]);
+
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+
+        if (correct[i][j] != sorted[j]) {
+            right = false;
+            break;
+        }
+
+    }
+
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "Given an array of integers nums, [" + x[i] + "], when sorted as indicated becomes [" + sorted + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SORT ARRAY BY PARITY II - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
