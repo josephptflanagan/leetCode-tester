@@ -3221,7 +3221,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SORT ARRAY BY PARITY II - START - EASY */
+/* SORT ARRAY BY PARITY II - START - EASY 
 
 //Given an array of integers nums, half of the integers in nums are odd, and the other half are even.
 
@@ -3294,7 +3294,151 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SORT ARRAY BY PARITY II - END - EASY */
+ SORT ARRAY BY PARITY II - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SPLIT LINKED LIST IN PARTS - START - MEDIUM */
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }
+}
+
+let insertNodeAtTail = function (head, data) {
+
+    let newNode = new ListNode(data);
+    if (head === null) {
+        head = newNode;
+    } else if (head.next === null) {
+        head.next = newNode;
+    } else {
+        insertNodeAtTail(head.next, data);
+    }
+    return head;
+
+}
+
+let listConstructor = function (array) {
+
+    let list = new LinkedList();
+
+    for (i = 0; i < array.length; i++) {
+
+        list.head = insertNodeAtTail(list.head, array[i])
+
+    }
+
+    return list;
+
+}
+let listToArrayFromHead = function (head) {
+
+    let array = [];
+
+    while (head !== null) {
+        array.push(head.val);
+        head = head.next;
+
+    }
+
+    return array;
+
+}
+
+var splitListToParts = function(head, k) {
+        
+    let listArray = listToArrayFromHead(head);
+    let splitArray = [];
+    let partLength = [];
+    let itemsPerPart = Math.ceil(listArray.length / k);
+
+    let itemCount = 0;
+
+    for (let i = 0; i < k; i++) {
+        partLength.push(itemsPerPart);
+        itemCount += itemsPerPart
+    }
+
+    let itterator = 0;
+
+    while (itemCount != listArray.length) {
+
+        if (itemCount > listArray.length) {
+
+            for (let i = 0; i < partLength.length; i++) {
+                partLength[i]--;
+                itemCount--;
+            }
+
+        } else if (itemCount < listArray.length) {
+            partLength[itterator]++;
+            itemCount++;
+            itterator++;
+        }
+
+    }
+
+    let start = 0;
+
+    for (let i = 0; i < partLength.length; i++) {
+
+        let tempList = listConstructor(listArray.slice(start, start + partLength[i]))
+
+        splitArray.push(tempList.head);
+
+        start += partLength[i];
+    }
+
+    return splitArray;
+
+};
+
+
+let x = [[1, 2, 3], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]];
+let y = [5, 3]
+let correct = [[[1], [2], [3], [], []], [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]];
+
+answerExplainationEl.textContent = "Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let list = listConstructor(x[i]);
+    let split = splitListToParts(list.head, y[i]);
+    let splitArray = [];
+
+    for (let i = 0; i < split.length; i++){
+        let tempArray = listToArrayFromHead(split[i])
+        splitArray.push(tempArray);
+    }
+
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+
+        if (correct[i][j] != splitArray[j]) {
+            right = false;
+            break;
+        }
+
+    }
+
+    let proper = (right ? ", this is correct" : ", this is wrong"); //Due to the nature of arrays, correct answers will show up as wrong here
+
+    listEl.textContent = "Given a singly linked list and an the integer " + y[i] + ", the linked list becomes [" + splitArray + "] when split into " + y[i] + " parts" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SPLIT LINKED LIST IN PARTS - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
