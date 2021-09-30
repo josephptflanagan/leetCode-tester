@@ -3298,7 +3298,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SPLIT LINKED LIST IN PARTS - START - MEDIUM */
+/* SPLIT LINKED LIST IN PARTS - START - MEDIUM 
 
 function ListNode(val, next) {
     this.val = (val === undefined ? 0 : val)
@@ -3438,7 +3438,83 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SPLIT LINKED LIST IN PARTS - END - MEDIUM */
+ SPLIT LINKED LIST IN PARTS - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITION TO K EQUAL SUM SUBSETS - START - MEDIUM */
+
+var canPartitionKSubsets = function(nums, k) {
+    
+    let totalSum = 0;
+    let maxNum = 0;
+
+    nums.forEach(num => {
+        totalSum += num;
+        maxNum = (num > maxNum ? num : maxNum);
+    });
+
+    let target = totalSum / k;
+
+    if(!k || totalSum % k !== 0 || maxNum > target) {
+        return false;
+    }
+
+    const visited = Array(nums.length).fill(0);
+	
+
+    function helper(start, k, currSum = 0) {
+		
+        if(k === 0) {
+            return true;
+        }
+		
+        if(currSum === target) {
+            return helper(0, k - 1, 0)
+        }
+		
+        for(let i = start; i < nums.length; ++i) {
+			
+            if(!visited[i] && currSum + nums[i] <= target) {
+				
+                visited[i] = 1;
+				
+                if(helper(i + 1, k, currSum + nums[i])) {
+                    return true;
+                }
+				
+                visited[i] = 0;
+            }
+        }
+		
+        return false;
+    }
+
+    return helper(0, k);
+
+};
+
+let x = [[4, 3, 2, 3, 5, 2, 1], [1, 2, 3, 4],[1,1,1,1,2,2,2,2]];
+let y = [4, 3, 2]
+let correct = [true, false, true];
+
+answerExplainationEl.textContent = "Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let partitionable = canPartitionKSubsets(x[i], y[i]);
+    let coloring = (partitionable ? "] is partitionable into " + y[i] + " subsets" : "] cannot be partitioned into " + y[i] + " subsets");
+
+    let proper = (partitionable == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "The array of integers [" + x[i] + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITION TO K EQUAL SUM SUBSETS - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
