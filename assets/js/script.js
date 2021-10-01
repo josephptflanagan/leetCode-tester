@@ -3442,7 +3442,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PARTITION TO K EQUAL SUM SUBSETS - START - MEDIUM */
+/* PARTITION TO K EQUAL SUM SUBSETS - START - MEDIUM 
 
 var canPartitionKSubsets = function(nums, k) {
     
@@ -3464,29 +3464,29 @@ var canPartitionKSubsets = function(nums, k) {
 	
 
     function helper(start, k, currSum = 0) {
-		
+    	
         if(k === 0) {
             return true;
         }
-		
+    	
         if(currSum === target) {
             return helper(0, k - 1, 0)
         }
-		
+    	
         for(let i = start; i < nums.length; ++i) {
-			
+        	
             if(!visited[i] && currSum + nums[i] <= target) {
-				
+            	
                 visited[i] = 1;
-				
+            	
                 if(helper(i + 1, k, currSum + nums[i])) {
                     return true;
                 }
-				
+            	
                 visited[i] = 0;
             }
         }
-		
+    	
         return false;
     }
 
@@ -3514,7 +3514,145 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* PARTITION TO K EQUAL SUM SUBSETS - END - MEDIUM */
+ PARTITION TO K EQUAL SUM SUBSETS - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST COMMON SUBSEQUENCE - START - MEDIUM */
+
+var longestCommonSubsequence = function (text1, text2) {
+
+    /*let longest = "";
+
+    if (text1 && text2) {
+
+        console.log ("text1.length: ", text1.length);
+        console.log ('text2.length: ', text2.length);
+
+        if (text2.includes(text1)) {
+            longest = text1;
+        } else if (text1.includes(text2)) {
+            longest = text2;
+        } else {
+
+            let common1 = "";
+            let common2 = "";
+
+            for (let i = 0; i < text1.length; i++) {
+                if (text2.includes(text1[i])) {
+                    common1 += text1[i];
+                }
+            }
+
+            if (common1.length > 0) {
+
+                for (let i = 0; i < text2.length; i++) {
+                    if (common1.includes(text2[i])) {
+                        common2 += text2[i];
+                    }
+                }
+
+                console.log("common1: ", common1);
+                console.log("common2: ", common2);
+
+                let longStr = (common1.length >= common2.length ? common1 : common2);
+                let shortStr = (common1.length >= common2.length ? common2 : common1);
+
+                for (let i = 0; i < shortStr.length; i++) {
+
+                    let tempLongStr = longStr.slice();
+                    let tempShortStr = shortStr.slice(i);
+
+                    for (let j = 0; j < shortStr.length; j++) {
+
+                        if (tempLongStr[j] && tempShortStr[j] !== tempLongStr[j]) {
+
+                            tempLongStr = tempLongStr.slice(0, j) + tempLongStr.slice(j + 1);
+                            j--;
+                            console.log("tempLongStr: ", tempLongStr);
+
+                        }
+                    }
+
+                    longest = (tempLongStr.length > longest.length ? tempLongStr : longest);
+                    console.log("longest: ", longest);
+                }
+
+                for (let i = 0; i < shortStr.length; i++) {
+
+                    
+                    let tempShortStr = shortStr.slice();
+                    let tempLongStr = longStr.slice(i);
+
+                    for (let j = 0; j < shortStr.length; j++) {
+
+                        if (tempShortStr[j] && tempShortStr[j] !== tempLongStr[j]) {
+
+                            tempShortStr = tempShortStr.slice(0, j) + tempShortStr.slice(j + 1);
+                            j--;
+                            console.log("tempShortStr: ", tempShortStr);
+
+                        }
+                    }
+
+                    longest = (tempShortStr.length > longest.length ? tempShortStr : longest);
+                    console.log("longest: ", longest);
+                }
+
+            }
+        }
+
+    }
+
+    return longest.length;*/
+
+    let len1 = text1.length;
+    let len2 = text2.length;
+    let dp = [...new Array(len1+1)].map(ele => new Array(len2+1).fill(0));
+    
+    
+    for(let i=1; i<len1+1; i++){
+        for(let j=1; j<len2+1; j++){
+            if(text1[i-1] == text2[j-1]){
+                dp[i][j] = dp[i-1][j-1] + 1
+            }else{
+                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1])
+            }
+        }
+    }
+    return dp[len1][len2]
+
+};
+
+let x = ["abcde", "abc", "abc", "abcdeee", "ezupkr", "oxcpqrsvwf", "hofubmnylkra",
+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "ylqpejqbalahwr"];
+let y = ["ace", "abc", "def", "aec", "ubmrapg", "shmtulqrypy", "pqhgxgdofcvmr",
+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "yrkzavgdmdgtqpg"];
+let correct = [3, 3, 0, 2, 2, 2, 5, 210, 3];
+
+answerExplainationEl.textContent = "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let longest = longestCommonSubsequence(x[i], y[i]);
+
+    let answerX = (x[i].length > 20 ? 'stupid long string' : x[i]);
+    let answerY = (y[i].length > 20 ? 'stupid long string' : y[i]);
+
+    let coloring = (longest ? " the longest common substring is " + longest + " characters long" : "' there is no common substring");
+
+    let proper = (longest == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "Given the strings '" + answerX + ",' and '" + answerY + ",' " + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST COMMON SUBSEQUENCE - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
