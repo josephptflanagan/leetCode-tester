@@ -3518,105 +3518,105 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST COMMON SUBSEQUENCE - START - MEDIUM */
+/* LONGEST COMMON SUBSEQUENCE - START - MEDIUM 
 
 var longestCommonSubsequence = function (text1, text2) {
 
-    /*let longest = "";
+    // let longest = "";
 
-    if (text1 && text2) {
+    // if (text1 && text2) {
 
-        console.log ("text1.length: ", text1.length);
-        console.log ('text2.length: ', text2.length);
+    //     console.log ("text1.length: ", text1.length);
+    //     console.log ('text2.length: ', text2.length);
 
-        if (text2.includes(text1)) {
-            longest = text1;
-        } else if (text1.includes(text2)) {
-            longest = text2;
-        } else {
+    //     if (text2.includes(text1)) {
+    //         longest = text1;
+    //     } else if (text1.includes(text2)) {
+    //         longest = text2;
+    //     } else {
 
-            let common1 = "";
-            let common2 = "";
+    //         let common1 = "";
+    //         let common2 = "";
 
-            for (let i = 0; i < text1.length; i++) {
-                if (text2.includes(text1[i])) {
-                    common1 += text1[i];
-                }
-            }
+    //         for (let i = 0; i < text1.length; i++) {
+    //             if (text2.includes(text1[i])) {
+    //                 common1 += text1[i];
+    //             }
+    //         }
 
-            if (common1.length > 0) {
+    //         if (common1.length > 0) {
 
-                for (let i = 0; i < text2.length; i++) {
-                    if (common1.includes(text2[i])) {
-                        common2 += text2[i];
-                    }
-                }
+    //             for (let i = 0; i < text2.length; i++) {
+    //                 if (common1.includes(text2[i])) {
+    //                     common2 += text2[i];
+    //                 }
+    //             }
 
-                console.log("common1: ", common1);
-                console.log("common2: ", common2);
+    //             console.log("common1: ", common1);
+    //             console.log("common2: ", common2);
 
-                let longStr = (common1.length >= common2.length ? common1 : common2);
-                let shortStr = (common1.length >= common2.length ? common2 : common1);
+    //             let longStr = (common1.length >= common2.length ? common1 : common2);
+    //             let shortStr = (common1.length >= common2.length ? common2 : common1);
 
-                for (let i = 0; i < shortStr.length; i++) {
+    //             for (let i = 0; i < shortStr.length; i++) {
 
-                    let tempLongStr = longStr.slice();
-                    let tempShortStr = shortStr.slice(i);
+    //                 let tempLongStr = longStr.slice();
+    //                 let tempShortStr = shortStr.slice(i);
 
-                    for (let j = 0; j < shortStr.length; j++) {
+    //                 for (let j = 0; j < shortStr.length; j++) {
 
-                        if (tempLongStr[j] && tempShortStr[j] !== tempLongStr[j]) {
+    //                     if (tempLongStr[j] && tempShortStr[j] !== tempLongStr[j]) {
 
-                            tempLongStr = tempLongStr.slice(0, j) + tempLongStr.slice(j + 1);
-                            j--;
-                            console.log("tempLongStr: ", tempLongStr);
+    //                         tempLongStr = tempLongStr.slice(0, j) + tempLongStr.slice(j + 1);
+    //                         j--;
+    //                         console.log("tempLongStr: ", tempLongStr);
 
-                        }
-                    }
+    //                     }
+    //                 }
 
-                    longest = (tempLongStr.length > longest.length ? tempLongStr : longest);
-                    console.log("longest: ", longest);
-                }
+    //                 longest = (tempLongStr.length > longest.length ? tempLongStr : longest);
+    //                 console.log("longest: ", longest);
+    //             }
 
-                for (let i = 0; i < shortStr.length; i++) {
+    //             for (let i = 0; i < shortStr.length; i++) {
 
                     
-                    let tempShortStr = shortStr.slice();
-                    let tempLongStr = longStr.slice(i);
+    //                 let tempShortStr = shortStr.slice();
+    //                 let tempLongStr = longStr.slice(i);
 
-                    for (let j = 0; j < shortStr.length; j++) {
+    //                 for (let j = 0; j < shortStr.length; j++) {
 
-                        if (tempShortStr[j] && tempShortStr[j] !== tempLongStr[j]) {
+    //                     if (tempShortStr[j] && tempShortStr[j] !== tempLongStr[j]) {
 
-                            tempShortStr = tempShortStr.slice(0, j) + tempShortStr.slice(j + 1);
-                            j--;
-                            console.log("tempShortStr: ", tempShortStr);
+    //                         tempShortStr = tempShortStr.slice(0, j) + tempShortStr.slice(j + 1);
+    //                         j--;
+    //                         console.log("tempShortStr: ", tempShortStr);
 
-                        }
-                    }
+    //                     }
+    //                 }
 
-                    longest = (tempShortStr.length > longest.length ? tempShortStr : longest);
-                    console.log("longest: ", longest);
-                }
+    //                 longest = (tempShortStr.length > longest.length ? tempShortStr : longest);
+    //                 console.log("longest: ", longest);
+    //             }
 
-            }
-        }
+    //         }
+    //     }
 
-    }
+    // }
 
-    return longest.length;*/
+    // return longest.length;
 
     let len1 = text1.length;
     let len2 = text2.length;
-    let dp = [...new Array(len1+1)].map(ele => new Array(len2+1).fill(0));
-    
-    
-    for(let i=1; i<len1+1; i++){
-        for(let j=1; j<len2+1; j++){
-            if(text1[i-1] == text2[j-1]){
-                dp[i][j] = dp[i-1][j-1] + 1
-            }else{
-                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1])
+    let dp = [...new Array(len1 + 1)].map(ele => new Array(len2 + 1).fill(0));
+
+
+    for (let i = 1; i < len1 + 1; i++) {
+        for (let j = 1; j < len2 + 1; j++) {
+            if (text1[i - 1] == text2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
             }
         }
     }
@@ -3625,11 +3625,11 @@ var longestCommonSubsequence = function (text1, text2) {
 };
 
 let x = ["abcde", "abc", "abc", "abcdeee", "ezupkr", "oxcpqrsvwf", "hofubmnylkra",
- "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
- "ylqpejqbalahwr"];
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "ylqpejqbalahwr"];
 let y = ["ace", "abc", "def", "aec", "ubmrapg", "shmtulqrypy", "pqhgxgdofcvmr",
- "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
- "yrkzavgdmdgtqpg"];
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "yrkzavgdmdgtqpg"];
 let correct = [3, 3, 0, 2, 2, 2, 5, 210, 3];
 
 answerExplainationEl.textContent = "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.";
@@ -3652,7 +3652,98 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* LONGEST COMMON SUBSEQUENCE - END - MEDIUM */
+LONGEST COMMON SUBSEQUENCE - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ISLAND PERIMETER - START - EASY */
+
+var islandPerimeter = function (grid) {
+
+    let coastline = 0;
+    let xMax = grid[0].length-1;
+    let yMax = grid.length-1;
+
+    for (let i = 0; i < grid.length; i++){
+        for (let j = 0; j < grid[0].length; j++){
+
+            if (grid[i][j] == 1){
+
+                let left = j-1;
+                let up = i-1;
+                let right = j+1;
+                let down = i+1;
+
+                if (left >= 0){
+                    if (grid[i][left] === 0){
+                        coastline++;
+                    }
+                } else {
+                    coastline++;
+                }
+
+                if (up >= 0){
+                    if (grid[up][j] === 0){
+                        coastline++;
+                    }
+                } else {
+                    coastline++;
+                }
+
+                if (right <= xMax){
+                    if (grid[i][right] === 0){
+                        coastline++;
+                    }
+                } else {
+                    coastline++;
+                }
+
+                if (down <= yMax){
+                    if (grid[down][j] === 0){
+                        coastline++;
+                    }
+                } else {
+                    coastline++;
+                }
+            }
+        }
+    }
+
+    return coastline;
+
+};
+
+let x = [[[0, 1, 0, 0], [1, 1, 1, 0], [0, 1, 0, 0], [1, 1, 0, 0]], [[1]], [[1, 0]]];
+let correct = [16, 4, 4];
+
+answerExplainationEl.textContent = "Given a grid of 1's and 0's, with 1's being land and 0's being water, find the length of the coast";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let coastLength = islandPerimeter(x[i]);
+    let answerX = "";
+
+    for (let j = 0; j < x[i].length; j++) {
+
+        answerX += ("[" + x[i][j] + "]")
+
+        if (j != x[i].length-1){
+            answerX += ",";
+        }
+    }
+
+    let coloring = (coastLength ? " the coastline is " + coastLength + " long" : "' there is no island, and thus no coastline");
+
+    let proper = (coastLength == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "Given the grid [" + answerX + "], " + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ISLAND PERIMETER - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
