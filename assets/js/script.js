@@ -3656,7 +3656,7 @@ LONGEST COMMON SUBSEQUENCE - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ISLAND PERIMETER - START - EASY */
+/* ISLAND PERIMETER - START - EASY 
 
 var islandPerimeter = function (grid) {
 
@@ -3743,7 +3743,49 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* ISLAND PERIMETER - END - EASY */
+ ISLAND PERIMETER - END - EASY */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* CLIMBING STARTS - START - EASY */
+
+var climbStairs = function (n) {
+
+    let a = 0;
+    let b = 1;
+    let temp = 0;
+
+    for (let i = 0; i < n; i++) {
+
+        temp = b;
+        b = a + b;
+        a = temp;
+
+    }
+
+    return b;
+
+};
+
+let x = [2, 3];
+let correct = [2, 3];
+
+answerExplainationEl.textContent = "Given that you can take stairs a mix of one or two at a time, given a number of steps, " +
+    "how many ways are there to climb the stairs";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let ways = climbStairs(x[i]);
+
+    let proper = (ways == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "You can take " + x[i] + " steps in " + ways + " different ways" + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CLIMBING STARTS - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
