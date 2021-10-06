@@ -3747,7 +3747,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CLIMBING STARTS - START - EASY */
+/* CLIMBING STARTS - START - EASY 
 
 var climbStairs = function (n) {
 
@@ -3786,6 +3786,111 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* CLIMBING STARTS - END - EASY */
+ CLIMBING STARTS - END - EASY */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND ALL DUPLICATES IN AN ARRAY - START - MEDIUM */
+
+// var findDuplicates = function (nums) {
+
+//     let dupes = [];
+//     let workingArr = nums.slice();
+
+//     while (workingArr.length > 0) {
+
+//         let tempArr = workingArr.slice(1);
+//         let currNum = workingArr[0]
+
+//         if (tempArr.includes(currNum)) {
+
+//             let dupIdx = tempArr.indexOf(currNum) + 1;
+
+//             dupes.push(currNum);
+
+//             workingArr.splice(dupIdx, 1);
+
+//         } 
+
+//         workingArr.splice(0, 1);
+
+//     }
+
+//     return dupes;
+
+// };
+var findDuplicates = function (nums) {
+
+    let dupes = [];
+
+    nums.reduce((previousVal, currentVal) => {
+
+        if (previousVal[currentVal]) {
+
+            dupes.push(currentVal)
+
+        } else {
+
+            previousVal[currentVal] = currentVal
+
+        }
+
+        return previousVal
+        
+    }, {})
+
+    return dupes
+
+};
+
+let x = [[4, 3, 2, 7, 8, 2, 3, 1], [1, 1, 2], [1]];
+let correct = [[2, 3], [1], []];
+
+answerExplainationEl.textContent = "Given an array of integers return an array of integers that appear twice";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let duplicates = findDuplicates(x[i]);
+
+    let right = true;
+
+    if (duplicates) {
+
+        let localCorrect = correct[i].slice();
+        let dupeCopy = duplicates.slice(0);
+
+        while (dupeCopy.length > 0) {
+
+            let currNum = dupeCopy[0];
+
+            if (!localCorrect.includes(currNum)) {
+
+                right = false;
+                break; ``
+
+            } else {
+
+                correctIdx = localCorrect.indexOf(currNum);
+                duplicatesIdx = dupeCopy.indexOf(currNum);
+
+                localCorrect.splice(correctIdx, 1);
+                dupeCopy.splice(duplicatesIdx, 1);
+
+            }
+
+        }
+
+    }
+
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "Given the integer array [" + x[i] + "], the duplicates are [" + duplicates + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIND ALL DUPLICATES IN AN ARRAY - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
