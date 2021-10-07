@@ -3790,9 +3790,9 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FIND ALL DUPLICATES IN AN ARRAY - START - MEDIUM */
+/* FIND ALL DUPLICATES IN AN ARRAY - START - MEDIUM 
 
-// var findDuplicates = function (nums) {
+// var findDuplicates = function (nums) { //too slow
 
 //     let dupes = [];
 //     let workingArr = nums.slice();
@@ -3891,6 +3891,90 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* FIND ALL DUPLICATES IN AN ARRAY - END - MEDIUM */
+ FIND ALL DUPLICATES IN AN ARRAY - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/*WORD SEARCH - START - MEDIUM */
+
+var exist = function (board, word) {
+
+    let yMax = board.length;
+    let xMax = board[0].length;
+    let dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+    for (let i = 0; i < yMax; i++) {
+
+        for (let j = 0; j < xMax; j++) {
+
+            if (word[0] == board[i][j]) {
+
+                if (searchWord(i, j)){
+
+                    return true;
+
+                } 
+
+            }
+        }
+    }
+
+    return false;
+
+    function searchWord(i, j, len = 0) {
+
+        if (i < 0 || i > yMax - 1 || j < 0 || j > xMax - 1 || board[i][j] == null || board[i][j] !== word[len]) {
+
+            return false;
+
+        }
+
+        if (len === word.length - 1) {
+
+            return true;
+
+        }
+
+        let val = board[i][j];
+        board[i][j] = null;
+
+        for (let dir of dirs) {
+
+            if (searchWord(i + dir[0], j + dir[1], len + 1)){
+
+                return true;
+
+            } 
+
+        }
+
+        board[i][j] = val;
+        return false;
+    }
+
+};
+
+let x = [[["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]], [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]];
+let y = ["ABCCED", "SEE", "ABCB"];
+let correct = [true, true, false]
+
+answerExplainationEl.textContent = "Given a matrix of letters and a word, see if the word can be found in the matrix";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+    let inMatrix = exist(x[i], y[i]);
+
+    let proper = (inMatrix == correct[i] ? ", this is correct" : ", this is wrong");
+
+    let coloring = (inMatrix ? "contains the word " + y[i] : "does not contain the given word");
+
+    listEl.textContent = "The given matrix " + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* WORD SEARCH - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
