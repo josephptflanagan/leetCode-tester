@@ -3895,25 +3895,25 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/*WORD SEARCH - START - MEDIUM */
+/*WORD SEARCH - START - MEDIUM 
 
 var exist = function (board, word) {
 
     let yMax = board.length;
     let xMax = board[0].length;
-    let dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+    let dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]] //UP DOWN LEFT RIGHT
 
-    for (let i = 0; i < yMax; i++) {
+    for (let i = 0; i < yMax; i++) { //CYCLE ROWS
 
-        for (let j = 0; j < xMax; j++) {
+        for (let j = 0; j < xMax; j++) { //CYCLE ROW
 
-            if (word[0] == board[i][j]) {
+            if (word[0] == board[i][j]) { //FIRST ELEMENT == CURRENT ITEM ?
 
-                if (searchWord(i, j)){
+                if (searchWord(i, j)) { //SEARCH WORD FUNCTION
 
                     return true;
 
-                } 
+                }
 
             }
         }
@@ -3921,7 +3921,7 @@ var exist = function (board, word) {
 
     return false;
 
-    function searchWord(i, j, len = 0) {
+    function searchWord(i, j, len = 0) { //Takes y position, x position, creates length
 
         if (i < 0 || i > yMax - 1 || j < 0 || j > xMax - 1 || board[i][j] == null || board[i][j] !== word[len]) {
 
@@ -3938,13 +3938,13 @@ var exist = function (board, word) {
         let val = board[i][j];
         board[i][j] = null;
 
-        for (let dir of dirs) {
+        for (let dir of dirs) { //SEARCHING IN EACH DIRECTION
 
-            if (searchWord(i + dir[0], j + dir[1], len + 1)){
+            if (searchWord(i + dir[0], j + dir[1], len + 1)) { //RECURSIVE SEARCH
 
                 return true;
 
-            } 
+            }
 
         }
 
@@ -3975,6 +3975,97 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* WORD SEARCH - END - MEDIUM */
+ WORD SEARCH - END - MEDIUM */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - START */
+
+var Trie = function () {
+
+    this.root = {};
+
+};
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function (word) {
+
+    let node = this.root;
+
+    for (let char of word) {
+
+        if (!node[char]) {
+
+            node[char] = {};
+
+        }
+
+        node = node[char];
+
+    }
+
+    node["end"] = true;
+};
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+Trie.prototype.search = function (word) {
+
+    let node = this.root;
+
+    for (let char of word) {
+
+        if (!node[char]) {
+
+            return false;
+
+        }
+
+        node = node[char];
+
+    }
+
+    return node["end"] === true;
+
+};
+
+/** 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function (prefix) {
+
+    let node = this.root;
+
+    for (let char of prefix) {
+
+        if (!node[char]) {
+
+            return false;
+
+        }
+
+        node = node[char];
+
+    }
+
+    return true;
+
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
+
+/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
