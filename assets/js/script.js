@@ -4069,7 +4069,7 @@ Trie.prototype.startsWith = function (prefix) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - START */
+/* DIAMETER OF BINARY TREE - EASY - START */
 
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
@@ -4140,6 +4140,6 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - END */
+/* DIAMETER OF BINARY TREE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
