@@ -3979,7 +3979,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - START */
+/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - START 
 
 var Trie = function () {
 
@@ -3987,10 +3987,10 @@ var Trie = function () {
 
 };
 
-/** 
- * @param {string} word
- * @return {void}
- */
+// 
+//  @param {string} word
+//  @return {void}
+//  
 Trie.prototype.insert = function (word) {
 
     let node = this.root;
@@ -4010,10 +4010,10 @@ Trie.prototype.insert = function (word) {
     node["end"] = true;
 };
 
-/** 
- * @param {string} word
- * @return {boolean}
- */
+
+//  @param {string} word
+//  @return {boolean}
+ 
 Trie.prototype.search = function (word) {
 
     let node = this.root;
@@ -4034,10 +4034,9 @@ Trie.prototype.search = function (word) {
 
 };
 
-/** 
- * @param {string} prefix
- * @return {boolean}
- */
+//  @param {string} prefix
+//  @return {boolean}
+ 
 Trie.prototype.startsWith = function (prefix) {
 
     let node = this.root;
@@ -4058,13 +4057,88 @@ Trie.prototype.startsWith = function (prefix) {
 
 };
 
-/**
- * Your Trie object will be instantiated and called as such:
- * var obj = new Trie()
- * obj.insert(word)
- * var param_2 = obj.search(word)
- * var param_3 = obj.startsWith(prefix)
- */
+
+  Your Trie object will be instantiated and called as such:
+  var obj = new Trie()
+  obj.insert(word)
+  var param_2 = obj.search(word)
+  var param_3 = obj.startsWith(prefix)
+ 
+
+ IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - START */
+
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+// Function to insert nodes in level order
+function insertLevelOrder(arr, root, i) {
+    // Base case for recursion
+    if (i < arr.length) {
+        let temp = new TreeNode(arr[i]);
+        root = temp;
+
+        // insert left child
+        root.left = insertLevelOrder(arr, root.left,
+            2 * i + 1);
+
+        // insert right child
+        root.right = insertLevelOrder(arr, root.right,
+            2 * i + 2);
+    }
+    return root;
+}
+
+var diameterOfBinaryTree = function (root) {
+
+    let diameter = 0;
+
+    helper(root);
+
+    return diameter
+
+    function helper(root) {
+
+        if (!root) return 0;
+
+        let left = helper(root.left);
+        let right = helper(root.right);
+
+        diameter = Math.max(left + right, diameter);
+
+        return 1 + Math.max(left, right)
+    }
+
+};
+
+let x = [[1, 2, 3, 4, 5], [1, 2], [8, 10, 12, 5, 3, 6]];
+let correct = [3, 1, 4];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, return the length of the diameter";
+//diameter of a binary tree is the longest path between any two nodes of the tree, this path may not necessarily pass through the root. 
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let root;
+    root = insertLevelOrder(x[i], root, 0);
+
+    let diameter = diameterOfBinaryTree(root);
+
+    let proper = (diameter == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "The given binary tree has a diameter of " + diameter + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
 
 /* IMPLEMENT TRIE (PREFIX TREE) - MEDIUM - END */
 
