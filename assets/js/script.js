@@ -4069,7 +4069,7 @@ Trie.prototype.startsWith = function (prefix) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* DIAMETER OF BINARY TREE - EASY - START */
+/* DIAMETER OF BINARY TREE - EASY - START 
 
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
@@ -4140,6 +4140,95 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* DIAMETER OF BINARY TREE - EASY - END */
+ DIAMETER OF BINARY TREE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* GUESS NUMBER HIGHER OR LOWER - EASY - START */
+
+// We are playing the Guess Game. The game is as follows:
+
+// I pick a number from 1 to n. You have to guess which number I picked.
+
+// Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.
+
+// You call a pre-defined API int guess(int num), which returns 3 possible results:
+
+// -1: The number I picked is lower than your guess (i.e. pick < num).
+// 1: The number I picked is higher than your guess (i.e. pick > num).
+// 0: The number I picked is equal to your guess (i.e. pick == num).
+
+// Return the number that I picked.
+
+let turn = 0;
+let picks = [6,1,1,2];
+
+var guess = function (num){
+
+    let pick = picks[turn];
+    let response;
+
+    if (pick < num){
+        response = -1;
+    } else if (pick > num){
+        response = 1
+    } else {
+        reponse = 0;
+    }
+
+    return response;
+
+}
+
+var guessNumber = function (n) {
+
+    let minimum = 0 
+    let maximum = n - 1;
+
+    while (minimum <= maximum) {
+
+        let middle = Math.floor((minimum + maximum) / 2);
+        let response = guess(middle);
+
+        if (response == 0) {
+
+            return middle;
+
+        } else if (response == 1) {
+
+            minimum = middle + 1;
+
+        } else {
+
+            maximum = middle - 1;
+
+        }
+    }
+    
+    return minimum;
+
+};
+
+let x = [10, 1, 2, 2];
+let correct = [6, 1, 1, 2];
+
+answerExplainationEl.textContent = "Guessing Game, the computer picks a number between 1 and n, create a program to guess that number";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let guessed = guessNumber(x[i]);
+    turn++;
+
+    let proper = (guessed == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "In a range of numbers from 1 to "  + x[i] + " the computer picked " + guessed + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* GUESS NUMBER HIGHER OR LOWER - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
