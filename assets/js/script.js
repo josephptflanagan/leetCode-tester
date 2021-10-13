@@ -4144,7 +4144,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* GUESS NUMBER HIGHER OR LOWER - EASY - START */
+/* GUESS NUMBER HIGHER OR LOWER - EASY - START 
 
 // We are playing the Guess Game. The game is as follows:
 
@@ -4229,6 +4229,62 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* GUESS NUMBER HIGHER OR LOWER - EASY - END */
+ GUESS NUMBER HIGHER OR LOWER - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - START */
+
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+var bstFromPreorder = function(preorder) {
+
+    let i = 0;
+    
+    let helper = (limit) => {
+
+        if (i > preorder.length-1 || preorder[i] > limit){
+            return null;
+        } 
+        
+        let node = new TreeNode(preorder[i], null, null)
+
+        i++;
+        
+        node.left = helper(node.val)
+        node.right = helper(limit)
+        
+        return node
+    }
+    
+    return helper(Infinity)   
+
+}
+
+let x = [[8, 5, 1, 7, 10, 12], [1, 3]];
+let correct = [[8, 5, 10, 1, 7, null, 12], [1, null, 3]];
+
+answerExplainationEl.textContent = "Given an array if numbers, construct a binary search tree from preorder traversal";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let tree = bstFromPreorder(x[i]);
+    console.log("tree: ", tree);
+
+    let proper = (tree == correct[i] ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = "[" + tree + "] is a binary search tree constructed from [" + x[i] + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
