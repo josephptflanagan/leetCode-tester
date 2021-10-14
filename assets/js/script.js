@@ -4233,7 +4233,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - START */
+/* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - START 
 
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
@@ -4285,6 +4285,79 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - END */
+ CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PERFECT SQUARES - MEDIUM - START */
+
+// Given an integer n, return the least number of perfect square numbers that sum to n.
+
+// A perfect square is an integer that is the square of an integer; in other words, 
+// it is the product of some integer with itself. For example, 1, 4, 9, and 16 are perfect squares while 3 and 11 are not.
+
+var numSquares = function (n) {
+
+    let cache = [];
+
+    return backtrack(n, 0);
+
+    function backtrack(n) {
+
+        if (cache[n] !== undefined) {
+
+            return cache[n];
+
+        }
+
+        if (n === 0) {
+
+            return 0;
+
+        } else if (n === 1) {
+
+            return 1;
+
+        }
+
+        let min = 10000
+        let res;
+
+        for (let i = 1; i * i <= n; i++) {
+
+            res = backtrack(n - i * i) + 1;
+            min = Math.min(min, res);
+
+        }
+
+        cache[n] = min;
+        return min;
+        
+    }
+
+};
+
+let x = [12, 13, 16];
+let correct = [3, 2, 1];
+
+answerExplainationEl.textContent = "Given an integer n, return the least number of perfect square numbers that sum to n.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let num = numSquares(x[i]);
+
+    let coloring = (num > 0 ? x[i] + " can be the sum of " + num + " perfect squares" : x[i] + " cannot be the sum of perfect squares")
+
+    let proper = (num == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PERFECT SQUARES - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
