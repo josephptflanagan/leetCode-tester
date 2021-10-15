@@ -4289,7 +4289,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PERFECT SQUARES - MEDIUM - START */
+/* PERFECT SQUARES - MEDIUM - START 
 
 // Given an integer n, return the least number of perfect square numbers that sum to n.
 
@@ -4358,6 +4358,64 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* PERFECT SQUARES - MEDIUM - END */
+ PERFECT SQUARES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - START */
+
+// You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+// Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share
+// of the stock multiple times) with the following restrictions:
+
+// After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
+// Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+var maxProfit = function (prices) {
+
+    if (prices.length === 0) {
+        return 0;
+    }
+
+    let dp = [...Array(prices.length)].map(e => Array(4).fill(0));
+    dp[0][0] = -prices[0];
+    dp[0][1] = 0;
+    dp[0][2] = 0;
+    dp[0][3] = 0;
+
+    for (let i = 1; i < prices.length; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][2] - prices[i], dp[i - 1][3] - prices[i]);
+        dp[i][1] = dp[i - 1][0] + prices[i];
+        dp[i][2] = dp[i - 1][1];
+        dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2]);
+    }
+
+    return Math.max(dp[prices.length - 1][1], dp[prices.length - 1][2], dp[prices.length - 1][3]);
+
+};
+
+let x = [[1, 2, 3, 0, 2], [1], [1, 2, 4]];
+let correct = [3, 0, 3];
+
+answerExplainationEl.textContent = "Given an array of integers and the posiblity to buy and sell with a cooldown after selling, what is the max proit that can be achieved.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let profit = maxProfit(x[i]);
+
+    let coloring = (profit > 0 ? "The highest profit that can be achieved given [" + x[i] + "] is " + profit : " No profit can be achieved given [" + x[i] + "]")
+
+    let proper = (profit == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
