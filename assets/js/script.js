@@ -1,6 +1,54 @@
 let answerExplainationEl = document.querySelector('#explaination')
 let answerListEl = document.querySelector('#answerList');
 
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+// Function to insert nodes in level order
+function insertLevelOrder(arr, root, i) {
+    // Base case for recursion
+    if (i < arr.length) {
+        let temp = new TreeNode(arr[i]);
+        root = temp;
+
+        // insert left child
+        root.left = insertLevelOrder(arr, root.left,
+            2 * i + 1);
+
+        // insert right child
+        root.right = insertLevelOrder(arr, root.right,
+            2 * i + 2);
+    }
+    return root;
+}
+
+function bstFromPreorder(preorder) {
+
+    let i = 0;
+
+    let helper = (limit) => {
+
+        if (i > preorder.length - 1 || preorder[i] > limit) {
+            return null;
+        }
+
+        let node = new TreeNode(preorder[i], null, null)
+
+        i++;
+
+        node.left = helper(node.val)
+        node.right = helper(limit)
+
+        return node
+    }
+
+    return helper(Infinity)
+
+}
+
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -4071,30 +4119,6 @@ Trie.prototype.startsWith = function (prefix) {
 
 /* DIAMETER OF BINARY TREE - EASY - START 
 
-function TreeNode(val, left, right) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
-}
-
-// Function to insert nodes in level order
-function insertLevelOrder(arr, root, i) {
-    // Base case for recursion
-    if (i < arr.length) {
-        let temp = new TreeNode(arr[i]);
-        root = temp;
-
-        // insert left child
-        root.left = insertLevelOrder(arr, root.left,
-            2 * i + 1);
-
-        // insert right child
-        root.right = insertLevelOrder(arr, root.right,
-            2 * i + 2);
-    }
-    return root;
-}
-
 var diameterOfBinaryTree = function (root) {
 
     let diameter = 0;
@@ -4235,12 +4259,6 @@ for (let i = 0; i < x.length; i++) {
 
 /* CONSTRUCT BINARY SEARCH TREE FROM PREORDER TRAVERSAL - MEDIUM - START 
 
-function TreeNode(val, left, right) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
-}
-
 var bstFromPreorder = function(preorder) {
 
     let i = 0;
@@ -4362,7 +4380,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - START */
+/* BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - START 
 
 // You are given an array prices where prices[i] is the price of a given stock on the ith day.
 
@@ -4416,6 +4434,156 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - END */
+ BEST TIME TO BUY AND SELL A STOCK WITH COOLDOWN - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* COUSINS IN BINARY TREE - EASY - START 
+
+//Given the root of a binary tree with unique values and the values of two different nodes of the tree x and y, 
+//return true if the nodes corresponding to the values x and y in the tree are cousins, or false otherwise.
+
+//Two nodes of a binary tree are cousins if they have the same depth with different parents.
+
+//Note that in a binary tree, the root node is at the depth 0, and children of each depth k node are at the depth k + 1.
+
+let findParentAndDepth = (curNode, value, curDepth = 0, parentValue) => {
+
+    if (!curNode) {
+        return;
+    }
+
+    if (curNode.val === value) {
+        return [curDepth, parentValue];
+    }
+
+    return findParentAndDepth(curNode.left, value, curDepth + 1, curNode.val) || findParentAndDepth(curNode.right, value, curDepth + 1, curNode.val);
+
+};
+
+var isCousins = function (root, x, y) {
+    //993
+    let [xDepth, xParent] = findParentAndDepth(root, x);
+    let [yDepth, yParent] = findParentAndDepth(root, y);
+
+    return xDepth === yDepth && xParent !== yParent;
+
+};
+
+let root = [[1, 2, 3, 4], [1, 2, 3, null, 4, null, 5], [1, 2, 3, null, 4]];
+let x = [4, 5, 2];
+let y = [3, 4, 3]
+let correct = [false, true, false];
+
+answerExplainationEl.textContent = "Given an array of integers and the posiblity to buy and sell with a cooldown after selling, what is the max proit that can be achieved.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let rootTree = insertLevelOrder(root[i]);
+
+    console.log("rootTree: ", rootTree);
+
+    let areCousins = isCousins(rootTree, x[i], y[i]);
+
+    let displayRoot = [];
+
+    for (let j = 0; j < root[i].length; j++) {
+
+        if (root[i][j] == null) {
+
+            displayRoot.push("null");
+
+        } else {
+
+            displayRoot.push(root[i][j]);
+
+        }
+
+    }
+
+    let coloring = (areCousins === true ? " are cousins" : " are not cousins")
+
+    let proper = (areCousins == correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = "Given a binary tree with the components [" + displayRoot + "], " + x[i] + " and " + y[i] + coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+ COUSINS IN BINARY TREE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NEXT GREATER ELEMENT I - EASY - START */
+
+// The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
+
+// You are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.
+
+// For each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j]
+// in nums2. If there is no next greater element, then the answer for this query is -1.
+
+// Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+
+var nextGreaterElement = function (nums1, nums2) {
+
+    let answerArray = [];
+
+    for (let i = 0; i < nums1.length; i++) {
+
+        let reducedNums2 = nums2.slice(nums2.indexOf(nums1[i]))
+
+        for (let j = 0; j < reducedNums2.length; j++) { //Not a fan of this solution, (O)n^2
+            if (reducedNums2[j] > nums1[i]) {
+                answerArray.push(reducedNums2[j]);
+                break;
+            }
+        }
+
+        if (answerArray.length < i + 1) {
+            answerArray.push(-1);
+        }
+
+    }
+
+    return answerArray;
+
+};
+
+let x = [[4, 1, 2], [2, 4], [1, 3, 5, 2, 4]];
+let y = [[1, 3, 4, 2], [1, 2, 3, 4], [6, 5, 4, 3, 2, 1, 7]];
+let correct = [[-1, 3, -1], [3, -1], [7, 7, 7, 7, 7]];
+
+answerExplainationEl.textContent = "Given two arrays of integers, search the second array for each element in the first array. If its there, check to see if an element to it's right is greater. If there is, return it, otherwise return -1.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let result = nextGreaterElement(x[i], y[i]);
+
+    let right = true;
+
+    for (let j = 0; j < correct[i].length; j++) {
+        if (result[j] !== correct[i][j]) {
+            right = false;
+            break;
+        }
+    }
+
+    let coloring = "Given the first array [" + x[i] + "] and the second array [" + y[i] + "] the resulting array from the algorithm is [" + result + "]";
+
+    let proper = (right ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* NEXT GREATER ELEMENT I - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
