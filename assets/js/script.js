@@ -49,6 +49,47 @@ function bstFromPreorder(preorder) {
 
 }
 
+function isAlpha(char) {
+
+    let code = char.charCodeAt(0)
+
+    if (!(code > 64 && code < 91) && !(code > 96 && code < 123)) {
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+function isNum(char) {
+
+    let code = char.charCodeAt(0)
+
+    if (!(code > 47 && code < 58)) {
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+function isAlphaNum(char) {
+
+    let code = char.charCodeAt(0)
+
+    if (!(code > 47 && code < 58) && !(code > 64 && code < 91) && !(code > 96 && code < 123)) {
+
+        return false;
+
+    }
+
+    return true;
+}
+
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -4517,7 +4558,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NEXT GREATER ELEMENT I - EASY - START */
+/* NEXT GREATER ELEMENT I - EASY - START 
 
 // The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
 
@@ -4584,6 +4625,62 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* NEXT GREATER ELEMENT I - EASY - END */
+ NEXT GREATER ELEMENT I - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REVERSE WORDS IN A STRING - MEDIUM - START */
+
+// Given an input string s, reverse the order of the words.
+
+// A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+
+// Return a string of the words in reverse order concatenated by a single space.
+
+// Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have
+//  a single space separating the words. Do not include any extra spaces.
+
+var reverseWords = function (s) {
+
+    let reversed = "";
+    let sArr = s.split(" ");
+    let cleanArr = [];
+
+    for (let i = sArr.length-1; i >= 0; i--) {
+        if (sArr[i]) {
+            cleanArr.push(sArr[i]);
+        }
+    }
+
+    //cleanArr.reverse();
+
+    reversed = cleanArr.join(" ");
+
+    return reversed;
+
+};
+
+let x = ["the sky is blue", "  hello world  ", "a good   example", "  Bob    Loves  Alice   ", "Alice does not even like bob"];
+let correct = ["blue is sky the", "world hello", "example good a", "Alice Loves Bob", "bob like even not does Alice"];
+
+answerExplainationEl.textContent = "Given a string of words separated by spaces, return a string with a reversed order of the words.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let reversed = reverseWords(x[i]);
+
+    let coloring = "reversing the word order in '" + x[i] + "' yields '" + reversed;
+
+    let proper = (reversed == correct[i] ? "', this is correct" : "', this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REVERSE WORDS IN A STRING - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
