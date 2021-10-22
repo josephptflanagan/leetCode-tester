@@ -4629,7 +4629,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REVERSE WORDS IN A STRING - MEDIUM - START */
+/* REVERSE WORDS IN A STRING - MEDIUM - START 
 
 // Given an input string s, reverse the order of the words.
 
@@ -4681,6 +4681,75 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* REVERSE WORDS IN A STRING - MEDIUM - END */
+REVERSE WORDS IN A STRING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SORT CHARACTERS BY FREQUENCY - MEDIUM - START */
+
+// Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is
+// the number of times it appears in the string.
+
+// Return the sorted string. If there are multiple answers, return any of them.
+
+var frequencySort = function(s) {
+
+    let obj = {};
+
+    for (let i = 0; i < s.length; i++){
+        obj[s[i]] = obj[s[i]] ? obj[s[i]] + 1 : 1
+    }
+
+    let letters = [];
+
+    for (let i in obj){
+        letters.push([i, obj[i]]);
+    }
+
+    letters.sort(function(a,b){
+        return b[1] - a[1];
+    })
+
+    let idx = 0;
+    s = "";
+
+    while (idx < letters.length){
+        s += letters[idx][0];
+        if (letters[idx][1] > 1){
+            letters[idx][1]--;
+        } else {
+            idx++;
+        }
+    }
+    
+    return s;
+    
+};
+
+let x = ["tree", "cccaaa", "Aabb"];
+let correct1 = ["eert", "aaaccc", "bbAa"];
+let correct2 = ["eetr", "cccaaa", "bbaA"];
+
+answerExplainationEl.textContent = "Given a string of letters, sort them based on frequency.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let sorted = frequencySort(x[i]);
+
+    console.log("sorted: ", sorted);
+
+    let coloring = "'" + x[i] + "' sorted by frequency yields '" + sorted;
+
+    let proper = (sorted == correct1[i] || sorted == correct2[i] ? "', this is correct" : "', this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SORT CHARACTERS BY FREQUENCY - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
