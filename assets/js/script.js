@@ -4685,7 +4685,7 @@ REVERSE WORDS IN A STRING - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SORT CHARACTERS BY FREQUENCY - MEDIUM - START */
+/* SORT CHARACTERS BY FREQUENCY - MEDIUM - START 
 
 // Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is
 // the number of times it appears in the string.
@@ -4750,6 +4750,87 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SORT CHARACTERS BY FREQUENCY - MEDIUM - END */
+ SORT CHARACTERS BY FREQUENCY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SORT COLORS - MEDIUM - START*/
+
+// Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the
+// same color are adjacent, with the colors in the order red, white, and blue.
+
+// We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+
+// You must solve this problem without using the library's sort function.
+
+var sortColors = function (nums) {
+
+    let red = 0;
+    let white = 0;
+    let blue = 0;
+    let idx = 0;
+
+    for (let i = 0; i < nums.length; i++) {
+
+        if (nums[i] === 0) {
+            red++;
+        } else if (nums[i] === 1) {
+            white++;
+        } else {
+            blue++;
+        }
+
+    }
+
+    while (idx < nums.length) {
+
+        if (red > 0) {
+            nums[idx] = 0;
+            red--;
+        } else if (white > 0) {
+            nums[idx] = 1;
+            white--;
+        } else {
+            nums[idx] = 2;
+            blue--;
+        }
+
+        idx++;
+    }
+
+};
+
+let x = [[2, 0, 2, 1, 1, 0], [2, 0, 1], [0], [1]];
+let correct = [[0, 0, 1, 1, 2, 2], [0, 1, 2], [0], [1]];
+
+answerExplainationEl.textContent = "Given an array of numbers from 0 to 2, sort them without using a library fuction.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let coloring = "[" + x[i] + "] when sorted becomes [";
+
+    sortColors(x[i])
+
+    coloring += x[i];
+
+    let right = true;
+
+    for (let j = 0; j < x[i].length; j++) {
+        if(x[i][j] != correct[i][j]){
+            right = false;
+            break;
+        }
+    }
+    let proper = (right ? "], this is correct" : "], this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SORT COLORS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
