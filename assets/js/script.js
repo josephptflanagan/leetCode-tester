@@ -90,6 +90,22 @@ function isAlphaNum(char) {
     return true;
 }
 
+function compareArrays(arr1, arr2) {
+
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) {
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -4754,7 +4770,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SORT COLORS - MEDIUM - START*/
+/* SORT COLORS - MEDIUM - START
 
 // Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the
 // same color are adjacent, with the colors in the order red, white, and blue.
@@ -4831,6 +4847,112 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SORT COLORS - MEDIUM - END */
+ SORT COLORS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ROTTING ORANGES - MEDIUM - START */
+
+// You are given an m x n grid where each cell can have one of three values:
+
+// 0 representing an empty cell,
+// 1 representing a fresh orange, or
+// 2 representing a rotten orange.
+// Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+
+// Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+
+var orangesRotting = function (grid) {
+
+    let queue = []
+    let freshOranges = 0
+    let directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    let minutes = 0
+
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+
+            if (grid[i][j] === 1) {
+
+                freshOranges++
+
+            } else if (grid[i][j] === 2) {
+
+                queue.push([i, j])
+
+            }
+        }
+    }
+
+    while (queue.length > 0 && freshOranges > 0) {
+        let size = queue.length
+
+        while (size) {
+            let [x, y] = queue.shift()
+
+            // each loop is one minute
+            for (let [dx, dy] of directions) {
+                let nextX = x + dx
+                let nextY = y + dy
+
+                // Find next fresh oranges to remove
+                if (nextX < 0 || nextX >= grid.length || nextY < 0 || nextY >= grid[0].length || grid[nextX][nextY] !== 1) continue
+
+                freshOranges--
+                grid[nextX][nextY] = 2
+                queue.push([nextX, nextY])
+            }
+            size--
+        }
+        minutes++
+    }
+
+    return freshOranges ? -1 : minutes
+    
+};
+
+let x = [[[2, 1, 1], [1, 1, 0], [0, 1, 1]], [[2, 1, 1], [0, 1, 1], [1, 0, 1]], [[0, 2]],
+[[2, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+[1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+[1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+[1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+[1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+[1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+[1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+[[2, 1, 1],
+[1, 1, 1],
+[0, 1, 2]]];
+let correct = [4, -1, 0, 58, 2];
+
+answerExplainationEl.textContent = "Given a matrix of oranges, return how long it takes for all the oranges to rot.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let rot = orangesRotting(x[i]);
+
+    let coloring;
+
+    if (rot === -1) {
+        coloring = "Not all of the oranges can rot";
+    } else if (rot === 0) {
+        coloring = "All of the oranges are already rotten";
+    } else {
+        coloring = "All of the oranges will rot within " + rot + " minutes";
+    }
+
+    let proper = (rot === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ROTTING ORANGES - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
