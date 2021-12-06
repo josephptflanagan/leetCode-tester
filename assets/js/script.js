@@ -4851,7 +4851,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ROTTING ORANGES - MEDIUM - START */
+/* ROTTING ORANGES - MEDIUM - START 
 
 // You are given an m x n grid where each cell can have one of three values:
 
@@ -4954,5 +4954,53 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* ROTTING ORANGES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM COST TO MOVE CHIPS TO THE SAME POSITION - EASY - START */
+
+function minCostToMoveChips(position){
+
+    let odds = 0;
+    let evens = 0;
+
+    for (let i = 0; i < position.length;i++){
+        if (position[i] % 2 === 0){
+            evens++;
+        } else {
+            odds++;
+        }
+    }
+
+    if (odds > evens){
+        return evens;
+    } 
+
+    return odds;
+
+}
+
+let x = [[1,2,3],[2,2,2,3,3], [1,1000000000]]
+let correct = [1,2,1];
+
+answerExplainationEl.textContent = "Given an array of positions of chips, determine the cost of moving those chips into a single column. Chips located an odd number of spaces from the destination column cost 1 to move, even spaces cost none";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let cost = minCostToMoveChips(x[i]);
+
+    let coloring = "The cost of moving all the chips in [" + x[i] + "] to a single column is " + cost;
+
+    let proper = (cost === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MINIMUM COST TO MOVE CHIPS TO THE SAME POSITION - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
