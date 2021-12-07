@@ -106,6 +106,46 @@ function compareArrays(arr1, arr2) {
 
 }
 
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }    
+}
+
+let insertNodeAtTail = function (head, data) {
+
+    let newNode = new ListNode(data);
+    if(head === null){
+        head = newNode;
+    }else if (head.next === null){
+        head.next = newNode;
+    }else{
+        insertNodeAtTail(head.next, data);
+    }
+    return head;
+
+}
+
+let listConstructor = function (array) {
+
+    let list = new LinkedList();
+
+    for (i = 0; i < array.length; i++) {
+
+        list.head = insertNodeAtTail(list.head, array[i])
+
+    }
+
+    return list;
+
+}
+
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -4957,7 +4997,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIMUM COST TO MOVE CHIPS TO THE SAME POSITION - EASY - START */
+/* MINIMUM COST TO MOVE CHIPS TO THE SAME POSITION - EASY - START 
 
 function minCostToMoveChips(position){
 
@@ -5002,5 +5042,63 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIMUM COST TO MOVE CHIPS TO THE SAME POSITION - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+
+/* CONVERT BINARY NUMBER IN A LINKED LIST TO AN INTEGER - EASY - START */
+
+function getDecimalValue(head){
+
+    let listArr = [];
+    let integer = 0;
+
+    //First I'll convert the list into an array
+
+    while(head != null){
+        
+        listArr.push(head.val); //adds the value of the link to the array
+        head = head.next; //progresses through the list
+    }
+
+    //Now I'll convert the array into a decimal number
+    //starting with the reversing of the array
+    listArr = listArr.reverse();
+    
+    //Now to convert by multiplying each digit by the appropriate power of two
+    for (let i = 0; i < listArr.length; i++){
+
+        integer += (listArr[i] * Math.pow(2,i));
+
+    }
+
+    return integer;
+
+}
+
+let x = [[1,0,1],[0], [1],[1,0,0,1,0,0,1,1,1,0,0,0,0,0,0],[0,0]]
+let correct = [5,0,1,18880,0];
+
+answerExplainationEl.textContent = "Given a linked list in which every link is a digit of a binary number, return that number as a decimal number";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = listConstructor(x[i]);
+
+    let decimal = getDecimalValue(xList.head);
+
+    let coloring = "[" + x[i] + "] is a list containing a binary number that is equivalent to " + decimal + " as an integer";
+
+    let proper = (decimal === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONVERT BINARY NUMBER IN A LINKED LIST TO AN INTEGER - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
