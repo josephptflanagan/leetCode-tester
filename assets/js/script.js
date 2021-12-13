@@ -5045,8 +5045,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-
-/* CONVERT BINARY NUMBER IN A LINKED LIST TO AN INTEGER - EASY - START */
+/* CONVERT BINARY NUMBER IN A LINKED LIST TO AN INTEGER - EASY - START 
 
 function getDecimalValue(head){
 
@@ -5100,5 +5099,72 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* CONVERT BINARY NUMBER IN A LINKED LIST TO AN INTEGER - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONSECUTIVE CHARACTERS - EASY - START */
+
+function maxPower(s){
+    //take in a string and return the length of the longest run of consecutive characters.
+    //Time Complexity O(n) dependent on input string length
+    //Space Complexity O(n) based on comparison string
+
+    let maxCount = 1;  //the variable to be returned, stores the length of the longest run of consecutive characters
+
+    //These variables are the working variables, used to determine if a run of consecutive characters is continuing,
+    //of if it's time to check the length of the last run and to see if it's the longest
+    let currentCount = 1;
+    let currentChar = s[0];
+
+    //cycle through all characters
+    for (let i = 1; i < s.length; i++){
+
+        //if the newly examined character is equal to the character creating the current run of consecutive characters
+        if(currentChar == s[i]){
+
+            //simply add one to the count
+            currentCount++;
+
+            //then check if this new count is higher than the previous maxCount. If yes, replace the maxCount
+            maxCount = currentCount > maxCount ? currentCount : maxCount;
+
+        } else {
+
+            //otherwise, if the new character is different than the previous run, reset the working variables
+            //so they can be used going forward
+            currentChar = s[i];
+            currentCount = 1;
+
+        }
+
+    }
+
+    //once the loop has run its course, return the maxCount
+    return maxCount;
+
+}
+
+let x = ["leetcode", "abbcccddddeeeeedcba", "triplepillooooow", "hooraaaaaaaaaaay", "tourist", "cc"]
+let correct = [2,5,5,11,1,2];
+
+answerExplainationEl.textContent = "Given a sting of characters, return the count of the element that appears consecutively the most";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let highest = maxPower(x[i]);
+
+    let coloring = "The highest number of consecutive characters in '" + x[i] + ",' is " + highest;
+
+    let proper = (highest === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONSECUTIVE CHARACTERS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
