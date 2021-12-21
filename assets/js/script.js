@@ -5102,7 +5102,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CONSECUTIVE CHARACTERS - EASY - START */
+/* CONSECUTIVE CHARACTERS - EASY - START 
 
 function maxPower(s){
     //take in a string and return the length of the longest run of consecutive characters.
@@ -5156,6 +5156,50 @@ for (let i = 0; i < x.length; i++) {
     let highest = maxPower(x[i]);
 
     let coloring = "The highest number of consecutive characters in '" + x[i] + ",' is " + highest;
+
+    let proper = (highest === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONSECUTIVE CHARACTERS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* POWER OF TWO - EASY - START */
+
+function isPowerOfTwo(n){ 
+    //Given an integer n, return true if it is a power of two. Otherwise, return false.
+    //Time Complexity O(n) because of the array.includes
+    //Space Complexity O(1) 
+
+    //This array contains all powers of two less than the integer limit of 2147483647
+    let powersOfTwo = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
+         2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144,
+          524288, 1048576, 2097152, 4194304, 8388608, 16777216,
+           33554432, 67108864, 134217728, 268435456, 536870912,
+            1073741824];
+
+    //this checks if the number is one of the powers of two smaller than the integer limit of 2147483647
+    return powersOfTwo.includes(n);
+
+}
+
+let x = [1,16,3]
+let correct = [true,true,false];
+
+answerExplainationEl.textContent = "Given a sting of characters, return the count of the element that appears consecutively the most";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let highest = isPowerOfTwo(x[i]);
+
+    let coloring = highest ? x[i] + " is a power of two" : x[i] + " is not a power of two";
 
     let proper = (highest === correct[i] ? ", this is correct" : ", this is wrong");
 
