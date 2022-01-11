@@ -5303,21 +5303,22 @@ var sumRootToLeaf = function (root) {
 
     function rootToLeafSearch(root) {
 
-        let data = [];
-        let currentRun = Array(100).fill(0);
+        let data = []; //holds the paths
+        let currentRun = Array(100).fill(0); //placeholder array to store current paths
 
+        //recursive helper function to traverse the tree and construct the paths
         function traverse(node, currentRun, runLength) {
 
             if (node == null) {
                 return;
             }
 
-            currentRun[runLength] = node.val;
-            runLength++;
+            currentRun[runLength] = node.val; //populates the placeholder array
+            runLength++; //iterates the current path length
 
-            if (node.left == null && node.right == null)
+            if (node.left == null && node.right == null) //Leaf Found, adding path to data array
                 data.push(currentRun.slice(0, runLength));
-            else {
+            else { //Branch Found, recursing to next node
                 traverse(node.left, currentRun, runLength);
                 traverse(node.right, currentRun, runLength);
             }
