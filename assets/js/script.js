@@ -49,6 +49,32 @@ function bstFromPreorder(preorder) {
 
 }
 
+function binaryTreeConstructor(array) {
+
+    let root = new TreeNode(array.shift());
+    let insertionPosition = [root]
+    let currentNode = insertionPosition.shift();
+
+    while (array.length > 0) {
+
+        let newLeftNode = new TreeNode(array.shift());
+        currentNode.left = newLeftNode;
+        insertionPosition.push(newLeftNode);
+
+        if (array.length > 0) {
+            let newRightNode = new TreeNode(array.shift())
+            currentNode.right = newRightNode;
+            insertionPosition.push(newRightNode);
+        }
+
+        currentNode = insertionPosition.shift();
+
+    }
+
+    return root;
+
+}
+
 function isAlpha(char) {
 
     let code = char.charCodeAt(0)
@@ -115,17 +141,17 @@ function ListNode(val, next) {
 class LinkedList {
     constructor() {
         this.head = null;
-    }    
+    }
 }
 
 let insertNodeAtTail = function (head, data) {
 
     let newNode = new ListNode(data);
-    if(head === null){
+    if (head === null) {
         head = newNode;
-    }else if (head.next === null){
+    } else if (head.next === null) {
         head.next = newNode;
-    }else{
+    } else {
         insertNodeAtTail(head.next, data);
     }
     return head;
@@ -5169,7 +5195,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* POWER OF TWO - EASY - START */
+/* POWER OF TWO - EASY - START 
 
 function isPowerOfTwo(n){ 
     //Given an integer n, return true if it is a power of two. Otherwise, return false.
@@ -5209,6 +5235,154 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* CONSECUTIVE CHARACTERS - EASY - END */
+/* POWER OF TWO - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* POWER OF TWO - EASY - START 
+
+function findJudge(n, trust){ 
+    //Given n people and an array of a series of identifiers for individuals and who they trust, return the id of one individual that is trusted by everyone
+    //Time Complexity O(n) based on for loop
+    //Space Complexity O(n) based on length of trust array
+
+    //set the trusted individual based on the first individual in the trust array
+    let trusted = trust[0][1];
+
+    //if the trusted indivdual doesn't exist, return -1
+    if (trusted > n){
+        return -1;
+    }
+
+    //if the length of the array is 1, return the id of the trusted individual by the first individual 
+    if (trust.length == 1){
+        return trust[0][1];
+    }
+
+    //check if everyone else trusts the same individual, returning -1 if they are not the same
+    for (let i = 1; i < trust.length;i++){
+        if (trust[i][1] != trusted){
+            return -1;
+        }
+    }
+
+    //if nothing else has broken the function yet, return the trusted individual
+    return trusted;
+
+}
+
+let x = [2,3,3,4];
+let y = [[[1,2]], [[1,3],[2,3]], [[1,3],[2,3],[3,1]], [[1,3],[1,4],[2,3],[2,4],[4,3]]];
+let correct = [2,3,-1,3];
+
+answerExplainationEl.textContent = "Given that a 'secret judge' might exist in the population, that there are n people in town, and that everyone but the judge trusts the judge, return the id of the secret judge if they exist, or -1 if they dont exist";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let judge = findJudge(x[i], y[i]);
+
+    let coloring = judge != -1 ? "The judge is the person ID'd as " + judge : "There is no secret judge";
+
+    let proper = (judge === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* POWER OF TWO - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SUM ROOT TO LEAF BINARY NUMBERS */
+
+var sumRootToLeaf = function (root) {
+
+    function rootToLeafSearch(root) {
+
+        let data = [];
+        let currentRun = Array(100).fill(0);
+
+        function traverse(node, currentRun, runLength) {
+
+            if (node == null) {
+                return;
+            }
+
+            currentRun[runLength] = node.val;
+            runLength++;
+
+            if (node.left == null && node.right == null)
+                data.push(currentRun.slice(0, runLength));
+            else {
+                traverse(node.left, currentRun, runLength);
+                traverse(node.right, currentRun, runLength);
+            }
+        }
+
+        traverse(root, currentRun, 0);
+
+        return data;
+
+    }
+
+    function binaryToDecimalConverter(binaryNum) {
+
+        let decimalNum = 0;
+
+        //reverses the binary number to make it easier to use
+        binaryNum = binaryNum.reverse().join("");
+
+        for (let i = 0; i < binaryNum.length; i++) {
+
+            //populates the decimal number by adding each binary digit's value to it
+            decimalNum += binaryNum[i] * Math.pow(2, i);
+
+        }
+
+        return decimalNum;
+
+    };
+
+    let binaryStrings = rootToLeafSearch(root);
+    let decimalNumber = 0;
+
+    for (let i = 0; i < binaryStrings.length; i++) {
+        decimalNumber += binaryToDecimalConverter(binaryStrings[i]);
+    }
+
+    return decimalNumber;
+
+};
+
+let x = [[1, 0, 1, 0, 1, 0, 1], [0]];
+let correct = [22, 0];
+
+answerExplainationEl.textContent = "Given the root of a Binary Tree filled with binary numbers, return the decimal equivalent of the binary number created by the path through those binary numbers";
+
+for (let i = 0; i < x.length; i++) {
+
+    let xCopy = x[i].slice();
+
+    let listEl = document.createElement('li');
+
+    let xRoot = binaryTreeConstructor(x[i]);
+
+    let digitalSum = sumRootToLeaf(xRoot);
+
+    let coloring = "A binary tree containing the binary numbers [" + xCopy + "], generates binary numbers on root to leaf paths that sum to " + digitalSum;
+
+    let proper = (digitalSum === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SUM ROOT TO LEAF BINARY NUMBERS */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
