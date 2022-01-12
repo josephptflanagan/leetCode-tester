@@ -75,6 +75,88 @@ function binaryTreeConstructor(array) {
 
 }
 
+function bstConstructor(array) {
+
+    if (array.length < 1) {
+        return null;
+    }
+
+    let root = new TreeNode(array.shift())
+
+    function insert(val) {
+
+        if (val == null) {
+            return root;
+        }
+
+        let tempNode = root;
+        let newNode = new TreeNode(val);
+
+        while (true) {
+
+            if (newNode.val === tempNode.val) {
+
+                return root;
+
+            } else if (newNode.val < tempNode.val) {
+                if (tempNode.left) {
+                    tempNode = tempNode.left;
+                }
+                else {
+                    tempNode.left = newNode;
+                    return root;
+                }
+            } else if (newNode.val > tempNode.val) {
+
+                if (tempNode.right) {
+                    tempNode = tempNode.right;
+                }
+                else {
+                    tempNode.right = newNode;
+                    return root;
+                }
+            }
+
+        }
+
+    }
+
+    while (array.length > 0) {
+
+        let val = array.shift();
+        root = insert(val);
+
+    }
+
+    return root;
+
+}
+
+function bstToArray(root) {
+
+    let queue = [];
+    let contents = [];
+
+    if (!root) {
+        return null;
+    }
+
+    queue.push(root);
+
+    while (queue.length > 0) {
+        if (queue[0].left) {
+            queue.push(queue[0].left)
+        }
+        if (queue[0].right) {
+            queue.push(queue[0].right)
+        }
+        contents.push(queue.shift().val)
+    }
+
+    return contents;
+
+}
+
 function isAlpha(char) {
 
     let code = char.charCodeAt(0)
@@ -130,6 +212,36 @@ function compareArrays(arr1, arr2) {
 
     return true;
 
+}
+
+function compareTreeArrays(arr1, arr2) {
+
+    let compArr1 = [];
+    let compArr2 = [];
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] != null) {
+            compArr1.push(arr1[i])
+        }
+    }
+
+    for (let i = 0; i < arr2.length; i++) {
+        if (arr2[i] != null) {
+            compArr2.push(arr2[i])
+        }
+    }
+
+    if (compArr1.length !== compArr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < compArr1.length; i++) {
+        if (compArr1[i] !== compArr2[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function ListNode(val, next) {
@@ -5297,7 +5409,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SUM ROOT TO LEAF BINARY NUMBERS */
+/* SUM ROOT TO LEAF BINARY NUMBERS - EASY - START 
 
 var sumRootToLeaf = function (root) {
 
@@ -5384,6 +5496,94 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SUM ROOT TO LEAF BINARY NUMBERS */
+/* SUM ROOT TO LEAF BINARY NUMBERS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INSERT INTO A BINARY SEARCH TREE - MEDIUM - START */
+
+var insertIntoBST = function (root, val) {
+
+    let newNode = new TreeNode(val);
+    let tempNode = root;
+
+
+    if (!root) {
+        root = newNode;
+        return root;
+    }
+
+    while (true) {
+
+        if (newNode.val === tempNode.val) {
+
+            return root;
+
+        } else if (newNode.val < tempNode.val) {
+            if (tempNode.left) {
+                tempNode = tempNode.left;
+            }
+            else {
+                tempNode.left = newNode;
+                return root;
+            }
+        } else if (newNode.val > tempNode.val) {
+            if (tempNode.right) {
+                tempNode = tempNode.right;
+            }
+            else {
+                tempNode.right = newNode;
+                return root;
+            }
+        }
+
+    }
+
+};
+
+function prepArr(array){
+    
+    let returnArray = [];
+
+    for(let i = 0; i < array.length;i++){
+        if (array[i] != null){
+            returnArray.push(array[i]);
+        }
+    }
+    
+    return returnArray;
+}
+
+let x = [[40, 20, 60, 10, 30, 50, 70], [4, 2, 7, 1, 3, null, null, null, null, null, null]];
+let y = [25, 5]
+let correct = [[40, 20, 60, 10, 30, 50, 70, null, null, 25], [4, 2, 7, 1, 3, 5]];
+
+answerExplainationEl.textContent = "Given the root of a binary search tree (BST) and a value to insert into the BST, insert the value and return the root";
+
+for (let i = 0; i < x.length; i++) {
+
+    let xCopy = x[i].slice();
+
+    let listEl = document.createElement('li');
+
+    let xRoot = bstConstructor(x[i]);
+
+    let updatedTreeRoot = insertIntoBST(xRoot, y[i]);
+
+    let treeArray = bstToArray(updatedTreeRoot);
+
+    let preparedXCopy = prepArr(xCopy)
+
+    let coloring = "Inserting the value " + y[i] + " into the binary search tree containing the values [" + preparedXCopy + "], results in a binary search tree containing [" + treeArray + "]";
+
+    let proper = compareTreeArrays(treeArray, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INSERT INTO A BINARY SEARCH TREE - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
