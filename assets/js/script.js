@@ -1684,7 +1684,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ZIG ZAG CONVERSATION - START - MEDIUM
+/* STRING TO INTEGER - START - MEDIUM
 
 //Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
 
@@ -1767,7 +1767,7 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
- ZIG ZAG CONVERSATION - END - MEDIUM */
+MY A TO I - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
@@ -5500,7 +5500,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* INSERT INTO A BINARY SEARCH TREE - MEDIUM - START */
+/* INSERT INTO A BINARY SEARCH TREE - MEDIUM - START 
 
 var insertIntoBST = function (root, val) {
 
@@ -5585,5 +5585,125 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* INSERT INTO A BINARY SEARCH TREE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - START  
+
+var findMinArrowShots = function(points) {
+
+    let localPoints = points.slice();
+
+    function populate(array){
+
+        let start = array[0];
+        let end = array[1] + 1;
+        let fullArray = [];
+
+        for (let i = start; i < end;i++){
+            fullArray.push(i);
+        }
+        return fullArray;
+    }
+
+    for (let i = 0; i < localPoints.length;i++){
+        localPoints[i] = populate(localPoints[i]);
+    }
+
+    let combinedArray = [].concat(...localPoints);
+
+    combinedArray.sort();
+
+    console.log(combinedArray);
+
+};
+
+let x = [[[10,16],[2,8],[1,6],[7,12]], [[1,2],[3,4],[5,6],[7,8]], [[1,2],[2,3],[3,4],[4,5]]];
+let correct = [2, 4, 2];
+
+answerExplainationEl.textContent = "Given an array of points corresponding to the left and right x coordinates of a series of balloons, determine the minimum number of arrows required to pop them all (looking for overlaps)";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let arrowCount = findMinArrowShots(x[i]);
+
+    let coloring = "A series of balloons with x coordinates of [" + x[i] + "], you would need to fire " + arrowCount + " to pop them all";
+
+    let proper = (arrowCount === correct[i] ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = coloring + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SUM ROOT TO LEAF BINARY NUMBERS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* STRING TO INTEGER (A TO I) (ATTEMPT 2, IMPROVE WORKING FUNCTION) - MEDIUM - START */
+
+var myAtoi = function (s) {
+
+    // Local copy of provided string
+    let stringInProcess = s.slice();
+
+    // Unusable Characters RegEx
+    let unusable = /[a-z\.+-\s]/;
+
+    // Remove leading zeros
+    while (true) {
+
+        if (stringInProcess[0] == " ") {
+            stringInProcess = stringInProcess.slice(1);
+        } else {
+            break;
+        }
+
+    }
+
+    // Remove leading unuseable positive and negative characters
+    if (stringInProcess[0] == '-' || stringInProcess[0] == '+') {
+        stringInProcess = stringInProcess.slice(1);
+    }
+
+    // Check for empty strings or strings with unusable characters
+    if (!stringInProcess || stringInProcess[0].match(unusable)) {
+        return 0;
+    }
+
+    //Use JS built in function
+    let integer = parseInt(s);
+
+    //Catch out of bounds
+    integer = integer > 2147483647 ? 2147483647 : integer;
+    integer = integer < -2147483648 ? -2147483648 : integer;
+
+    return integer;
+
+};
+
+let x = ["42", "   -42", "4193 with words", "words and 987", "-91283472332", "21474836460", "00000-42a1234", "+-12","  +  413"];
+let correct = [42, -42, 4193, 0, -2147483648, 2147483647, 0, 0, 0];
+
+answerExplainationEl.textContent = "This algorithm converts strings to integers like c/c++'s atoi function";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let converted = myAtoi(x[i]);
+
+    let proper = (converted == correct[i] ? "this is correct" : "this is wrong");
+
+    listEl.textContent = "The string '" + x[i] + "', becomes " + converted + " using myAtoi function, " + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* STRING TO INTEGER (A TO I) (ATTEMPT 2, IMPROVE WORKING FUNCTION) - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
