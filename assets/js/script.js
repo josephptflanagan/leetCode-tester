@@ -5643,7 +5643,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* STRING TO INTEGER (A TO I) (ATTEMPT 2, IMPROVE WORKING FUNCTION) - MEDIUM - START */
+/* STRING TO INTEGER (A TO I) (ATTEMPT 2, IMPROVE WORKING FUNCTION) - MEDIUM - START 
 
 var myAtoi = function (s) {
 
@@ -5705,5 +5705,96 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* STRING TO INTEGER (A TO I) (ATTEMPT 2, IMPROVE WORKING FUNCTION) - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* WORD PATTERN - EASY - START */
+
+var wordPattern = function (pattern, s) {
+    //Convert pattern and s into compariable versions
+
+    // string split into individual words
+    let words = [];
+
+    if (s.indexOf(" ") == -1){ //one word, no need to split
+        words.push(s);
+    } else {
+        words = s.split(" ")
+    }
+    
+    //comparing lengths for early rejection
+    if (words.length != pattern.length){
+        return false
+    }
+
+    //variables to construct comparison versions
+    let wordsWordOrder = [];
+    let patternLetterOrder = [];
+
+    let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    
+    let patternFromWords = "";
+    let reconstructedPattern = "";
+    let currentWordIdx = 0;
+    let currentPatternIdx = 0;
+
+    for (let i = 0; i < words.length; i++) {
+
+        //checks if the letter of the pattern or the word in the word order have been found yet, returning its index if it does and -1 if it doesn't
+        let wordIndex = wordsWordOrder.indexOf(words[i]);
+        let patternIndex = patternLetterOrder.indexOf(pattern[i]);
+
+        // if the word is not yet in the wordsWordOrder array, add it, set the wordIndex to the next empty spot, iterate the currentWordIdx to prep it for the next new word 
+        if (wordIndex < 0) {
+            wordsWordOrder.push(words[i]);
+            wordIndex = currentWordIdx;
+            currentWordIdx++;
+        }
+
+        // if the letter is not yet in the patternLetterOrder array, add it, set the patternIndex to the next empty spot, iterate the currentPatternIdx to prep it for the next new letter
+        if(patternIndex < 0){
+            patternLetterOrder.push(pattern[i]);
+            patternIndex = currentPatternIdx;
+            currentPatternIdx++
+        }
+
+        //construct strings of numbers from the relevant indecies
+        patternFromWords += wordIndex;
+        reconstructedPattern += patternIndex;
+
+    }
+
+    //converting the strings of numbers into actual numbers
+    patternFromWords = parseInt(patternFromWords);
+    reconstructedPattern = parseInt(reconstructedPattern);
+
+    //returning a boolean of if the integers are equal
+    return patternFromWords == reconstructedPattern;
+
+};
+
+let x = ["abba", "abba", "aaaa", 'e'];
+let y = ["dog cat cat dog", "dog cat cat fish", "dog cat cat dog", 'eureka'];
+let correct = [true, false, false, true];
+
+answerExplainationEl.textContent = "This algorithm checks if a given string of words corresponds to a given pattern of words";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let compared = wordPattern(x[i], y[i]);
+
+    let color = compared ? "The sentence '" + y[i] + ",' meets the pattern '" + x[i] + ",'" : "The sentence '" +  y[i] + ",' does not meet the pattern '" + x[i] + ",'";
+
+    let proper = (compared == correct[i] ? " this is correct" : " this is wrong");
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* WORD PATTERN - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
