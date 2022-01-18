@@ -5708,7 +5708,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* WORD PATTERN - EASY - START */
+/* WORD PATTERN - EASY - START 
 
 var wordPattern = function (pattern, s) {
     //Convert pattern and s into compariable versions
@@ -5794,5 +5794,98 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* WORD PATTERN - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CAN PLACE FLOWERS - EASY - START */
+
+var canPlaceFlowers = function (flowerbed, n) {
+    //attempt to place flowers, if any are unplaceable, return false
+
+    if (n == 0) { //early return for obvious answer
+        return true;
+    }
+
+    let plantedBed = flowerbed.slice();
+    let idx = 0;
+
+    if (plantedBed.length === 1) { //single space edge case
+        if (plantedBed[idx] === 0 && n === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    while (true) { //cycle the bed looking for spots until n is depleted, or until there are no more possible spots
+
+        if (idx == plantedBed.length - 1) { //last spot, if n is not zero and the spot is not fillable, return false
+
+            if (plantedBed[idx - 1] === 0 && plantedBed[idx] === 0) {
+
+                plantedBed[idx] = 1;
+                n--;
+
+            }
+
+            if (n != 0) {
+                return false;
+            }
+
+        } else if (idx === 0) { //first spot, only looking at spot and forward
+
+            if (plantedBed[idx] === 0 && plantedBed[idx + 1] === 0) {
+
+                plantedBed[idx] = 1;
+                n--;
+
+            }
+
+            idx++;
+
+        } else { //middle spots, looking ahead and back
+
+            if (plantedBed[idx - 1] === 0 && plantedBed[idx] === 0 && plantedBed[idx + 1] === 0) {
+
+                plantedBed[idx] = 1;
+                n--;
+
+            }
+
+            idx++;
+
+        }
+
+        if (n == 0) {  //if n had been depleted, return true
+            return true;
+        }
+
+    }
+
+};
+
+let x = [[1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 1], [1, 0, 0, 0, 0, 1], [0], [1], [1, 0, 1, 1, 0, 0], [1, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0],[0,0,0],[0,1,0],[0,0,0,0,0]];
+let y = [1, 2, 1, 2, 1, 1, 0, 1, 1, 2, 2, 1, 3];
+let correct = [true, false, true, false, true, false, true, true, true, true, true,false, true];
+
+answerExplainationEl.textContent = "Given an array representing a flower bed of spots with 1's meaning full spots and 0's meaning empty spots (in which no flowers may be adjacent), and a number of flowers to plant, determine if that many flowers can be planted";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let placeable = canPlaceFlowers(x[i], y[i]);
+
+    let color = placeable ? "The flower bed [" + x[i] + "], can handle " + y[i] + " flowers" : "The flower bed [" + x[i] + "], cannot handle " + y[i] + " flowers";
+
+    let proper = (placeable == correct[i] ? ", this is correct" : " this is wrong");
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CAN PLACE FLOWERS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
