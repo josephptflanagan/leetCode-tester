@@ -5797,7 +5797,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CAN PLACE FLOWERS - EASY - START */
+/* CAN PLACE FLOWERS - EASY - START 
 
 var canPlaceFlowers = function (flowerbed, n) {
     //attempt to place flowers, if any are unplaceable, return false
@@ -5887,5 +5887,102 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* CAN PLACE FLOWERS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LINKED LIST CYCLE II - MEDIUM - START */
+
+var detectCycle = function (head) {
+    //given the head of of a singly linked list, determine if there is a cycle somewhere in the list
+
+    //my attempts yielded the ability to detect a cycle, but not its origin point. this algorithm I found does both
+
+    let fast = head;
+    let slow = head;
+    let hasCycle = false;
+
+    while(fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast === slow) { 
+            hasCycle = true 
+            break;
+        };
+    }
+    
+    if (!hasCycle) return null;
+	
+    let slow2 = head;
+    while (slow2!==slow) {
+        slow = slow.next;
+        slow2 = slow2.next;
+    }
+    return slow2; 
+
+};
+
+let cycleListCreator = function (array, position) {
+
+    let newList = new LinkedList;
+    let currentNode;
+
+    for (let i = 0; i < array.length; i++) {
+
+        let newNode = new ListNode(array[i]);
+
+        if (newList.head == null) {
+            newList.head = newNode;
+            currentNode = newList.head;
+        } else {
+
+            currentNode.next = newNode;
+            currentNode = newNode;
+
+            if (i == array.length - 1 && position > -1) {
+
+                let localCurrentNode = newList.head;
+
+                for (let j = 0; j < position + 1; j++) {
+
+                    if (j == position) {
+                        currentNode.next = localCurrentNode;
+                    } else {
+                        localCurrentNode = localCurrentNode.next;
+                    }
+
+                }
+            }
+        }
+    }
+
+    return newList.head;
+
+}
+
+let x = [[3, 2, 0, -4], [1, 2], [1]];
+let y = [1, 0, -1]
+let correct = [1, 0, null];
+
+answerExplainationEl.textContent = "given the head of of a singly linked list, determine if there is a cycle somewhere in the list";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = cycleListCreator(x[i], y[i]);
+
+    let cycleOrNot = detectCycle(xList);
+
+    let color = cycleOrNot != null ? "there is a cycle in [" + x[i] + "]" : "There is no cycle in [" + x[i] + "]";
+
+    let proper = ((cycleOrNot != null && correct[i] != null) || (cycleOrNot == null && correct[i] == null) ? ", this is correct" : ", this is wrong");
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LINKED LIST CYCLE II - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
