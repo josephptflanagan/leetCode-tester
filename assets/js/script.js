@@ -5890,7 +5890,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LINKED LIST CYCLE II - MEDIUM - START */
+/* LINKED LIST CYCLE II - MEDIUM - START 
 
 var detectCycle = function (head) {
     //given the head of of a singly linked list, determine if there is a cycle somewhere in the list
@@ -5984,5 +5984,79 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* LINKED LIST CYCLE II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+var minEatingSpeed = function (piles, h) {
+
+    // Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
+    // Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. 
+    //     If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.
+    // Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.   
+    // Return the minimum integer k such that she can eat all the bananas within h hours.
+
+    let k = Infinity;
+    let min = 1
+    let max = Math.max(...piles);
+
+    let compute = function (n) {
+
+        let count = 0;
+
+        for (let i = 0; i < piles.length; i++) {
+
+            count += Math.ceil(piles[i] / n);
+
+            if (count > h) {
+                return false;
+            }
+        }
+
+        return !(count > h);
+    }
+
+    while (min <= max) {
+
+        let avg = Math.floor((min + max) / 2);
+
+        if (compute(avg)) {
+
+            k = Math.min(k, avg);
+            max = avg - 1;
+
+        } else {
+
+            min = avg + 1;
+
+        }
+    }
+
+    return k;
+
+};
+
+let x = [[3, 6, 7, 11], [30, 11, 23, 4, 20], [30, 11, 23, 4, 20]];
+let y = [8, 5, 6]
+let correct = [4, 30, 23];
+
+answerExplainationEl.textContent = "given an array of piles of bananas and number of hours before the keeper returns, what is the rate at which the gorilla eats the bananas";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let rate = minEatingSpeed(x[i], y[i]);
+
+    let color = "Koko eats the piles of bananas at a rate of " + rate + " per hour";
+
+    let proper = (rate == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* KOKO EATING BANANAS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
