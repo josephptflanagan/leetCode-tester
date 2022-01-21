@@ -6065,7 +6065,7 @@ for (let i = 0; i < x.length; i++) {
 
 /* GAS STATION - MEDIUM - START */
 
-var canCompleteCircuit = function(gas, cost) {
+var canCompleteCircuit = function (gas, cost) {
 
     // There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
 
@@ -6075,54 +6075,71 @@ var canCompleteCircuit = function(gas, cost) {
     // Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction,
     // otherwise return -1. If there exists a solution, it is guaranteed to be unique
 
+    // let possibleOrigins = gas.length;
+    // let origin = 0;
+    // let localGas = gas.slice();
+    // let localCost = cost.slice();
 
-    let possibleOrigins = gas.length;
+    // let cycleOrigin = function(){
+
+    //     let gasStart = localGas.shift();
+    //     let costStart = localCost.shift();
+
+    //     localGas.push(gasStart);
+    //     localCost.push(costStart);
+
+    // }
+
+    // while (possibleOrigins > 0){
+
+
+    //     let tank = 0;
+
+    //     for (let i = 0; i < gas.length; i++){
+
+    //         tank = tank + localGas[i] - localCost[i];
+
+    //         if (tank < 0){
+    //             break;
+    //         }
+
+    //     }
+
+    //     if (tank >= 0){
+    //         return origin;
+    //     }
+
+    //     possibleOrigins--;
+    //     origin++;
+    //     cycleOrigin();
+
+    // }
+
+    // return -1;
+
     let origin = 0;
-    let localGas = gas.slice();
-    let localCost = cost.slice();
+    let tank = 0;
+    let total = 0;
 
-    let cycleOrigin = function(){
+    for (let i = 0; i < gas.length; i++) {
 
-        let gasStart = localGas.shift();
-        let costStart = localCost.shift();
+        tank += gas[i] - cost[i];
+        total += gas[i] - cost[i];
 
-        localGas.push(gasStart);
-        localCost.push(costStart);
+        if (tank < 0) {
+            origin = i + 1;
+            tank = 0;
+        }
 
     }
 
-    while (possibleOrigins > 0){
-
-        
-        let tank = 0;
-
-        for (let i = 0; i < gas.length; i++){
-
-            tank = tank + localGas[i] - localCost[i];
-
-            if (tank < 0){
-                break;
-            }
-
-        }
-
-        if (tank >= 0){
-            return origin;
-        }
-
-        possibleOrigins--;
-        origin++;
-        cycleOrigin();
-
-    }
-    
-    return -1;
+    return (total >= 0) ? origin : -1;
 
 };
 
-let x = [[1,2,3,4,5], [2,3,4]]; //amount of gas at gas station gas[i]
-let y = [[3,4,5,1,2], [3,4,3]]; //cost of gas to travel to the next station
-let correct = [3,-1];
+let x = [[1, 2, 3, 4, 5], [2, 3, 4]]; //amount of gas at gas station gas[i]
+let y = [[3, 4, 5, 1, 2], [3, 4, 3]]; //cost of gas to travel to the next station
+let correct = [3, -1];
 
 answerExplainationEl.textContent = "given an array of piles of bananas and number of hours before the keeper returns, what is the rate at which the gorilla eats the bananas";
 
