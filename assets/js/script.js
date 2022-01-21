@@ -5987,6 +5987,8 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* KOKO EATING BANANAS - MEDIUM - START
+
 var minEatingSpeed = function (piles, h) {
 
     // Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
@@ -6058,5 +6060,88 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* KOKO EATING BANANAS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* GAS STATION - MEDIUM - START */
+
+var canCompleteCircuit = function(gas, cost) {
+
+    // There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+
+    // You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station.
+    // You begin the journey with an empty tank at one of the gas stations.
+
+    // Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction,
+    // otherwise return -1. If there exists a solution, it is guaranteed to be unique
+
+
+    let possibleOrigins = gas.length;
+    let origin = 0;
+    let localGas = gas.slice();
+    let localCost = cost.slice();
+
+    let cycleOrigin = function(){
+
+        let gasStart = localGas.shift();
+        let costStart = localCost.shift();
+
+        localGas.push(gasStart);
+        localCost.push(costStart);
+
+    }
+
+    while (possibleOrigins > 0){
+
+        
+        let tank = 0;
+
+        for (let i = 0; i < gas.length; i++){
+
+            tank = tank + localGas[i] - localCost[i];
+
+            if (tank < 0){
+                break;
+            }
+
+        }
+
+        if (tank >= 0){
+            return origin;
+        }
+
+        possibleOrigins--;
+        origin++;
+        cycleOrigin();
+
+    }
+    
+    return -1;
+
+};
+
+let x = [[1,2,3,4,5], [2,3,4]]; //amount of gas at gas station gas[i]
+let y = [[3,4,5,1,2], [3,4,3]]; //cost of gas to travel to the next station
+let correct = [3,-1];
+
+answerExplainationEl.textContent = "given an array of piles of bananas and number of hours before the keeper returns, what is the rate at which the gorilla eats the bananas";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let origin = canCompleteCircuit(x[i], y[i]);
+
+    let color = (origin > -1) ? "It is possible to start a circuit of the stations if you start at station " + origin : "It is not possible to complete a circuit of the stations";
+
+    let proper = (origin == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* GAS STATION - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
