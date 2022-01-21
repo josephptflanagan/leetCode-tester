@@ -6141,7 +6141,7 @@ let x = [[1, 2, 3, 4, 5], [2, 3, 4]]; //amount of gas at gas station gas[i]
 let y = [[3, 4, 5, 1, 2], [3, 4, 3]]; //cost of gas to travel to the next station
 let correct = [3, -1];
 
-answerExplainationEl.textContent = "given an array of piles of bananas and number of hours before the keeper returns, what is the rate at which the gorilla eats the bananas";
+answerExplainationEl.textContent = "given a series of gas stations with a certain amount of gas, set a certain distance apart, determine if a cycle through all gas stations can be completed";
 
 for (let i = 0; i < x.length; i++) {
 
