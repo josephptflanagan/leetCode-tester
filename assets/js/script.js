@@ -6175,6 +6175,7 @@ var detectCapitalUse = function(word) {
 
     // Given a string word, return true if the usage of capitals in it is right.
 
+    //Regular Expressions for all three correct options
     let allCaps = /^[A-Z]+$/;
     let noCaps = /^[a-z]+$/;
     let firstCap = /^[A-Z][a-z]*$/;
