@@ -6063,7 +6063,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* GAS STATION - MEDIUM - START */
+/* GAS STATION - MEDIUM - START 
 
 var canCompleteCircuit = function (gas, cost) {
 
@@ -6160,5 +6160,54 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* GAS STATION - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DETECT CAPITAL - EASY - START */
+
+var detectCapitalUse = function(word) {
+
+    // We define the usage of capitals in a word to be right when one of the following cases holds:
+
+    // All letters in this word are capitals, like "USA".
+    // All letters in this word are not capitals, like "leetcode".
+    // Only the first letter in this word is capital, like "Google".
+
+    // Given a string word, return true if the usage of capitals in it is right.
+
+    let allCaps = /^[A-Z]+$/;
+    let noCaps = /^[a-z]+$/;
+    let firstCap = /^[A-Z][a-z]*$/;
+
+    if (word.match(allCaps) || word.match(noCaps) || word.match(firstCap)){
+        return true;
+    }
+
+    return false;
+
+};
+
+let x = ["USA", "FlaG", "fakE", "EVere", "asdasfa"];
+let correct = [true, false, false, false, true];
+
+answerExplainationEl.textContent = "Given a string word, return true if the usage of capitals in it is right.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let capitalized = detectCapitalUse(x[i]);
+
+    let color = capitalized ? x[i] + " is properly capitalized" : x[i] + " is not properly capitalized";
+
+    let proper = (capitalized === correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* DETECT CAPITAL - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
