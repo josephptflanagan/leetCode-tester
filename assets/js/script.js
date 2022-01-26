@@ -6163,7 +6163,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* DETECT CAPITAL - EASY - START */
+/* DETECT CAPITAL - EASY - START 
 
 var detectCapitalUse = function(word) {
 
@@ -6210,5 +6210,140 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* DETECT CAPITAL - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* VALID MOUNTAIN ARRAY - EASY - START 
+
+var validMountainArray = function (arr) {
+
+    // Given an array of integers arr, return true if and only if it is a valid mountain array.
+
+    // Recall that arr is a mountain array if and only if:
+
+    // arr.length >= 3
+    // There exists some i with 0 < i < arr.length - 1 such that:
+    // arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+    // arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+    if (arr.length >= 3) {
+
+        let goingUp = true;
+        let previousNum = arr[0];
+
+        for (let i = 1; i < arr.length; i++) {
+
+            //exit loop if this item is the same as the last, if it's going down immediately, or if it starts going up when it's only supposed to go down
+            if ((previousNum == arr[i]) || (previousNum > arr[i] && i == 1) || (previousNum < arr[i] && !goingUp)) {
+                break;
+            } else if (previousNum > arr[i] && goingUp){ 
+                goingUp = false;
+            }
+            //if no condition has been broken and it's the last item, 
+            if (i == arr.length-1 && !goingUp){
+                return true;
+            }
+
+            previousNum = arr[i];
+
+        }
+    }
+
+    return false;
+
+};
+
+let x = [[2, 1], [3, 5, 5], [0, 3, 2, 1], [1,3,2],[2,0,2],[0,1,2,3,4,5,6,7,8,9],[9,8,7,6,5,4,3,2,1,0]];
+let correct = [false, false, true, true, false, false, false];
+
+answerExplainationEl.textContent = "Given an array of integers arr, return true if and only if it is a valid mountain array.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let mountain = validMountainArray(x[i]);
+
+    let color = mountain ? x[i] + " is a proper mountain array" : x[i] + " is not a mountain array";
+
+    let proper = (mountain === correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* VALID MOUNTAIN ARRAY - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* ALL ELEMENTS IN TWO BINARY SEARCH TREES - MEDIUM - START */
+
+var getAllElements = function (root1, root2) {
+
+    // Given two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.
+
+    function bstToArray(root) {
+
+        let queue = [];
+        let contents = [];
+
+        if (!root) {
+            return null;
+        }
+
+        queue.push(root);
+
+        while (queue.length > 0) {
+            if (queue[0].left) {
+                queue.push(queue[0].left)
+            }
+            if (queue[0].right) {
+                queue.push(queue[0].right)
+            }
+            contents.push(queue.shift().val)
+        }
+
+        return contents;
+
+    }
+
+    let arr1 = root1 ? bstToArray(root1) : [];
+    let arr2 = root2 ? bstToArray(root2) : [];
+
+    return arr1.concat(arr2).sort((a, b) => a - b);
+
+};
+
+let x = [[2, 1, 4], [1, null, 8], [0, -10, 10], []];
+let y = [[1, 0, 3], [8, 1], [5, 1, 7, 0, 2], [5, 1, 7, 0, 2]]
+let correct = [[0, 1, 1, 2, 3, 4], [1, 1, 8, 8], [-10, 0, 0, 1, 2, 5, 7, 10], [0, 1, 2, 5, 7]];
+
+answerExplainationEl.textContent = "Given two binary search trees root1 and root2, return a list containing all the integers from both trees sorted in ascending order.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let xCopy = x[i].slice();
+    let yCopy = y[i].slice();
+
+    let listEl = document.createElement('li');
+
+    let xRoot = bstConstructor(x[i]);
+    let yRoot = bstConstructor(y[i]);
+
+    let combined = getAllElements(xRoot, yRoot);
+
+    let color = "The combination of [" + xCopy + "] and [" + yCopy + "] is [" + combined + "]";
+
+    let proper = compareArrays(combined, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ALL ELEMENTS IN TWO BINARY SEARCH TREES - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
