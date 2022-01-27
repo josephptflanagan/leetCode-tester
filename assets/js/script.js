@@ -6278,7 +6278,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ALL ELEMENTS IN TWO BINARY SEARCH TREES - MEDIUM - START */
+/* ALL ELEMENTS IN TWO BINARY SEARCH TREES - MEDIUM - START 
 
 var getAllElements = function (root1, root2) {
 
@@ -6345,5 +6345,204 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* ALL ELEMENTS IN TWO BINARY SEARCH TREES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM XOR OF TWO NUMBERS IN AN ARRAY - MEDIUM - START */
+
+var findMaximumXOR = function (nums) {
+
+    // Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
+
+    let decimalToBinary = function (decimalNum) {
+
+        //This algorithm works by checking increasingly large exponents of 2 against the number. 
+        //When the exponent of 2 exceeds the user number, the previous exponent of 2 is subtracted from the decimal number.
+        //The algorithm whittles down the decimal number to 0. At 0 the binary number is ready and the while loop ends
+
+        //empty array that will store the digits of the binary number
+        let binaryNum = [];
+
+        //number that will determine how many digits there are in the binaryNum
+        let position = 0;
+
+        //currentNum is the current exponent of 2 being checked against the user number
+        let currentNum = 0;
+
+        //bool that details if this is the first exponent of 2 being subtracted from the user number or not
+        let first = true;
+
+        //immediately ejects 0
+        if (decimalNum == 0) {
+            binaryNum.push(decimalNum);
+        }
+        else {
+
+            //Main Loop
+            while (decimalNum > 0) {
+
+                //As the loop starts the previous exponent of 2 is set to the current exponent of 2
+                let lastNum = currentNum;
+                //The current exponent of 2 is updated to the next highest
+                currentNum = Math.pow(2, position);
+
+                //if the user number is greater than the current exponent of 2, position increases
+                if (decimalNum > currentNum) {
+                    position += 1;
+                }
+                else {
+
+                    //if this is the first time the binaryNum array is being interacted with
+                    if (binaryNum.length == 0) {
+
+                        //this for loop fills every spot with 0's except the last, which gets a 1
+                        for (let i = 0; i < position + 1; i++) {
+
+                            if (i == position) {
+                                binaryNum[binaryNum.length - 1] = "1";
+                            }
+                            else {
+                                binaryNum.push("0");
+                            }
+                        }
+
+                    }
+                    //as the decimal number decreases, the position will decrease, and lower positions in the array will be replaced with 1's as is warranted. 
+                    else {
+                        if (decimalNum == currentNum) {
+                            binaryNum[position] = "1"
+                        }
+                        else {
+                            binaryNum[position - 1] = "1"
+                        }
+                    }
+
+                    //if the decimal number and exponent of 2 are equal, the exponent of 2 is subtracted from the decimalnumber to make 0
+                    if (decimalNum == currentNum) {
+                        decimalNum = 0;
+                    }
+                    //otherwise the last exponent of 2 is subtracted from 2
+                    else {
+                        decimalNum -= lastNum;
+                    }
+
+                    //a catch for exponents of 2 that cause a mistake in the algorithm otherwise. I will endeavor to figure out why, but without this 2,4,8,16, etc... come out one digit short
+                    if (first && decimalNum == 0) {
+                        binaryNum[binaryNum.length - 1] = "0";
+                        binaryNum.push("1");
+                    }
+
+                    //sets first to false, resets counting and comparing variables
+                    first = false;
+                    position = 0;
+                    currentNum = 0;
+
+                }
+            }
+        }
+
+        //reverses the binaryNum array and turns it into a string
+        let binaryNumStr = binaryNum.reverse().join("");
+
+        return binaryNumStr;
+    }
+
+    let binaryToDecimal = function (binaryNum) {
+
+        let decimalNum = 0;
+
+        //reverses the binary number to make it easier to use
+        binaryNum = binaryNum.split("").reverse().join("");
+
+        for (let i = 0; i < binaryNum.length; i++) {
+
+            //populates the decimal number by adding each binary digit's value to it
+            decimalNum += binaryNum[i] * Math.pow(2, i);
+
+        }
+
+        return decimalNum;
+    }
+
+    let XORComparator = function (binary1, binary2) {
+
+        //raw returnable XOR outcome
+        let xor = "";
+
+        //bringing the lengths of the binary nums in alignment
+        while (binary1.length < binary2.length) {
+            binary1 = "0" + binary1;
+        }
+
+        while (binary2.length < binary1.length) {
+            binary2 = "0" + binary2;
+        }
+
+        //XOR comparison, exlusive or, as (1 and 0 is 1) or (0 and 1 is 1). Alternatively, (0 and 0 is 0) and (1 and 1 is 0)
+        for (let k = 0; k < binary1.length; k++) {
+
+            if ((binary1[k] == "1" && binary2[k] == "1") || (binary1[k] == "0" && binary2[k] == "0")) {
+                xor += "0";
+            } else {
+                xor += "1";
+            }
+
+        }
+
+        return xor;
+
+    }
+
+    
+    let maxXOR = 0;
+
+
+    for (let i = 0; i < nums.length; i++) {
+
+        for (let j = i+1; j < nums.length;j++){
+
+        //get binary versions of the numbers
+        //as the XOR comparison requires this format
+        let binaryI = decimalToBinary(nums[i]);
+        let binaryJ = decimalToBinary(nums[j]);
+
+        //run a xor comparison on binaryI and binaryJ
+        //convert the result to decimal
+        let currentXOR = binaryToDecimal(XORComparator(binaryI, binaryJ));
+
+        //compare the XOR result from the current comparison to the previous largest XOR result
+        maxXOR = currentXOR > maxXOR ? currentXOR : maxXOR;
+
+        }
+
+    }
+
+    //return the maximum
+    return maxXOR;
+
+};
+
+let x = [[3, 10, 5, 25, 2, 8], [14, 70, 53, 83, 49, 91, 36, 80, 92, 51, 66, 70], [8, 10, 2]];
+let correct = [28, 127, 10];
+
+answerExplainationEl.textContent = "Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let maximum = findMaximumXOR(x[i]);
+
+    let color = "The maximum result of nums[i] XOR nums[j] of [" + x[i] + "] is " + maximum;
+
+    let proper = (maximum == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAXIMUM XOR OF TWO NUMBERS IN AN ARRAY - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
