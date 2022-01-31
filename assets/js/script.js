@@ -6348,7 +6348,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM XOR OF TWO NUMBERS IN AN ARRAY - MEDIUM - START */
+/* MAXIMUM XOR OF TWO NUMBERS IN AN ARRAY - MEDIUM - START 
 
 var findMaximumXOR = function (nums) {
 
@@ -6544,5 +6544,128 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MAXIMUM XOR OF TWO NUMBERS IN AN ARRAY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DESIGN AND ADD SEARCH WORDS DATA STRUCTURE - MEDIUM - START 
+
+var WordDictionary = function () {
+    this.root = {}
+};
+
+
+WordDictionary.prototype.addWord = function (word) {
+    let node = this.root;
+    for (let char of word) {
+        if (!node[char]) {
+            node[char] = {}
+        }
+        node = node[char]
+    }
+    node['end'] = true;
+};
+
+WordDictionary.prototype.search = function (word, node = this.root, start = 0) {
+    for (let i = start; i < word.length; i++) {
+        let char = word[i];
+        if (char === '.') {
+            for (let key of Object.keys(node)) {
+                if (key === 'end') continue
+                if (this.search(word, node[key], i + 1)) {
+                    return true
+                }
+            }
+            return false
+        } else {
+            if (!node[char]) return false;
+            node = node[char]
+        }
+    }
+    if (node['end']) return true;
+
+    return false
+};
+
+let populate = function (arr) {
+    let obj = new WordDictionary();
+    for (let word in arr) {
+        obj.addWord(word)
+    }
+    return obj;
+}
+
+let addables = ["bad", "dad", "mad"];
+let searchables = ["pad", "bad", ".ad", "b.."];
+let correct = [false, true, true, true];
+
+answerExplainationEl.textContent = "Design a data structure that supports adding new words and finding if a string matches any previously added string.";
+
+for (let i = 0; i < searchables.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let dict = populate(addables);
+    console.log(dict);
+
+    let present = dict.search(searchables[i])
+
+    let color = present ? "The wordSearch data structure contains the word " + searchables[i] : "The wordSearch data structure does not contains the word";
+
+    let proper = (present == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* DESIGN AND ADD SEARCH WORDS DATA STRUCTURE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RICHEST CUSTOMER WEALTH - EASY - START */
+
+// You are given an m x n integer grid accounts where accounts[i][j] is the amount of money the i​​​​​​​​​​​th​​​​ customer has in the j​​​​​​​​​​​th​​​​ bank. Return the wealth that the richest customer has.
+
+// A customer's wealth is the amount of money they have in all their bank accounts. The richest customer is the customer that has the maximum wealth.
+
+var maximumWealth = function(accounts) {
+
+    let max = 0;
+
+    for (let i = 0; i < accounts.length;i++){
+
+        let currentSum = accounts[i].reduce((partialSum, a) => partialSum + a, 0)
+
+        max = currentSum > max ? currentSum : max;
+
+    }
+
+    return max;
+    
+};
+
+let x = [[[1,2,3],[3,2,1]],[[1,5],[7,3],[3,5]],[[2,8,7],[7,1,3],[1,9,5]]];
+let correct = [6,10,17];
+
+answerExplainationEl.textContent = "Given a series of arrays referring customer assets in banks, return the wealth of the assets of the wealthiest customer";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let highest = maximumWealth(x[i]);
+
+    let color = "The wealthiest customer has a wealth of " + highest;
+
+    let proper = (highest == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* RICHEST CUSTOMER WEALTH - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
