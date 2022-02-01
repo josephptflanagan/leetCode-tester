@@ -6623,7 +6623,7 @@ for (let i = 0; i < searchables.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* RICHEST CUSTOMER WEALTH - EASY - START */
+/* RICHEST CUSTOMER WEALTH - EASY - START 
 
 // You are given an m x n integer grid accounts where accounts[i][j] is the amount of money the i​​​​​​​​​​​th​​​​ customer has in the j​​​​​​​​​​​th​​​​ bank. Return the wealth that the richest customer has.
 
@@ -6635,9 +6635,9 @@ var maximumWealth = function(accounts) {
 
     for (let i = 0; i < accounts.length;i++){
 
-        let currentSum = accounts[i].reduce((partialSum, a) => partialSum + a, 0)
+        let currentSum = accounts[i].reduce((partialSum, a) => partialSum + a, 0) //sum the elements of the array with array.reduce
 
-        max = currentSum > max ? currentSum : max;
+        max = currentSum > max ? currentSum : max; //compare max to currentSum, max becomes the higher of the two
 
     }
 
@@ -6667,5 +6667,57 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* RICHEST CUSTOMER WEALTH - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BEST TIME TO BUY AND SELL STOCK - EASY - START */
+
+// You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+// You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+// Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+var maxProfit = function (prices) {
+
+    let buyDay = 0;
+    let sellDay = 1;
+    let max = 0;
+
+    while (sellDay < prices.length){
+        if (prices[buyDay] < prices[sellDay]){
+            max = max < prices[sellDay] - prices[buyDay] ? prices[sellDay] - prices[buyDay]: max;
+        } else {
+            buyDay = sellDay;
+        }
+        sellDay++;
+    }
+
+    return max;
+
+};
+
+let x = [[7, 1, 5, 3, 6, 4], [7, 6, 4, 3, 1]];
+let correct = [5, 0];
+
+answerExplainationEl.textContent = "Given an array prices where prices[i] is the price of a given stock on the ith day, return the day on which you can achieve maximum profit. If you cannot achieve any profit, return 0";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let bestDay = maxProfit(x[i]);
+
+    let color = bestDay > 0 ? "The best day to sell is " + bestDay : "You cannot make a profit with the given prices";
+
+    let proper = (bestDay == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BEST TIME TO BUY AND SELL STOCK - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
