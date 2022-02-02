@@ -6670,7 +6670,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BEST TIME TO BUY AND SELL STOCK - EASY - START */
+/* BEST TIME TO BUY AND SELL STOCK - EASY - START 
 
 // You are given an array prices where prices[i] is the price of a given stock on the ith day.
 
@@ -6711,6 +6711,114 @@ for (let i = 0; i < x.length; i++) {
     let color = bestDay > 0 ? "The best day to sell is " + bestDay : "You cannot make a profit with the given prices";
 
     let proper = (bestDay == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BEST TIME TO BUY AND SELL STOCK - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND ALL ANAGRAMS IN A STRING - MEDIUM - START */
+
+// Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order.
+
+// An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+var findAnagrams = function (s, p) {
+
+    let trimP = function (p, idx) {
+
+        if (p.length == 1) {
+            return "";
+        }
+
+        if (idx == 0) {
+            return p.slice(1);
+        }
+
+        if (idx < p.length - 1) {
+            return p.slice(0, idx) + p.slice(idx + 1);
+        }
+
+        return p.slice(0, p.length - 1)
+
+    }
+
+    let left = 0;
+    let right = 1;
+    let locations = [];
+
+    while (right < s.length) {
+
+        let sCopy = s.slice(left);
+        let pCopy = p.slice();
+
+        if (pCopy.length == 1) {
+
+            for (let i = 0; i < s.length;i++){
+                if(sCopy[i] == pCopy[0]){
+                    locations.push(i);
+                }
+            }
+            break;
+
+        }
+
+        let idx = pCopy.indexOf(sCopy[0])
+
+        if (idx !== -1) {
+
+            sCopy = sCopy.slice(1);
+            pCopy = trimP(pCopy, idx);
+
+            while (pCopy.length > 0) {
+
+                idx = pCopy.indexOf(sCopy[0]);
+
+                if (idx == -1) {
+                    break;
+                }
+
+                sCopy = sCopy.slice(1);
+                pCopy = trimP(pCopy, idx);
+
+                if (pCopy.length === 0) {
+                    locations.push(left);
+                }
+
+            }
+
+            left++;
+
+        } else {
+            left = right;
+        }
+        right++;
+    }
+
+    return locations;
+
+};
+
+let x = ["cbaebabacd", "abab", "acdcaeccde"];
+let y = ["abc", "ab", "c"]
+let correct = [[0, 6], [0, 1, 2], [1, 3, 6, 7]];
+
+answerExplainationEl.textContent = "Given an array prices where prices[i] is the price of a given stock on the ith day, return the day on which you can achieve maximum profit. If you cannot achieve any profit, return 0";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let indecies = findAnagrams(x[i], y[i]);
+
+    let color = "Anagrams of [" + y[i] + "] can be found at [" + indecies + "] within [" + x[i] + "]";
+
+    let proper = compareArrays(indecies, correct[i]) ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
