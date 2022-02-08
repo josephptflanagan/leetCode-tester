@@ -6776,7 +6776,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FIND ALL ANAGRAMS IN A STRING - MEDIUM - START */
+/* FIND THE DIFFERENCE - EASY - START 
 
 //You are given two strings s and t.
 
@@ -6866,7 +6866,64 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* FIND ALL ANAGRAMS IN A STRING - MEDIUM - END */
+/* FIND THE DIFFERENCE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* ADD DIGITS - EASY - START */
+
+// Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
+
+var addDigits = function(num) {
+
+    if (num === 0){
+        return 0;
+    }
+
+    let numArr = num.toString().split("");
+
+    while (numArr.length > 1){
+
+        let num0 = Number(numArr.shift());
+        let num1 = Number(numArr.shift());
+        let sum = num0 + num1;
+
+        if (sum > 9){
+            let sumString = sum.toString();
+            sum = Number(sumString[0]) + Number(sumString[1]);
+        }
+
+        numArr.unshift(sum);
+
+    }
+
+    return numArr[0];
+
+};
+
+let x = [38,0];
+let correct = [2,0];
+
+answerExplainationEl.textContent = "Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let digit = addDigits(xCopy);
+
+    let color = "By adding the individual digits of " + xCopy + " until this is only one digit left, it becomes " + digit;
+
+    let proper = digit == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* ADD DIGITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
