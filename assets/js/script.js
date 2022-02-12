@@ -51,6 +51,10 @@ function bstFromPreorder(preorder) {
 
 function binaryTreeConstructor(array) {
 
+    if (array.length === 0){
+        return null;
+    }
+
     let root = new TreeNode(array.shift());
     let insertionPosition = [root]
     let currentNode = insertionPosition.shift();
@@ -58,13 +62,17 @@ function binaryTreeConstructor(array) {
     while (array.length > 0) {
 
         let newLeftNode = new TreeNode(array.shift());
-        currentNode.left = newLeftNode;
-        insertionPosition.push(newLeftNode);
+        if (newLeftNode.val) {
+            currentNode.left = newLeftNode;
+            insertionPosition.push(newLeftNode);
+        }
 
         if (array.length > 0) {
             let newRightNode = new TreeNode(array.shift())
-            currentNode.right = newRightNode;
-            insertionPosition.push(newRightNode);
+            if (newRightNode.val) {
+                currentNode.right = newRightNode;
+                insertionPosition.push(newRightNode);
+            }
         }
 
         currentNode = insertionPosition.shift();
@@ -6870,7 +6878,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* ADD DIGITS - EASY - START */
+/* ADD DIGITS - EASY - START 
 
 // Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
 
@@ -6925,5 +6933,58 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* ADD DIGITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BINARY TREE IN ORDER TRAVERSAL - EASY - START */
+
+// Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+var inOrderTraversal = function (root) {
+
+    if (root === null){
+        return [];
+    }
+
+    let data = [];
+
+    function traverse(node) {
+
+        node.left && traverse(node.left);
+        data.push(node.val);
+        node.right && traverse(node.right);
+        
+    }
+
+    traverse(root);
+
+    return data;
+
+};
+
+let x = [[1, null, 2, 3], [], [1]];
+let correct = [[1, 3, 2], [], [1]];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, return the inorder traversal of its nodes' values.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xTree = binaryTreeConstructor(x[i]);
+
+    let inOrder = inOrderTraversal(xTree);
+
+    let color = "The binary supplied binary tree, when traversed in order returns " + inOrder;
+
+    let proper = compareArrays(inOrder, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BINARY TREE IN ORDER TRAVERSAL - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
