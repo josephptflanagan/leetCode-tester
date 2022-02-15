@@ -6936,7 +6936,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BINARY TREE IN ORDER TRAVERSAL - EASY - START */
+/* BINARY TREE IN ORDER TRAVERSAL - EASY - START 
 
 // Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
@@ -6986,5 +6986,59 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* BINARY TREE IN ORDER TRAVERSAL - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SINGLE NUMBER - EASY - START */
+
+// Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+// You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+var singleNumber = function(nums) {
+    
+    let dict = {};
+    
+    for (let i = 0;i < nums.length;i++){
+        
+        if (!dict[nums[i]]){
+            dict[nums[i]] = 1;
+        } else{
+            dict[nums[i]]++;
+        }
+            
+    }
+    
+    for (key in dict){
+        if (dict[key] === 1){
+            return key;
+        }
+    }
+    
+    
+};
+
+let x = [[2,2,1],[4,1,2,1,2],[1]];
+let correct = [1,4,1];
+
+answerExplainationEl.textContent = "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let single = singleNumber(x[i]);
+
+    let color = "In the array [" + x[i] + "], the only element that appears once is '" + single + "'";
+
+    let proper = single == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SINGLE NUMBER - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
