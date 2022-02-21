@@ -6989,7 +6989,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SINGLE NUMBER - EASY - START */
+/* SINGLE NUMBER - EASY - START 
 
 // Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 
@@ -7040,5 +7040,60 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SINGLE NUMBER - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAJORITY ELEMENT - EASY - START */
+
+// Given an array nums of size n, return the majority element.
+
+// The majority element is the element that appears more than ⌊n / 2⌋ times.
+// You may assume that the majority element always exists in the array.
+
+var majorityElement = function(nums) {
+    
+    let dict = {};
+    let n = nums.length;
+    
+    for (let i = 0;i < nums.length;i++){
+        
+        if (!dict[nums[i]]){
+            dict[nums[i]] = 1;
+        } else{
+            dict[nums[i]]++;
+        }
+            
+    }
+    
+    for (key in dict){
+        if (dict[key] > n / 2){
+            return key;
+        }
+    }
+    
+};
+
+let x = [[3,2,3],[2,2,1,1,1,2,2]];
+let correct = [3,2];
+
+answerExplainationEl.textContent = "Given an array nums of size n, return the majority element.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let majority = majorityElement(x[i]);
+
+    let color = "In the array [" + x[i] + "], the majority element is '" + majority + "'";
+
+    let proper = majority == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAJORITY ELEMENT - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
