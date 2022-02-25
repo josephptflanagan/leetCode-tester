@@ -51,7 +51,7 @@ function bstFromPreorder(preorder) {
 
 function binaryTreeConstructor(array) {
 
-    if (array.length === 0){
+    if (array.length === 0) {
         return null;
     }
 
@@ -7043,7 +7043,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAJORITY ELEMENT - EASY - START */
+/* MAJORITY ELEMENT - EASY - START 
 
 // Given an array nums of size n, return the majority element.
 
@@ -7095,5 +7095,118 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MAJORITY ELEMENT - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - START */
+
+// Given the head of a linked list, remove the nth node from the end of the list and return its head.
+let singlyLinkedListConstructor = function (arr) {
+
+    let list = new LinkedList;
+    let currentNode;
+
+    for (let i = 0; i < arr.length; i++) {
+
+        let node = new ListNode(arr[i]);
+
+        if (list.head == null) {
+            list.head = node;
+            currentNode = list.head;
+        } else {
+            currentNode.next = node;
+            currentNode = node;
+        }
+
+    }
+
+    return list.head;
+
+}
+
+let arrConstructor = function (head) {
+
+    if (head === null) {
+        return [];
+    }
+
+    let arr = [];
+    let currNode = head;
+
+    while (currNode) {
+        arr.push(currNode.val);
+        currNode = currNode.next;
+    }
+
+    return arr;
+
+}
+
+var removeNthFromEnd = function (head, n) {
+
+    if (head.next === null) {
+        return null;
+    }
+
+    let listLength = 0;
+    let currNode = head;
+
+    while (currNode) {
+        listLength++;
+        currNode = currNode.next;
+    }
+
+    if (listLength == n){
+        return head.next;
+    }
+
+    let removeAt = listLength - n;
+    currNode = head;
+
+    for (let i = 0; i < removeAt; i++) {
+
+        if (i === removeAt - 1) {
+            let removedNode = currNode.next;
+            currNode.next = removedNode.next;
+            removedNode.next = null;
+        }
+
+        currNode = currNode.next;
+
+    }
+
+    return head;
+
+};
+
+let x = [[1, 2, 3, 4, 5], [1], [1, 2], [1, 2]];
+let y = [2, 1, 1, 2]
+let correct = [[1, 2, 3, 5], [], [1],[2]];
+
+answerExplainationEl.textContent = "Given the head of a linked list, remove the nth node from the end of the list and return its head.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = singlyLinkedListConstructor(x[i]);
+
+    let remainingList = removeNthFromEnd(xList, y[i]);
+
+    console.log(remainingList);
+
+    let remainingArr = arrConstructor(remainingList);
+
+    let color = "Given a linked list with the elements [" + x[i] + "] and a number n of  '" + y[i] + "', the list with the nth element from the end removed is [" + remainingArr + "]";
+
+    let proper = compareArrays(remainingArr, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REMOVE NTH NODE FROM END OF LIST - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
