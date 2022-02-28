@@ -7098,7 +7098,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - START */
+/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - START 
 
 // Given the head of a linked list, remove the nth node from the end of the list and return its head.
 let singlyLinkedListConstructor = function (arr) {
@@ -7207,6 +7207,79 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* REMOVE NTH NODE FROM END OF LIST - EASY - END */
+/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SUMMARY RANGES - EASY - START */
+
+// You are given a sorted unique integer array nums.
+
+// Return the smallest sorted list of ranges that cover all the numbers in the array exactly. That is, each element of nums is covered by exactly one of the ranges, and there is no integer x such that x is in one of the ranges but not in nums.
+
+// Each range [a,b] in the list should be output as:
+
+// "a->b" if a != b
+// "a" if a == b
+
+var summaryRanges = function (nums) {
+
+    let ranges = [];
+    let lastNum = 0;
+    let rangeStart = 0;
+    
+    if (nums.length === 1) {
+
+        ranges.push(nums[0].toString());
+
+    } else {
+
+        for (let i = 1; i < nums.length + 1; i++) {
+
+            if (nums[i] !== nums[lastNum] + 1) {
+
+                if (lastNum === rangeStart) {
+                    ranges.push(nums[lastNum].toString());
+                } else {
+                    ranges.push((nums[rangeStart].toString() + "->" + nums[lastNum].toString()));
+                }
+
+                lastNum = i;
+                rangeStart = i;
+
+            } else {
+
+                lastNum++;
+
+            }
+        }
+    }
+
+    return ranges;
+
+};
+
+let x = [[0, 1, 2, 4, 5, 7], [0, 2, 3, 4, 6, 8, 9], [-1]];
+let correct = [["0->2", "4->5", "7"], ["0", "2->4", "6", "8->9"], ["-1"]];
+
+answerExplainationEl.textContent = "Given a sorted array of unique integers, return the smallest sorted list of ranges that cover all the numbers in the array exactly.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let ranges = summaryRanges(x[i]);
+
+    let color = "Given an array with the elements [" + x[i] + "], those elements can be covered with the ranges [" + ranges + "]";
+
+    let proper = compareArrays(ranges, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SUMMARY RANGES - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
