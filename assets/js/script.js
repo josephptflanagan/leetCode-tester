@@ -7211,7 +7211,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SUMMARY RANGES - EASY - START */
+/* SUMMARY RANGES - EASY - START 
 
 // You are given a sorted unique integer array nums.
 
@@ -7281,5 +7281,60 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SUMMARY RANGES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* COUNTING BITS - EASY - START */
+
+// Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+
+var countBits = function (n) {
+
+    let sumArr = function (arr) {
+
+        let sum = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            sum += Number(arr[i]);
+        }
+
+        return sum;
+
+    }
+
+    let bits = [];
+
+    for (let i = 0; i < n + 1; i++) {
+
+        bits.push(sumArr(i.toString(2).split("")));
+
+    }
+
+    return bits;
+
+};
+
+let x = [2, 5];
+let correct = [[0, 1, 1], [0, 1, 1, 2, 1, 2]];
+
+answerExplainationEl.textContent = "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let bits = countBits(x[i]);
+
+    let color = "The array [" + bits + "], contains the individual sums of all the bits of all the integers leading up to and including '" + x[i] + "'";
+
+    let proper = compareArrays(bits, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* COUNTING BITS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
