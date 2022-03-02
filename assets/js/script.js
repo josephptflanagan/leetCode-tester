@@ -7284,7 +7284,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* COUNTING BITS - EASY - START */
+/* COUNTING BITS - EASY - START 
 
 // Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
@@ -7336,5 +7336,71 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* COUNTING BITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* IS SUBSEQUENCE - EASY - START */
+
+// Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+// A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of
+// the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+var isSubsequence = function (s, t) {
+
+    let sPointer = 0
+    let tPointer = 0;
+
+    if (s.length === 0){
+        return true;
+    }
+
+    while (tPointer < t.length) {
+
+        if (t[tPointer] !== s[sPointer]) {
+
+            tPointer++;
+
+        } else {
+
+            tPointer++;
+            sPointer++;
+
+            if (sPointer == s.length) {
+
+                return true;
+
+            }
+        }
+
+    }
+
+    return false;
+
+};
+
+let x = ["abc", "axc", ""];
+let y = ["ahbgdc", "ahbgdc", "ahbgdc"];
+let correct = [true, false, true];
+
+answerExplainationEl.textContent = "Given two strings s and t, return true if s is a subsequence of t, or false otherwise.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let isSub = isSubsequence(x[i], y[i]);
+
+    let color = isSub ? "'" + x[i] + "' is a  subsequence of '" + y[i] + "'" : "'" + x[i] + "' is not a  subsequence of '" + y[i] + "'";
+
+    let proper = isSub === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* IS SUBSEQUENCE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
