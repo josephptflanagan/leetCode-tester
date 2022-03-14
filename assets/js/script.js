@@ -7339,7 +7339,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* IS SUBSEQUENCE - EASY - START */
+/* IS SUBSEQUENCE - EASY - START 
 
 // Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
 
@@ -7402,5 +7402,164 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* IS SUBSEQUENCE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LINKED LIST CYCLE - EASY - START 
+
+//Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+//There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. 
+//Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+
+//Return true if there is a cycle in the linked list. Otherwise, return false.
+
+var hasCycle = function (head) {
+
+    let fast = head;
+    let slow = head;
+
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast === slow) {
+            return true;
+        };
+    }
+
+    return false;
+
+};
+
+let cycleListCreator = function (array, position) {
+
+    let newList = new LinkedList;
+    let currentNode;
+
+    for (let i = 0; i < array.length; i++) {
+
+        let newNode = new ListNode(array[i]);
+
+        if (newList.head == null) {
+            newList.head = newNode;
+            currentNode = newList.head;
+        } else {
+
+            currentNode.next = newNode;
+            currentNode = newNode;
+
+            if (i == array.length - 1 && position > -1) {
+
+                let localCurrentNode = newList.head;
+
+                for (let j = 0; j < position + 1; j++) {
+
+                    if (j == position) {
+                        currentNode.next = localCurrentNode;
+                    } else {
+                        localCurrentNode = localCurrentNode.next;
+                    }
+
+                }
+            }
+        }
+    }
+
+    return newList.head;
+
+}
+
+let x = [[3, 2, 0, -4], [1, 2], [1]];
+let y = [1, 0, -1]
+let correct = [true, true, false];
+
+answerExplainationEl.textContent = "Given head, the head of a linked list, determine if the linked list has a cycle in it.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = cycleListCreator(x[i], y[i]);
+
+    let cycleOrNot = hasCycle(xList);
+
+    let color = cycleOrNot ? "There is a cycle in [" + x[i] + "]" : "There is no cycle in [" + x[i] + "]";
+
+    let proper = cycleOrNot === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LINKED LIST CYCLE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SIMPLIFY PATH - MEDIUM - START */
+
+// Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system,
+// convert it to the simplified canonical path.
+
+// In a Unix-style file system, a period '.' refers to the current directory, a double period '..' refers to the directory up a level,
+// and any multiple consecutive slashes (i.e. '//') are treated as a single slash '/'. For this problem, any other format of periods
+// such as '...' are treated as file/directory names.
+
+// The canonical path should have the following format:
+
+//    The path starts with a single slash '/'.
+//    Any two directories are separated by a single slash '/'.
+//    The path does not end with a trailing '/'.
+//    The path only contains the directories on the path from the root directory to the target file or directory (i.e., no period '.' or double period '..')
+// Return the simplified canonical path.
+
+var simplifyPath = function (path) {
+
+    let newArr = path.split('/');
+    let stack = [];
+
+    for (let i = 0; i < newArr.length; i++) {
+
+        if (newArr[i]) {
+
+            if (newArr[i] === '..') {
+
+                stack.pop();
+
+            } else if (newArr[i] !== '.') {
+
+                stack.push(newArr[i]);
+
+            }
+        }
+    }
+
+    return '/' + stack.join('/');
+
+};
+
+let x = ["/home/", "/../", "/home//foo/", "g", "/a/./b/../../c/"];
+let correct = ["/home", "/", "/home/foo", "/g", "/c"];
+
+answerExplainationEl.textContent = "Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system, convert it to the simplified canonical path.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let canonicalPath = simplifyPath(x[i]);
+
+    let color = "This: '" + canonicalPath + "' is the canonical path gleaned from: '" + x[i] + "'";
+
+    let proper = canonicalPath === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SIMPLIFY PATH - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
