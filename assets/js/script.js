@@ -7497,7 +7497,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SIMPLIFY PATH - MEDIUM - START */
+/* SIMPLIFY PATH - MEDIUM - START 
 
 // Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system,
 // convert it to the simplified canonical path.
@@ -7563,3 +7563,69 @@ for (let i = 0; i < x.length; i++) {
 /* SIMPLIFY PATH - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* VALIDATE STACK SEQUENCES - MEDIUM - START */
+
+// Given two integer arrays pushed and popped each with distinct values, return true if this could have been the result of a
+// sequence of push and pop operations on an initially empty stack, or false otherwise.
+
+var validateStackSequences = function (pushed, popped) {
+
+    let pushedCopy = pushed.slice().reverse();
+    let lastElement1 = 0;
+    let lastElement2 = 0;
+    let constructedStack1 = [];
+    let constructedStack2 = [];
+
+    constructedStack1.push(pushedCopy.pop());
+
+    while (true) {
+
+        if (constructedStack2.length === popped.length) {
+            return true;
+        }
+
+        if (constructedStack1[lastElement1] === popped[lastElement2]) {
+
+            constructedStack2.push(constructedStack1.pop());
+            lastElement1--;
+            lastElement2++;
+
+        } else if (pushedCopy.length > 0) {
+
+            constructedStack1.push(pushedCopy.pop());
+            lastElement1++;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+};
+
+let x = [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]];
+let y = [[4, 5, 3, 2, 1], [4, 3, 5, 1, 2]];
+let correct = [true, false];
+
+answerExplainationEl.textContent = "Given two integer arrays pushed and popped each with distinct values, return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let possible = validateStackSequences(x[i], y[i]);
+
+    let color = possible ? "It's possible to convert [" + x[i] + "] into [" + y[i] + "] with a series of pushes and pops" : "It's not possible to convert [" + x[i] + "] into [" + y[i] + "] with a series of pushes and pops";
+
+    let proper = possible === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* VALIDATE STACK SEQUENCES - MEDIUM - END */
