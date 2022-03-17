@@ -7564,7 +7564,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* VALIDATE STACK SEQUENCES - MEDIUM - START */
+/* VALIDATE STACK SEQUENCES - MEDIUM - START 
 
 // Given two integer arrays pushed and popped each with distinct values, return true if this could have been the result of a
 // sequence of push and pop operations on an initially empty stack, or false otherwise.
@@ -7629,3 +7629,64 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* VALIDATE STACK SEQUENCES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SCORE OF PARENTHESES - MEDIUM - START */
+
+// Given a balanced parentheses string s, return the score of the string.
+
+// The score of a balanced parentheses string is based on the following rule:
+
+//    "()" has score 1.
+//    AB has score A + B, where A and B are balanced parentheses strings.
+//    (A) has score 2 * A, where A is a balanced parentheses string.
+
+var scoreOfParentheses = function (s) {
+
+    let scoreByDepth = [0];
+
+    for (let i = 0; i < s.length; i++) {
+
+        if (s[i] === "(") {
+
+            scoreByDepth.push(0);
+
+        } else {
+
+            let currDepthScore = scoreByDepth[scoreByDepth.length - 1] > 0 ? 2 * scoreByDepth[scoreByDepth.length - 1] : 1;
+            scoreByDepth.pop();
+            scoreByDepth[scoreByDepth.length - 1] += currDepthScore;
+
+        }
+
+    }
+
+    return scoreByDepth[0];
+
+};
+
+let x = ["()", "(())", "()()", "(()(()))"];
+let correct = [1, 2, 2, 6];
+
+answerExplainationEl.textContent = "Given a balanced parentheses string s, return the score of the string.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let score = scoreOfParentheses(x[i]);
+
+    let color = "The score of the string '" + x[i] + "' is " + score;
+
+    let proper = score === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SCORE OF PARENTHESES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
