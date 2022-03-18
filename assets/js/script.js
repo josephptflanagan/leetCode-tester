@@ -7632,7 +7632,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SCORE OF PARENTHESES - MEDIUM - START */
+/* SCORE OF PARENTHESES - MEDIUM - START 
 
 // Given a balanced parentheses string s, return the score of the string.
 
@@ -7688,5 +7688,57 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SCORE OF PARENTHESES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE DUPLICATE LETTERS - MEDIUM - START */
+
+// Given a string s, remove duplicate letters so that every letter appears once and only once.
+// You must make sure your result is the smallest in lexicographical order among all possible results.
+
+var removeDuplicateLetters = function (s) {
+
+    let last_occ = {};
+    let stack = [];
+
+    for (let i = 0; i < s.length; i++) {
+        last_occ[s[i]] = i
+    }
+
+    for (let i = 0; i < s.length; i++) {
+        if (stack.indexOf(s[i]) == -1) {
+            while (stack.length > 0 && stack[stack.length - 1] > s[i] && last_occ[stack[stack.length - 1]] > i) {
+                stack.pop();
+            }
+            stack.push(s[i])
+        }
+    }
+
+    return stack.join("");
+
+};
+
+let x = ["bcabc", "cbacdcbc"];
+let correct = ["abc", "acdb"];
+
+answerExplainationEl.textContent = "Given a string of characters remove duplicate letters and return the result with the smallest lexographical order.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let simplified = removeDuplicateLetters(x[i]);
+
+    let color = "The string '" + x[i] + "' reduced to match the specifications is " + simplified;
+
+    let proper = simplified === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REMOVE DUPLICATE LETTERS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
