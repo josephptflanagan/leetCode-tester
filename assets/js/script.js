@@ -7691,7 +7691,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE DUPLICATE LETTERS - MEDIUM - START */
+/* REMOVE DUPLICATE LETTERS - MEDIUM - START 
 
 // Given a string s, remove duplicate letters so that every letter appears once and only once.
 // You must make sure your result is the smallest in lexicographical order among all possible results.
@@ -7740,5 +7740,76 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* REMOVE DUPLICATE LETTERS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITION LABELS - MEDIUM - START */
+
+// You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part.
+
+// Note that the partition is done so that after concatenating all the parts in order, the resultant string should be s.
+
+// Return a list of integers representing the size of these parts.
+
+var partitionLabels = function (s) {
+
+    let dict = {};
+    let i = 0;
+
+    while (i < s.length) {
+
+        if (!dict[s[i]]) {
+            dict[s[i]] = i;
+        } else {
+            dict[s[i]] = i;
+        }
+
+        i++;
+
+    }
+
+    i = 0;
+    let output = [];
+    let temp = 0;
+
+    while (i < s.length) {
+        temp = dict[s[i]];
+        let j = 0;
+        while (i + j <= temp) {
+            if (dict[s[i + j]] > temp) {
+                temp = dict[s[i + j]];
+            }
+            j++;
+        }
+        output.push(j);
+        i += j;
+    }
+
+    return output;
+
+};
+
+let x = ["ababcbacadefegdehijhklij", "eccbbbbdec"];
+let correct = [[9, 7, 8], [10]];
+
+answerExplainationEl.textContent = "Given a string s, partition the string into as many parts as possible so that each letter appears in at most one part, return a list of integers representing the size of these parts.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let sizes = partitionLabels(x[i]);
+
+    let color = "The string '" + x[i] + "' when partitioned into as many parts as possible become segments that are [" + sizes + "] characters long each";
+
+    let proper = compareArrays(sizes, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITION LABELS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
