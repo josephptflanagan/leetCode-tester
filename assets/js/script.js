@@ -7743,7 +7743,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PARTITION LABELS - MEDIUM - START */
+/* PARTITION LABELS - MEDIUM - START 
 
 // You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part.
 
@@ -7803,6 +7803,72 @@ for (let i = 0; i < x.length; i++) {
     let color = "The string '" + x[i] + "' when partitioned into as many parts as possible become segments that are [" + sizes + "] characters long each";
 
     let proper = compareArrays(sizes, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITION LABELS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITION LABELS - MEDIUM - START */
+
+// The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, so the numeric value of a is 1, 
+// the numeric value of b is 2, the numeric value of c is 3, and so on.
+
+// The numeric value of a string consisting of lowercase characters is defined as the sum of its characters' numeric values. For example,
+//  the numeric value of the string "abe" is equal to 1 + 2 + 5 = 8.
+
+// You are given two integers n and k. Return the lexicographically smallest string with length equal to n and numeric value equal to k.
+
+// Note that a string x is lexicographically smaller than string y if x comes before y in dictionary order, that is, either x is a prefix
+//  of y, or if i is the first position such that x[i] != y[i], then x[i] comes before y[i] in alphabetic order.
+
+var getSmallestString = function (n, k) {
+
+    // let alpha = {
+    //     'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13,
+    //     'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18, 's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26
+    // }
+
+    let alphaReverse = {
+        1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', 11: 'k', 12: 'l', 13: 'm',
+        14: 'n', 15: 'o', 16: 'p', 17: 'q', 18: 'r', 19: 's', 20: 't', 21: 'u', 22: 'v', 23: 'w', 24: 'x', 25: 'y', 26: 'z'
+    }
+
+    let result = [];
+    let localK = k;
+    let localN = n;
+
+    while (localK > 0) {
+        localN -= 1;
+        let diff = Math.min(localK - localN, 26);
+        result.push(alphaReverse[diff]);
+        localK -= diff;
+    }
+
+    return result.reverse().join("");
+
+};
+
+let x = [3, 5];
+let y = [27, 73]
+let correct = ["aay", "aaszz"];
+
+answerExplainationEl.textContent = "Given a number of characters and a sum, return a string that is the length of the number of characters and composed of characters whose values add up to the sum.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let smallestString = getSmallestString(x[i], y[i]);
+
+    let color = "'" + smallestString + "' is the smallest string that is both " + x[i] + " characters long and has characters that sum to " + y[i];
+
+    let proper = smallestString == correct[i] ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
