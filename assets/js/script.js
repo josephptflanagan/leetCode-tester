@@ -7814,7 +7814,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PARTITION LABELS - MEDIUM - START */
+/* GET SMALLEST STRING - MEDIUM - START 
 
 // The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, so the numeric value of a is 1, 
 // the numeric value of b is 2, the numeric value of c is 3, and so on.
@@ -7876,6 +7876,69 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* PARTITION LABELS - MEDIUM - END */
+/* GET SMALLEST STRING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BROKEN CALCULATOR - MEDIUM - START */
+
+// There is a broken calculator that has the integer startValue on its display initially. In one operation, you can:
+
+//      multiply the number on display by 2, or
+//      subtract 1 from the number on display.
+
+// Given two integers startValue and target, return the minimum number of operations needed to display target on the calculator.
+
+var brokenCalc = function (startValue, target) {
+
+    let ops = 0;
+    let currentValue = startValue;
+
+    while (currentValue !== target) {
+
+        if (currentValue > target) {
+
+            ops += currentValue - target;
+            currentValue = target;
+
+        } else if (target % 2 == 1) {
+
+            target++;
+            ops++
+
+        } else {
+
+            target = Math.floor(target / 2);
+            ops++;
+        }
+    }
+
+    return ops;
+
+};
+
+let x = [2, 5, 3, 1024];
+let y = [3, 8, 10, 1]
+let correct = [2, 2, 3, 1023];
+
+answerExplainationEl.textContent = "Given a broken calculator that can only subtract 1 or multiply by 2, a starting number and a target return the minimum number of operations required to reach the target.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let operations = brokenCalc(x[i], y[i]);
+
+    let color = "It takes " + operations + " operations to get from " + x[i] + " to " + y[i];
+
+    let proper = operations == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BROKEN CALCULATOR - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
