@@ -7880,7 +7880,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BROKEN CALCULATOR - MEDIUM - START */
+/* BROKEN CALCULATOR - MEDIUM - START 
 
 // There is a broken calculator that has the integer startValue on its display initially. In one operation, you can:
 
@@ -7940,5 +7940,68 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* BROKEN CALCULATOR - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BOATS TO SAVE PEOPLE - MEDIUM - START */
+
+// You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat
+// can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of
+// those people is at most limit.
+
+//Return the minimum number of boats to carry every given person.
+
+var numRescueBoats = function (people, limit) {
+
+    people.sort((a, b) => { return a - b });
+
+    let boats = 0;
+    let low = 0;
+    let high = people.length - 1;
+
+    while (low <= high) {
+
+        if (people[low] + people[high] <= limit) {
+
+            low++;
+            high--;
+
+        } else {
+
+            high--;
+
+        }
+
+        boats++;
+
+    }
+
+    return boats;
+
+};
+
+let x = [[1, 2], [3, 2, 2, 1], [3, 5, 3, 4], [3, 4, 2, 1, 3, 5, 4, 1, 1, 1, 3, 2, 4], [21, 40, 16, 24, 30], [44, 10, 29, 12, 49, 41, 23, 5, 17, 26]];
+let y = [3, 3, 5, 5, 50, 50]
+let correct = [1, 3, 4, 7, 3, 6];
+
+answerExplainationEl.textContent = "Given an array of weights of people and a weight limit per boat, return the minimum number of boats that would carry everyone.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let boats = numRescueBoats(x[i], y[i]);
+
+    let color = "It takes " + boats + " boat(s) with a weight limit of " + y[i] + " to save " + x[i].length + " people of given weights";
+
+    let proper = boats == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BOATS TO SAVE PEOPLE - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
