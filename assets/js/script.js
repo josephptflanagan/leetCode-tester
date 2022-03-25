@@ -7943,7 +7943,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BOATS TO SAVE PEOPLE - MEDIUM - START */
+/* BOATS TO SAVE PEOPLE - MEDIUM - START 
 
 // You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat
 // can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of
@@ -8003,5 +8003,67 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* BOATS TO SAVE PEOPLE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TWO CITY SCHEDULING - MEDIUM - START */
+
+// A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the
+// ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
+
+// Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+
+var twoCitySchedCost = function (costs) {
+
+    costs.sort((a, b) => {
+
+        let aDiff = a[0] - a[1];
+        let bDiff = b[0] - b[1];
+
+        return aDiff - bDiff;
+
+    });
+
+    let sum = 0;
+
+    for (let i = 0; i < costs.length; i++) {
+
+        if (i >= costs.length / 2) {
+
+            sum += costs[i][1];
+
+        } else {
+
+            sum += costs[i][0];
+
+        }
+    }
+
+    return sum;
+
+};
+
+let x = [[[10, 20], [30, 200], [400, 50], [30, 20]], [[259, 770], [448, 54], [926, 667], [184, 139], [840, 118], [577, 469]], [[515, 563], [451, 713], [537, 709], [343, 819], [855, 779], [457, 60], [650, 359], [631, 42]]];
+let correct = [110, 1859, 3086];
+
+answerExplainationEl.textContent = "Given an array of the costs to fly job applicants to two different cities, return the minimum cost to fly half to one city and half to the other.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let minimumCost = twoCitySchedCost(x[i]);
+
+    let color = "It costs at least " + minimumCost + " to fly half the applicants to city 'a' and half to  city 'b'";
+
+    let proper = minimumCost == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TWO CITY SCHEDULING - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
