@@ -8006,7 +8006,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* TWO CITY SCHEDULING - MEDIUM - START */
+/* TWO CITY SCHEDULING - MEDIUM - START 
 
 // A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the
 // ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
@@ -8065,5 +8065,57 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* TWO CITY SCHEDULING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - START */
+
+// There is an integer array nums sorted in non-decreasing order (not necessarily with distinct values).
+
+// Before being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting
+// array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,4,4,5,6,6,7]
+// might be rotated at pivot index 5 and become [4,5,6,6,7,0,1,2,4,4].
+
+// Given the array nums after the rotation and an integer target, return true if target is in nums, or false if it is not in nums.
+
+// You must decrease the overall operation steps as much as possible.
+
+var search = function (nums, target) {
+
+    // let idx = nums.indexOf(target);
+
+    // if (idx != -1) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+
+    return nums.indexOf(target) != -1
+
+};
+
+let x = [[2, 5, 6, 0, 0, 1, 2], [2, 5, 6, 0, 0, 1, 2]];
+let y = [0, 3]
+let correct = [true, false];
+
+answerExplainationEl.textContent = "Given an array of integers that has been sorted and then rotated, return if a target integer exists within the array.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let isInArray = search(x[i], y[i]);
+
+    let color = isInArray ? "The target " + y[i] + " exists with the rotated array " + x[i] : "The target " + y[i] + " is not in the rotated array " + x[i];
+
+    let proper = isInArray == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
