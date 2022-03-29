@@ -8068,7 +8068,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - START */
+/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - START 
 
 // There is an integer array nums sorted in non-decreasing order (not necessarily with distinct values).
 
@@ -8117,5 +8117,57 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND THE DUPLICATE NUMBER - MEDIUM - START */
+
+// Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+
+// There is only one repeated number in nums, return this repeated number.
+
+// You must solve the problem without modifying the array nums and uses only constant extra space.
+
+var findDuplicate = function (nums) {
+
+    let map = {};
+
+    for (let i = 0; i < nums.length; i++) {
+
+        if (map[nums[i]]) {
+
+            return nums[i];
+
+        } else {
+
+            map[nums[i]] = 1;
+
+        }
+    }
+
+};
+
+let x = [[1, 3, 4, 2, 2], [3, 1, 3, 4, 2]];
+let correct = [2, 3];
+
+answerExplainationEl.textContent = "Given an array of integers that includes a duplicate number, return that duplicate number";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let duplicate = findDuplicate(x[i]);
+
+    let color = "The duplicate number in the array [" + x[i] + "], is " + duplicate;
+
+    let proper = duplicate == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIND THE DUPLICATE NUMBER - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
