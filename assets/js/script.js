@@ -8120,7 +8120,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FIND THE DUPLICATE NUMBER - MEDIUM - START */
+/* FIND THE DUPLICATE NUMBER - MEDIUM - START 
 
 // Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
 
@@ -8169,5 +8169,80 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* FIND THE DUPLICATE NUMBER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SEARCH A 2D MATRIX - MEDIUM - START */
+
+// Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+//      Integers in each row are sorted from left to right.
+//      The first integer of each row is greater than the last integer of the previous row.
+
+var searchMatrix = function (matrix, target) {
+
+    let up = 0;
+    let right = matrix[0].length - 1;
+    let down = matrix.length - 1;
+    let left = 0;
+    let vertical = -1;
+
+    if (target < matrix[up][left] || target > matrix[down][right]) {
+        return false;
+    }
+
+    while (up <= down) {
+
+        if (target === matrix[up][left] || target === matrix[down][left] || target === matrix[up][right] || target === matrix[down][right]) {
+            return true;
+        } else if (target > matrix[up][left] && target < matrix[up][right]) {
+            vertical = up;
+            break;
+        } else if (target > matrix[down][left] && target < matrix[down][right]) {
+            vertical = down;
+            break;
+        } else {
+            up++;
+            down--;
+        }
+    }
+
+    while (vertical !== -1 && left <= right) {
+
+        if (target === matrix[vertical][left] || target === matrix[vertical][right]) {
+            return true;
+        } else {
+            left++;
+            right--;
+        }
+    }
+
+    return false;
+
+};
+
+let x = [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], [[1], [3]]];
+let y = [3, 13, 2];
+let correct = [true, false, false];
+
+answerExplainationEl.textContent = "Given a 2D Matrix of integers and a target integer, return whether or not the target exists in the matrix ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let present = searchMatrix(x[i], y[i]);
+
+    let color = present ? "The matrix contains the target" : "The matrix does not contain the target";
+
+    let proper = present == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SEARCH A 2D MATRIX - MEDIUM - START */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
