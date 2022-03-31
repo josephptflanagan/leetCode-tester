@@ -8172,7 +8172,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SEARCH A 2D MATRIX - MEDIUM - START */
+/* SEARCH A 2D MATRIX - MEDIUM - START 
 
 // Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
 
@@ -8243,6 +8243,87 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* SEARCH A 2D MATRIX - MEDIUM - START */
+/* SEARCH A 2D MATRIX - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SPLIT ARRAY LARGEST SUM - HARD - START */
+
+// Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.
+
+// Write an algorithm to minimize the largest sum among these m subarrays.
+
+var splitArray = function (nums, m) {
+
+    let low = Math.max(...nums);
+    let maxSum = 0;
+
+    let high = nums.reduce((prev, curr) => {
+        return prev + curr;
+    }, 0);
+
+    while (low <= high) {
+
+        const mid = Math.floor(low + (high - low) / 2);
+
+        if (isSplitPossible(nums, mid, m)) {
+
+            maxSum = mid;
+            high = mid - 1;
+
+        } else {
+
+            low = mid + 1;
+
+        }
+    }
+
+    return maxSum;
+
+};
+
+var isSplitPossible = function (nums, mid, m) {
+
+    let sum = 0;
+    let pairCount = 1;
+
+    for (let i = 0; i < nums.length; i++) {
+
+        sum += nums[i];
+
+        if (sum > mid) {
+
+            pairCount++;
+            sum = nums[i];
+
+        }
+    }
+
+    return pairCount <= m;
+};
+
+let x = [[7, 2, 5, 10, 8], [1, 2, 3, 4, 5], [1, 4, 4]];
+let y = [2, 2, 3];
+let correct = [18, 9, 4];
+
+answerExplainationEl.textContent = "Given an array of integers and an number of subarrays to spilt that array into, find the minimum largest sum among the subarrays ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let minimumMaxSum = splitArray(x[i], y[i]);
+
+    let color = "The minimum maximum sum that can be obtained from the array [" + x[i] + "] when that array is split into " + y[i] + " parts is " + minimumMaxSum;
+
+    let proper = minimumMaxSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SPLIT ARRAY LARGEST SUM - HARD - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
