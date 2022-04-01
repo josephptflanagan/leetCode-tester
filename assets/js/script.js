@@ -8247,7 +8247,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SPLIT ARRAY LARGEST SUM - HARD - START */
+/* SPLIT ARRAY LARGEST SUM - HARD - START 
 
 // Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.
 
@@ -8327,3 +8327,41 @@ for (let i = 0; i < x.length; i++) {
 /* SPLIT ARRAY LARGEST SUM - HARD - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REVERSE STRING - EASY - START */
+
+// Write a function that reverses a string. The input string is given as an array of characters s.
+
+// You must do this by modifying the input array in-place with O(1) extra memory.
+
+var reverseString = function (s) {
+    return s.reverse();
+};
+
+let x = [["h", "e", "l", "l", "o"], ["H", "a", "n", "n", "a", "h"]];
+let correct = [["o", "l", "l", "e", "h"], ["h", "a", "n", "n", "a", "H"]];
+
+answerExplainationEl.textContent = "Given a string (in the form of an array), return the reverse of that string (in the form of an array)";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let reversed = reverseString(x[i]);
+
+    let color = "The reverse of [" + xCopy + "] is [" + reversed + "]";
+
+    let proper = compareArrays(reversed, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REVERSE STRING - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
