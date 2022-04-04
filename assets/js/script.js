@@ -292,6 +292,34 @@ let listConstructor = function (array) {
 
 }
 
+let listToArrayTypeOne = function (list) {
+
+    let array = [];
+
+    while (list.head != null) {
+        array.push(list.head.val);
+        list.head = list.head.next;
+
+    }
+
+    return array;
+
+}
+
+let listToArrayTypeTwo = function (head) {
+
+    let array = [];
+    let currNode = head;
+
+    while (currNode != null) {
+        array.push(currNode.val);
+        currNode = currNode.next;
+
+    }
+
+    return array;
+
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -8328,7 +8356,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REVERSE STRING - EASY - START */
+/* REVERSE STRING - EASY - START 
 
 // Write a function that reverses a string. The input string is given as an array of characters s.
 
@@ -8362,6 +8390,89 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* REVERSE STRING - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SWAPPING NODES IN A LINKED LIST - MEDIUM - START */
+
+// You are given the head of a linked list, and an integer k.
+
+// Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end
+//(the list is 1-indexed).
+
+var swapNodes = function (head, k) {
+
+    let currNode = head;
+    let length = 0;
+    let temp1;
+    let temp2;
+
+    while (currNode != null) {
+        length++;
+        if (length == k) temp1 = currNode.val;
+        currNode = currNode.next;
+    }
+
+    let fromEnd = length - k;
+    let idx = 0;
+    currNode = head;
+
+    while (currNode != null) {
+        if (idx == fromEnd) {
+            temp2 = currNode.val;
+            currNode.val = temp1;
+        }
+        idx++;
+        currNode = currNode.next;
+    }
+
+    idx = 0;
+    currNode = head;
+
+    while (currNode != null) {
+
+        idx++;
+        if (idx == k) {
+            currNode.val = temp2;
+            break;
+        }
+        currNode = currNode.next;
+    }
+
+    return head;
+
+
+};
+
+let x = [[1, 2, 3, 4, 5], [7, 9, 6, 6, 7, 8, 3, 0, 9, 5]];
+let y = [2, 5];
+let correct = [[1, 4, 3, 2, 5], [7, 9, 6, 6, 8, 7, 3, 0, 9, 5]];
+
+answerExplainationEl.textContent = "Given a singly linked list and an integer k, swap the elements found at node k from the head and k from the end";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let xList = listConstructor(x[i]);
+
+    let altered = swapNodes(xList.head, y[i]);
+
+    let alteredArray = listToArrayTypeTwo(altered);
+
+    let color = "The list [" + xCopy + "] with the nodes '" + y[i] + "' from the start and the end is [" + alteredArray + "]";
+
+    let proper = compareArrays(alteredArray, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SWAPPING NODES IN A LINKED LIST - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
