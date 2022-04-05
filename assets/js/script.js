@@ -8393,7 +8393,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SWAPPING NODES IN A LINKED LIST - MEDIUM - START */
+/* SWAPPING NODES IN A LINKED LIST - MEDIUM - START 
 
 // You are given the head of a linked list, and an integer k.
 
@@ -8473,6 +8473,71 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SWAPPING NODES IN A LINKED LIST - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONTAINER WITH MOST WATER - MEDIUM - START */
+
+// You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line
+// are (i, 0) and (i, height[i]).
+
+// Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+// Return the maximum amount of water a container can store.
+
+// Notice that you may not slant the container.
+
+var maxArea = function (height) {
+
+    if (height.length < 2) {
+        return 0;
+    }
+
+    let i = 0;
+    let j = height.length - 1;
+    let tempArea = 0;
+    let maxArea = 0;
+
+    while (i != j) {
+
+        if (height[i] > height[j]) {
+            tempArea = height[j] * (j - i)
+            j--;
+        } else {
+            tempArea = height[i] * (j - i);
+            i++;
+        }
+
+        maxArea = tempArea > maxArea ? tempArea : maxArea;
+
+    }
+
+    return maxArea;
+
+};
+
+let x = [[1, 8, 6, 2, 5, 4, 8, 3, 7], [1, 1]];
+let correct = [49, 1];
+
+answerExplainationEl.textContent = "Given a singly linked list and an integer k, swap the elements found at node k from the head and k from the end";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let volume = maxArea(x[i]);
+
+    let color = "The greatest volume that can be obtained in [" + x[i] + "] is " + volume;
+
+    let proper = volume == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONTAINER WITH MOST WATER - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
