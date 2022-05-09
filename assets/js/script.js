@@ -8541,7 +8541,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LAST STONE WEIGHT - EASY - START */
+/* LAST STONE WEIGHT - EASY - START
 
 // You are given an array of integers stones where stones[i] is the weight of the ith stone.
 
@@ -8600,3 +8600,62 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - START */
+
+var letterCombinations = function (digits) {
+
+    if (!digits) return [];
+
+    let phone = { "2": ["a", "b", "c"], "3": ["d", "e", "f"], "4": ["g", "h", "i"], "5": ["j", "k", "l"], "6": ["m", "n", "o"], "7": ["p", "q", "r", "s"], "8": ["t", "u", "v"], "9": ["w", "x", "y", "z"] };
+
+    let combinations = [""];
+
+    for (let i = 0; i < digits.length; i++) {
+
+        let temp = [];
+
+        for (let j = 0; j < combinations.length; j++) {
+
+            let localAlpha = phone[digits[i]];
+
+            for (let k = 0; k < localAlpha.length; k++) {
+
+                temp.push(combinations[j] + localAlpha[k]);
+            }
+        }
+
+        combinations = temp;
+
+    }
+
+    return combinations;
+
+};
+
+let x = ["23", "", "2"];
+let correct = [["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], [], ["a", "b", "c"]];
+
+answerExplainationEl.textContent = "Given a string of numbers, return all possible letter combinations that can be created by that number, using a phone's keys as a guide.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let combos = letterCombinations(x[i]);
+
+    let color = "Given the string of numbers '" + x[i] + "', the possible letter combinations are [" + combos + "]";
+
+    let proper = compareArrays(combos, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
