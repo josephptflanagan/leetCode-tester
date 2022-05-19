@@ -222,6 +222,22 @@ function compareArrays(arr1, arr2) {
 
 }
 
+function compareNestedArrays(arr1, arr2) {
+
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!compareArrays(arr1[i], arr2[i])) {
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
 function compareTreeArrays(arr1, arr2) {
 
     let compArr1 = [];
@@ -250,6 +266,27 @@ function compareTreeArrays(arr1, arr2) {
     }
 
     return true;
+}
+
+let arrayItemRemoval = function (idx, array) {
+
+    let localArray = array.slice();
+
+    if (idx == 0) {
+
+        localArray.shift();
+
+    } else if (idx > 0 < links.length - 1) {
+
+        localArray = localArray.slice(0, idx) + localArray.slice(idx + 1);
+
+    } else {
+        localArray.pop();
+
+    }
+
+    return localArray;
+
 }
 
 function ListNode(val, next) {
@@ -8600,7 +8637,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - START */
+/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - START 
 
 var letterCombinations = function (digits) {
 
@@ -8657,5 +8694,215 @@ for (let i = 0; i < x.length; i++) {
 
 
 /* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CRITICAL CONNECTIONS IN A NETWORK - HARD - START 
+
+var criticalConnections = function (n, connections) {
+
+    const disc = Array(n).fill(0) //discovery time
+    const low = Array(n).fill(0) //low value
+
+    let time = 0;
+    const res = []
+    const graph = {}
+    const visited = new Set
+
+    for (let [u, v] of connections) {
+        if (!graph[u]) graph[u] = []
+        if (!graph[v]) graph[v] = []
+
+        graph[u].push(v)
+        graph[v].push(u)
+    }
+
+    function dfs(i, prev) {
+        visited.add(i)
+        time++
+        disc[i] = time
+        low[i] = disc[i]
+
+        for (let nei of graph[i]) {
+            if (!visited.has(nei)) {
+                dfs(nei, i)
+
+                low[i] = Math.min(low[i], low[nei])
+            } else if (nei !== prev) {
+                low[i] = Math.min(low[i], disc[nei])
+            }
+
+            if (low[nei] > disc[i]) {
+                res.push([i, nei])
+            }
+        }
+    }
+
+    dfs(0, -1)
+
+    return res
+};
+
+let x = [4, 2];
+let y = [[[0, 1], [1, 2], [2, 0], [1, 3]], [[0, 1]]];
+let correct = [[[3, 1]], [[0, 1]]];
+
+answerExplainationEl.textContent = "Given an array of server connections, return any critical connections i.e. those that if lost would disconnect servers from the network.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let critical = criticalConnections(x[i], y[i]);
+
+    let isAre = critical.length > 1 ? "connections are" : "connection is";
+
+    let color = "Given " + x[i] + " servers with [" + y[i] + "] connections, the critical " + isAre + " [" + critical + "]";
+
+    let proper = compareNestedArrays(critical, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* CRITICAL CONNECTIONS IN A NETWORK - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NEXT PERMUATION - MEDIUM - START */
+
+var nextPermutation = function (nums) {
+
+    //Weed out of small and simple arrays of nums
+    if (nums.length == 1) {
+        return nums;
+    } else if (nums.length == 2) {
+        return nums.reverse();
+    }
+
+    //When Supplied with an array and the indecies of two elements, returns the array with the elements swapped
+    let swap = function (array, idx1, idx2) {
+
+        let temp = array[idx1];
+
+        array[idx1] = array[idx2];
+        array[idx2] = temp;
+
+        return array;
+
+    }
+
+    //When Supploes with an array and the index of an element, this returns the next greatest element in the array (assumes there is one)
+    let nextGreaterIdx = function (array, targetIdx) {
+
+        let temp;
+        let leastGreaterIdx;
+
+        for (let i = 0; i < targetIdx; i++) {
+
+            if (array[i] > array[targetIdx]) {
+
+                if (!temp) {
+
+                    temp = array[i];
+                    leastGreaterIdx = i;
+
+                } else if (array[i] < temp && array[i] > array[targetIdx]) {
+
+                    leastGreaterIdx = i;
+                }
+            }
+        }
+
+        return leastGreaterIdx;
+
+    }
+
+    // Supplied with an array and an index at which to split the array, this function splits that array into two, sorts the first section, and returns a combined array
+    let sortSec = function (array, splitIdx) {
+
+        let part1 = array.slice(0, splitIdx);
+        let part2 = array.slice(splitIdx);
+
+        part1.sort((a, b) => (b - a));
+
+        return part1.concat(part2);
+
+    }
+
+    //reverse the array for easier use, instantiate the first element to be used in comparison
+    let numsRev = nums.reverse();
+    let last = nums[0];
+
+    //while loop control variables
+    let idx = 1;
+
+    while (true) {
+
+        //triggered when encountering the first lesser element in the array
+        if (numsRev[idx] < last) {
+
+            //find the index of the second element to swap
+            let swapIdx = nextGreaterIdx(numsRev, idx)
+
+            //swap the index of the next greater element with the lower element
+            numsRev = swap(numsRev, idx, swapIdx);
+
+            //sort the section of the array that will fall after the element in descending order
+            numsRev = sortSec(numsRev, idx);
+
+            //reverse the array
+            numsRev.reverse();
+
+            //exit the while loop
+            break;
+
+        }
+
+        idx++;
+
+        //triggered when the array has been run
+        if (idx === numsRev.length) {
+            //does not re-reverse the array, leaving it in the next permutation by default
+            //exit the while loop
+            break;
+        }
+
+    }
+
+    console.log(numsRev);
+
+    return numsRev;
+
+};
+
+let x = [[1, 2, 3], [3, 2, 1], [1, 1, 5], [1, 3, 2]];
+let correct = [[1, 3, 2], [1, 2, 3], [1, 5, 1], [2, 1, 3]];
+
+answerExplainationEl.textContent = "Given an array of integers, return the next greatest permuation of that array of integers. If the given array is already the greatest permutation, return the least greatest permuation.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let next = nextPermutation(x[i]);
+
+    let color = "Given the array [" + xCopy + "], the next greatest perumation is [" + next + "]";
+
+    let proper = compareArrays(next, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* NEXT PERMUATION - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
