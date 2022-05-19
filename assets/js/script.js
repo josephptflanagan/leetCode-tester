@@ -222,6 +222,22 @@ function compareArrays(arr1, arr2) {
 
 }
 
+function compareNestedArrays(arr1, arr2) {
+
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!compareArrays(arr1[i], arr2[i])) {
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
 function compareTreeArrays(arr1, arr2) {
 
     let compArr1 = [];
@@ -250,6 +266,27 @@ function compareTreeArrays(arr1, arr2) {
     }
 
     return true;
+}
+
+let arrayItemRemoval = function (idx, array) {
+
+    let localArray = array.slice();
+
+    if (idx == 0) {
+
+        localArray.shift();
+
+    } else if (idx > 0 < links.length - 1) {
+
+        localArray = localArray.slice(0, idx) + localArray.slice(idx + 1);
+
+    } else {
+        localArray.pop();
+
+    }
+
+    return localArray;
+
 }
 
 function ListNode(val, next) {
@@ -292,6 +329,34 @@ let listConstructor = function (array) {
 
 }
 
+let listToArrayTypeOne = function (list) {
+
+    let array = [];
+
+    while (list.head != null) {
+        array.push(list.head.val);
+        list.head = list.head.next;
+
+    }
+
+    return array;
+
+}
+
+let listToArrayTypeTwo = function (head) {
+
+    let array = [];
+    let currNode = head;
+
+    while (currNode != null) {
+        array.push(currNode.val);
+        currNode = currNode.next;
+
+    }
+
+    return array;
+
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -6988,3 +7053,1859 @@ for (let i = 0; i < x.length; i++) {
 /* BINARY TREE IN ORDER TRAVERSAL - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+<<<<<<< HEAD
+=======
+
+/* SINGLE NUMBER - EASY - START 
+
+// Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+// You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+var singleNumber = function(nums) {
+    
+    let dict = {};
+    
+    for (let i = 0;i < nums.length;i++){
+        
+        if (!dict[nums[i]]){
+            dict[nums[i]] = 1;
+        } else{
+            dict[nums[i]]++;
+        }
+            
+    }
+    
+    for (key in dict){
+        if (dict[key] === 1){
+            return key;
+        }
+    }
+    
+    
+};
+
+let x = [[2,2,1],[4,1,2,1,2],[1]];
+let correct = [1,4,1];
+
+answerExplainationEl.textContent = "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let single = singleNumber(x[i]);
+
+    let color = "In the array [" + x[i] + "], the only element that appears once is '" + single + "'";
+
+    let proper = single == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SINGLE NUMBER - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAJORITY ELEMENT - EASY - START 
+
+// Given an array nums of size n, return the majority element.
+
+// The majority element is the element that appears more than ⌊n / 2⌋ times.
+// You may assume that the majority element always exists in the array.
+
+var majorityElement = function(nums) {
+    
+    let dict = {};
+    let n = nums.length;
+    
+    for (let i = 0;i < nums.length;i++){
+        
+        if (!dict[nums[i]]){
+            dict[nums[i]] = 1;
+        } else{
+            dict[nums[i]]++;
+        }
+            
+    }
+    
+    for (key in dict){
+        if (dict[key] > n / 2){
+            return key;
+        }
+    }
+    
+};
+
+let x = [[3,2,3],[2,2,1,1,1,2,2]];
+let correct = [3,2];
+
+answerExplainationEl.textContent = "Given an array nums of size n, return the majority element.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let majority = majorityElement(x[i]);
+
+    let color = "In the array [" + x[i] + "], the majority element is '" + majority + "'";
+
+    let proper = majority == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAJORITY ELEMENT - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - START 
+
+// Given the head of a linked list, remove the nth node from the end of the list and return its head.
+let singlyLinkedListConstructor = function (arr) {
+
+    let list = new LinkedList;
+    let currentNode;
+
+    for (let i = 0; i < arr.length; i++) {
+
+        let node = new ListNode(arr[i]);
+
+        if (list.head == null) {
+            list.head = node;
+            currentNode = list.head;
+        } else {
+            currentNode.next = node;
+            currentNode = node;
+        }
+
+    }
+
+    return list.head;
+
+}
+
+let arrConstructor = function (head) {
+
+    if (head === null) {
+        return [];
+    }
+
+    let arr = [];
+    let currNode = head;
+
+    while (currNode) {
+        arr.push(currNode.val);
+        currNode = currNode.next;
+    }
+
+    return arr;
+
+}
+
+var removeNthFromEnd = function (head, n) {
+
+    if (head.next === null) {
+        return null;
+    }
+
+    let listLength = 0;
+    let currNode = head;
+
+    while (currNode) {
+        listLength++;
+        currNode = currNode.next;
+    }
+
+    if (listLength == n){
+        return head.next;
+    }
+
+    let removeAt = listLength - n;
+    currNode = head;
+
+    for (let i = 0; i < removeAt; i++) {
+
+        if (i === removeAt - 1) {
+            let removedNode = currNode.next;
+            currNode.next = removedNode.next;
+            removedNode.next = null;
+        }
+
+        currNode = currNode.next;
+
+    }
+
+    return head;
+
+};
+
+let x = [[1, 2, 3, 4, 5], [1], [1, 2], [1, 2]];
+let y = [2, 1, 1, 2]
+let correct = [[1, 2, 3, 5], [], [1],[2]];
+
+answerExplainationEl.textContent = "Given the head of a linked list, remove the nth node from the end of the list and return its head.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = singlyLinkedListConstructor(x[i]);
+
+    let remainingList = removeNthFromEnd(xList, y[i]);
+
+    console.log(remainingList);
+
+    let remainingArr = arrConstructor(remainingList);
+
+    let color = "Given a linked list with the elements [" + x[i] + "] and a number n of  '" + y[i] + "', the list with the nth element from the end removed is [" + remainingArr + "]";
+
+    let proper = compareArrays(remainingArr, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REMOVE NTH NODE FROM END OF LIST - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SUMMARY RANGES - EASY - START 
+
+// You are given a sorted unique integer array nums.
+
+// Return the smallest sorted list of ranges that cover all the numbers in the array exactly. That is, each element of nums is covered by exactly one of the ranges, and there is no integer x such that x is in one of the ranges but not in nums.
+
+// Each range [a,b] in the list should be output as:
+
+// "a->b" if a != b
+// "a" if a == b
+
+var summaryRanges = function (nums) {
+
+    let ranges = [];
+    let lastNum = 0;
+    let rangeStart = 0;
+    
+    if (nums.length === 1) {
+
+        ranges.push(nums[0].toString());
+
+    } else {
+
+        for (let i = 1; i < nums.length + 1; i++) {
+
+            if (nums[i] !== nums[lastNum] + 1) {
+
+                if (lastNum === rangeStart) {
+                    ranges.push(nums[lastNum].toString());
+                } else {
+                    ranges.push((nums[rangeStart].toString() + "->" + nums[lastNum].toString()));
+                }
+
+                lastNum = i;
+                rangeStart = i;
+
+            } else {
+
+                lastNum++;
+
+            }
+        }
+    }
+
+    return ranges;
+
+};
+
+let x = [[0, 1, 2, 4, 5, 7], [0, 2, 3, 4, 6, 8, 9], [-1]];
+let correct = [["0->2", "4->5", "7"], ["0", "2->4", "6", "8->9"], ["-1"]];
+
+answerExplainationEl.textContent = "Given a sorted array of unique integers, return the smallest sorted list of ranges that cover all the numbers in the array exactly.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let ranges = summaryRanges(x[i]);
+
+    let color = "Given an array with the elements [" + x[i] + "], those elements can be covered with the ranges [" + ranges + "]";
+
+    let proper = compareArrays(ranges, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SUMMARY RANGES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* COUNTING BITS - EASY - START 
+
+// Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+
+var countBits = function (n) {
+
+    let sumArr = function (arr) {
+
+        let sum = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+            sum += Number(arr[i]);
+        }
+
+        return sum;
+
+    }
+
+    let bits = [];
+
+    for (let i = 0; i < n + 1; i++) {
+
+        bits.push(sumArr(i.toString(2).split("")));
+
+    }
+
+    return bits;
+
+};
+
+let x = [2, 5];
+let correct = [[0, 1, 1], [0, 1, 1, 2, 1, 2]];
+
+answerExplainationEl.textContent = "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let bits = countBits(x[i]);
+
+    let color = "The array [" + bits + "], contains the individual sums of all the bits of all the integers leading up to and including '" + x[i] + "'";
+
+    let proper = compareArrays(bits, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* COUNTING BITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* IS SUBSEQUENCE - EASY - START 
+
+// Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+// A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of
+// the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+var isSubsequence = function (s, t) {
+
+    let sPointer = 0
+    let tPointer = 0;
+
+    if (s.length === 0){
+        return true;
+    }
+
+    while (tPointer < t.length) {
+
+        if (t[tPointer] !== s[sPointer]) {
+
+            tPointer++;
+
+        } else {
+
+            tPointer++;
+            sPointer++;
+
+            if (sPointer == s.length) {
+
+                return true;
+
+            }
+        }
+
+    }
+
+    return false;
+
+};
+
+let x = ["abc", "axc", ""];
+let y = ["ahbgdc", "ahbgdc", "ahbgdc"];
+let correct = [true, false, true];
+
+answerExplainationEl.textContent = "Given two strings s and t, return true if s is a subsequence of t, or false otherwise.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let isSub = isSubsequence(x[i], y[i]);
+
+    let color = isSub ? "'" + x[i] + "' is a  subsequence of '" + y[i] + "'" : "'" + x[i] + "' is not a  subsequence of '" + y[i] + "'";
+
+    let proper = isSub === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* IS SUBSEQUENCE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LINKED LIST CYCLE - EASY - START 
+
+//Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+//There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. 
+//Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+
+//Return true if there is a cycle in the linked list. Otherwise, return false.
+
+var hasCycle = function (head) {
+
+    let fast = head;
+    let slow = head;
+
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (fast === slow) {
+            return true;
+        };
+    }
+
+    return false;
+
+};
+
+let cycleListCreator = function (array, position) {
+
+    let newList = new LinkedList;
+    let currentNode;
+
+    for (let i = 0; i < array.length; i++) {
+
+        let newNode = new ListNode(array[i]);
+
+        if (newList.head == null) {
+            newList.head = newNode;
+            currentNode = newList.head;
+        } else {
+
+            currentNode.next = newNode;
+            currentNode = newNode;
+
+            if (i == array.length - 1 && position > -1) {
+
+                let localCurrentNode = newList.head;
+
+                for (let j = 0; j < position + 1; j++) {
+
+                    if (j == position) {
+                        currentNode.next = localCurrentNode;
+                    } else {
+                        localCurrentNode = localCurrentNode.next;
+                    }
+
+                }
+            }
+        }
+    }
+
+    return newList.head;
+
+}
+
+let x = [[3, 2, 0, -4], [1, 2], [1]];
+let y = [1, 0, -1]
+let correct = [true, true, false];
+
+answerExplainationEl.textContent = "Given head, the head of a linked list, determine if the linked list has a cycle in it.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xList = cycleListCreator(x[i], y[i]);
+
+    let cycleOrNot = hasCycle(xList);
+
+    let color = cycleOrNot ? "There is a cycle in [" + x[i] + "]" : "There is no cycle in [" + x[i] + "]";
+
+    let proper = cycleOrNot === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LINKED LIST CYCLE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SIMPLIFY PATH - MEDIUM - START 
+
+// Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system,
+// convert it to the simplified canonical path.
+
+// In a Unix-style file system, a period '.' refers to the current directory, a double period '..' refers to the directory up a level,
+// and any multiple consecutive slashes (i.e. '//') are treated as a single slash '/'. For this problem, any other format of periods
+// such as '...' are treated as file/directory names.
+
+// The canonical path should have the following format:
+
+//    The path starts with a single slash '/'.
+//    Any two directories are separated by a single slash '/'.
+//    The path does not end with a trailing '/'.
+//    The path only contains the directories on the path from the root directory to the target file or directory (i.e., no period '.' or double period '..')
+// Return the simplified canonical path.
+
+var simplifyPath = function (path) {
+
+    let newArr = path.split('/');
+    let stack = [];
+
+    for (let i = 0; i < newArr.length; i++) {
+
+        if (newArr[i]) {
+
+            if (newArr[i] === '..') {
+
+                stack.pop();
+
+            } else if (newArr[i] !== '.') {
+
+                stack.push(newArr[i]);
+
+            }
+        }
+    }
+
+    return '/' + stack.join('/');
+
+};
+
+let x = ["/home/", "/../", "/home//foo/", "g", "/a/./b/../../c/"];
+let correct = ["/home", "/", "/home/foo", "/g", "/c"];
+
+answerExplainationEl.textContent = "Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system, convert it to the simplified canonical path.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let canonicalPath = simplifyPath(x[i]);
+
+    let color = "This: '" + canonicalPath + "' is the canonical path gleaned from: '" + x[i] + "'";
+
+    let proper = canonicalPath === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SIMPLIFY PATH - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* VALIDATE STACK SEQUENCES - MEDIUM - START 
+
+// Given two integer arrays pushed and popped each with distinct values, return true if this could have been the result of a
+// sequence of push and pop operations on an initially empty stack, or false otherwise.
+
+var validateStackSequences = function (pushed, popped) {
+
+    let pushedCopy = pushed.slice().reverse();
+    let lastElement1 = 0;
+    let lastElement2 = 0;
+    let constructedStack1 = [];
+    let constructedStack2 = [];
+
+    constructedStack1.push(pushedCopy.pop());
+
+    while (true) {
+
+        if (constructedStack2.length === popped.length) {
+            return true;
+        }
+
+        if (constructedStack1[lastElement1] === popped[lastElement2]) {
+
+            constructedStack2.push(constructedStack1.pop());
+            lastElement1--;
+            lastElement2++;
+
+        } else if (pushedCopy.length > 0) {
+
+            constructedStack1.push(pushedCopy.pop());
+            lastElement1++;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+};
+
+let x = [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]];
+let y = [[4, 5, 3, 2, 1], [4, 3, 5, 1, 2]];
+let correct = [true, false];
+
+answerExplainationEl.textContent = "Given two integer arrays pushed and popped each with distinct values, return true if this could have been the result of a sequence of push and pop operations on an initially empty stack, or false otherwise.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let possible = validateStackSequences(x[i], y[i]);
+
+    let color = possible ? "It's possible to convert [" + x[i] + "] into [" + y[i] + "] with a series of pushes and pops" : "It's not possible to convert [" + x[i] + "] into [" + y[i] + "] with a series of pushes and pops";
+
+    let proper = possible === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* VALIDATE STACK SEQUENCES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SCORE OF PARENTHESES - MEDIUM - START 
+
+// Given a balanced parentheses string s, return the score of the string.
+
+// The score of a balanced parentheses string is based on the following rule:
+
+//    "()" has score 1.
+//    AB has score A + B, where A and B are balanced parentheses strings.
+//    (A) has score 2 * A, where A is a balanced parentheses string.
+
+var scoreOfParentheses = function (s) {
+
+    let scoreByDepth = [0];
+
+    for (let i = 0; i < s.length; i++) {
+
+        if (s[i] === "(") {
+
+            scoreByDepth.push(0);
+
+        } else {
+
+            let currDepthScore = scoreByDepth[scoreByDepth.length - 1] > 0 ? 2 * scoreByDepth[scoreByDepth.length - 1] : 1;
+            scoreByDepth.pop();
+            scoreByDepth[scoreByDepth.length - 1] += currDepthScore;
+
+        }
+
+    }
+
+    return scoreByDepth[0];
+
+};
+
+let x = ["()", "(())", "()()", "(()(()))"];
+let correct = [1, 2, 2, 6];
+
+answerExplainationEl.textContent = "Given a balanced parentheses string s, return the score of the string.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let score = scoreOfParentheses(x[i]);
+
+    let color = "The score of the string '" + x[i] + "' is " + score;
+
+    let proper = score === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SCORE OF PARENTHESES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE DUPLICATE LETTERS - MEDIUM - START 
+
+// Given a string s, remove duplicate letters so that every letter appears once and only once.
+// You must make sure your result is the smallest in lexicographical order among all possible results.
+
+var removeDuplicateLetters = function (s) {
+
+    let last_occ = {};
+    let stack = [];
+
+    for (let i = 0; i < s.length; i++) {
+        last_occ[s[i]] = i
+    }
+
+    for (let i = 0; i < s.length; i++) {
+        if (stack.indexOf(s[i]) == -1) {
+            while (stack.length > 0 && stack[stack.length - 1] > s[i] && last_occ[stack[stack.length - 1]] > i) {
+                stack.pop();
+            }
+            stack.push(s[i])
+        }
+    }
+
+    return stack.join("");
+
+};
+
+let x = ["bcabc", "cbacdcbc"];
+let correct = ["abc", "acdb"];
+
+answerExplainationEl.textContent = "Given a string of characters remove duplicate letters and return the result with the smallest lexographical order.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let simplified = removeDuplicateLetters(x[i]);
+
+    let color = "The string '" + x[i] + "' reduced to match the specifications is " + simplified;
+
+    let proper = simplified === correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REMOVE DUPLICATE LETTERS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITION LABELS - MEDIUM - START 
+
+// You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part.
+
+// Note that the partition is done so that after concatenating all the parts in order, the resultant string should be s.
+
+// Return a list of integers representing the size of these parts.
+
+var partitionLabels = function (s) {
+
+    let dict = {};
+    let i = 0;
+
+    while (i < s.length) {
+
+        if (!dict[s[i]]) {
+            dict[s[i]] = i;
+        } else {
+            dict[s[i]] = i;
+        }
+
+        i++;
+
+    }
+
+    i = 0;
+    let output = [];
+    let temp = 0;
+
+    while (i < s.length) {
+        temp = dict[s[i]];
+        let j = 0;
+        while (i + j <= temp) {
+            if (dict[s[i + j]] > temp) {
+                temp = dict[s[i + j]];
+            }
+            j++;
+        }
+        output.push(j);
+        i += j;
+    }
+
+    return output;
+
+};
+
+let x = ["ababcbacadefegdehijhklij", "eccbbbbdec"];
+let correct = [[9, 7, 8], [10]];
+
+answerExplainationEl.textContent = "Given a string s, partition the string into as many parts as possible so that each letter appears in at most one part, return a list of integers representing the size of these parts.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let sizes = partitionLabels(x[i]);
+
+    let color = "The string '" + x[i] + "' when partitioned into as many parts as possible become segments that are [" + sizes + "] characters long each";
+
+    let proper = compareArrays(sizes, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITION LABELS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* GET SMALLEST STRING - MEDIUM - START 
+
+// The numeric value of a lowercase character is defined as its position (1-indexed) in the alphabet, so the numeric value of a is 1, 
+// the numeric value of b is 2, the numeric value of c is 3, and so on.
+
+// The numeric value of a string consisting of lowercase characters is defined as the sum of its characters' numeric values. For example,
+//  the numeric value of the string "abe" is equal to 1 + 2 + 5 = 8.
+
+// You are given two integers n and k. Return the lexicographically smallest string with length equal to n and numeric value equal to k.
+
+// Note that a string x is lexicographically smaller than string y if x comes before y in dictionary order, that is, either x is a prefix
+//  of y, or if i is the first position such that x[i] != y[i], then x[i] comes before y[i] in alphabetic order.
+
+var getSmallestString = function (n, k) {
+
+    // let alpha = {
+    //     'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13,
+    //     'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18, 's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26
+    // }
+
+    let alphaReverse = {
+        1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', 11: 'k', 12: 'l', 13: 'm',
+        14: 'n', 15: 'o', 16: 'p', 17: 'q', 18: 'r', 19: 's', 20: 't', 21: 'u', 22: 'v', 23: 'w', 24: 'x', 25: 'y', 26: 'z'
+    }
+
+    let result = [];
+    let localK = k;
+    let localN = n;
+
+    while (localK > 0) {
+        localN -= 1;
+        let diff = Math.min(localK - localN, 26);
+        result.push(alphaReverse[diff]);
+        localK -= diff;
+    }
+
+    return result.reverse().join("");
+
+};
+
+let x = [3, 5];
+let y = [27, 73]
+let correct = ["aay", "aaszz"];
+
+answerExplainationEl.textContent = "Given a number of characters and a sum, return a string that is the length of the number of characters and composed of characters whose values add up to the sum.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let smallestString = getSmallestString(x[i], y[i]);
+
+    let color = "'" + smallestString + "' is the smallest string that is both " + x[i] + " characters long and has characters that sum to " + y[i];
+
+    let proper = smallestString == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* GET SMALLEST STRING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BROKEN CALCULATOR - MEDIUM - START 
+
+// There is a broken calculator that has the integer startValue on its display initially. In one operation, you can:
+
+//      multiply the number on display by 2, or
+//      subtract 1 from the number on display.
+
+// Given two integers startValue and target, return the minimum number of operations needed to display target on the calculator.
+
+var brokenCalc = function (startValue, target) {
+
+    let ops = 0;
+    let currentValue = startValue;
+
+    while (currentValue !== target) {
+
+        if (currentValue > target) {
+
+            ops += currentValue - target;
+            currentValue = target;
+
+        } else if (target % 2 == 1) {
+
+            target++;
+            ops++
+
+        } else {
+
+            target = Math.floor(target / 2);
+            ops++;
+        }
+    }
+
+    return ops;
+
+};
+
+let x = [2, 5, 3, 1024];
+let y = [3, 8, 10, 1]
+let correct = [2, 2, 3, 1023];
+
+answerExplainationEl.textContent = "Given a broken calculator that can only subtract 1 or multiply by 2, a starting number and a target return the minimum number of operations required to reach the target.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let operations = brokenCalc(x[i], y[i]);
+
+    let color = "It takes " + operations + " operations to get from " + x[i] + " to " + y[i];
+
+    let proper = operations == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BROKEN CALCULATOR - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BOATS TO SAVE PEOPLE - MEDIUM - START 
+
+// You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat
+// can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of
+// those people is at most limit.
+
+//Return the minimum number of boats to carry every given person.
+
+var numRescueBoats = function (people, limit) {
+
+    people.sort((a, b) => { return a - b });
+
+    let boats = 0;
+    let low = 0;
+    let high = people.length - 1;
+
+    while (low <= high) {
+
+        if (people[low] + people[high] <= limit) {
+
+            low++;
+            high--;
+
+        } else {
+
+            high--;
+
+        }
+
+        boats++;
+
+    }
+
+    return boats;
+
+};
+
+let x = [[1, 2], [3, 2, 2, 1], [3, 5, 3, 4], [3, 4, 2, 1, 3, 5, 4, 1, 1, 1, 3, 2, 4], [21, 40, 16, 24, 30], [44, 10, 29, 12, 49, 41, 23, 5, 17, 26]];
+let y = [3, 3, 5, 5, 50, 50]
+let correct = [1, 3, 4, 7, 3, 6];
+
+answerExplainationEl.textContent = "Given an array of weights of people and a weight limit per boat, return the minimum number of boats that would carry everyone.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let boats = numRescueBoats(x[i], y[i]);
+
+    let color = "It takes " + boats + " boat(s) with a weight limit of " + y[i] + " to save " + x[i].length + " people of given weights";
+
+    let proper = boats == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BOATS TO SAVE PEOPLE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TWO CITY SCHEDULING - MEDIUM - START 
+
+// A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the
+// ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
+
+// Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+
+var twoCitySchedCost = function (costs) {
+
+    costs.sort((a, b) => {
+
+        let aDiff = a[0] - a[1];
+        let bDiff = b[0] - b[1];
+
+        return aDiff - bDiff;
+
+    });
+
+    let sum = 0;
+
+    for (let i = 0; i < costs.length; i++) {
+
+        if (i >= costs.length / 2) {
+
+            sum += costs[i][1];
+
+        } else {
+
+            sum += costs[i][0];
+
+        }
+    }
+
+    return sum;
+
+};
+
+let x = [[[10, 20], [30, 200], [400, 50], [30, 20]], [[259, 770], [448, 54], [926, 667], [184, 139], [840, 118], [577, 469]], [[515, 563], [451, 713], [537, 709], [343, 819], [855, 779], [457, 60], [650, 359], [631, 42]]];
+let correct = [110, 1859, 3086];
+
+answerExplainationEl.textContent = "Given an array of the costs to fly job applicants to two different cities, return the minimum cost to fly half to one city and half to the other.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let minimumCost = twoCitySchedCost(x[i]);
+
+    let color = "It costs at least " + minimumCost + " to fly half the applicants to city 'a' and half to  city 'b'";
+
+    let proper = minimumCost == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TWO CITY SCHEDULING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - START 
+
+// There is an integer array nums sorted in non-decreasing order (not necessarily with distinct values).
+
+// Before being passed to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting
+// array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,4,4,5,6,6,7]
+// might be rotated at pivot index 5 and become [4,5,6,6,7,0,1,2,4,4].
+
+// Given the array nums after the rotation and an integer target, return true if target is in nums, or false if it is not in nums.
+
+// You must decrease the overall operation steps as much as possible.
+
+var search = function (nums, target) {
+
+    // let idx = nums.indexOf(target);
+
+    // if (idx != -1) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+
+    return nums.indexOf(target) != -1
+
+};
+
+let x = [[2, 5, 6, 0, 0, 1, 2], [2, 5, 6, 0, 0, 1, 2]];
+let y = [0, 3]
+let correct = [true, false];
+
+answerExplainationEl.textContent = "Given an array of integers that has been sorted and then rotated, return if a target integer exists within the array.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let isInArray = search(x[i], y[i]);
+
+    let color = isInArray ? "The target " + y[i] + " exists with the rotated array " + x[i] : "The target " + y[i] + " is not in the rotated array " + x[i];
+
+    let proper = isInArray == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SEARCH IN ROTATED SORTED ARRAY II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIND THE DUPLICATE NUMBER - MEDIUM - START 
+
+// Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+
+// There is only one repeated number in nums, return this repeated number.
+
+// You must solve the problem without modifying the array nums and uses only constant extra space.
+
+var findDuplicate = function (nums) {
+
+    let map = {};
+
+    for (let i = 0; i < nums.length; i++) {
+
+        if (map[nums[i]]) {
+
+            return nums[i];
+
+        } else {
+
+            map[nums[i]] = 1;
+
+        }
+    }
+
+};
+
+let x = [[1, 3, 4, 2, 2], [3, 1, 3, 4, 2]];
+let correct = [2, 3];
+
+answerExplainationEl.textContent = "Given an array of integers that includes a duplicate number, return that duplicate number";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let duplicate = findDuplicate(x[i]);
+
+    let color = "The duplicate number in the array [" + x[i] + "], is " + duplicate;
+
+    let proper = duplicate == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIND THE DUPLICATE NUMBER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SEARCH A 2D MATRIX - MEDIUM - START 
+
+// Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+//      Integers in each row are sorted from left to right.
+//      The first integer of each row is greater than the last integer of the previous row.
+
+var searchMatrix = function (matrix, target) {
+
+    let up = 0;
+    let right = matrix[0].length - 1;
+    let down = matrix.length - 1;
+    let left = 0;
+    let vertical = -1;
+
+    if (target < matrix[up][left] || target > matrix[down][right]) {
+        return false;
+    }
+
+    while (up <= down) {
+
+        if (target === matrix[up][left] || target === matrix[down][left] || target === matrix[up][right] || target === matrix[down][right]) {
+            return true;
+        } else if (target > matrix[up][left] && target < matrix[up][right]) {
+            vertical = up;
+            break;
+        } else if (target > matrix[down][left] && target < matrix[down][right]) {
+            vertical = down;
+            break;
+        } else {
+            up++;
+            down--;
+        }
+    }
+
+    while (vertical !== -1 && left <= right) {
+
+        if (target === matrix[vertical][left] || target === matrix[vertical][right]) {
+            return true;
+        } else {
+            left++;
+            right--;
+        }
+    }
+
+    return false;
+
+};
+
+let x = [[[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], [[1], [3]]];
+let y = [3, 13, 2];
+let correct = [true, false, false];
+
+answerExplainationEl.textContent = "Given a 2D Matrix of integers and a target integer, return whether or not the target exists in the matrix ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let present = searchMatrix(x[i], y[i]);
+
+    let color = present ? "The matrix contains the target" : "The matrix does not contain the target";
+
+    let proper = present == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SEARCH A 2D MATRIX - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SPLIT ARRAY LARGEST SUM - HARD - START 
+
+// Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays.
+
+// Write an algorithm to minimize the largest sum among these m subarrays.
+
+var splitArray = function (nums, m) {
+
+    let low = Math.max(...nums);
+    let maxSum = 0;
+
+    let high = nums.reduce((prev, curr) => {
+        return prev + curr;
+    }, 0);
+
+    while (low <= high) {
+
+        const mid = Math.floor(low + (high - low) / 2);
+
+        if (isSplitPossible(nums, mid, m)) {
+
+            maxSum = mid;
+            high = mid - 1;
+
+        } else {
+
+            low = mid + 1;
+
+        }
+    }
+
+    return maxSum;
+
+};
+
+var isSplitPossible = function (nums, mid, m) {
+
+    let sum = 0;
+    let pairCount = 1;
+
+    for (let i = 0; i < nums.length; i++) {
+
+        sum += nums[i];
+
+        if (sum > mid) {
+
+            pairCount++;
+            sum = nums[i];
+
+        }
+    }
+
+    return pairCount <= m;
+};
+
+let x = [[7, 2, 5, 10, 8], [1, 2, 3, 4, 5], [1, 4, 4]];
+let y = [2, 2, 3];
+let correct = [18, 9, 4];
+
+answerExplainationEl.textContent = "Given an array of integers and an number of subarrays to spilt that array into, find the minimum largest sum among the subarrays ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let minimumMaxSum = splitArray(x[i], y[i]);
+
+    let color = "The minimum maximum sum that can be obtained from the array [" + x[i] + "] when that array is split into " + y[i] + " parts is " + minimumMaxSum;
+
+    let proper = minimumMaxSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SPLIT ARRAY LARGEST SUM - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REVERSE STRING - EASY - START 
+
+// Write a function that reverses a string. The input string is given as an array of characters s.
+
+// You must do this by modifying the input array in-place with O(1) extra memory.
+
+var reverseString = function (s) {
+    return s.reverse();
+};
+
+let x = [["h", "e", "l", "l", "o"], ["H", "a", "n", "n", "a", "h"]];
+let correct = [["o", "l", "l", "e", "h"], ["h", "a", "n", "n", "a", "H"]];
+
+answerExplainationEl.textContent = "Given a string (in the form of an array), return the reverse of that string (in the form of an array)";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let reversed = reverseString(x[i]);
+
+    let color = "The reverse of [" + xCopy + "] is [" + reversed + "]";
+
+    let proper = compareArrays(reversed, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REVERSE STRING - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SWAPPING NODES IN A LINKED LIST - MEDIUM - START 
+
+// You are given the head of a linked list, and an integer k.
+
+// Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end
+//(the list is 1-indexed).
+
+var swapNodes = function (head, k) {
+
+    let currNode = head;
+    let length = 0;
+    let temp1;
+    let temp2;
+
+    while (currNode != null) {
+        length++;
+        if (length == k) temp1 = currNode.val;
+        currNode = currNode.next;
+    }
+
+    let fromEnd = length - k;
+    let idx = 0;
+    currNode = head;
+
+    while (currNode != null) {
+        if (idx == fromEnd) {
+            temp2 = currNode.val;
+            currNode.val = temp1;
+        }
+        idx++;
+        currNode = currNode.next;
+    }
+
+    idx = 0;
+    currNode = head;
+
+    while (currNode != null) {
+
+        idx++;
+        if (idx == k) {
+            currNode.val = temp2;
+            break;
+        }
+        currNode = currNode.next;
+    }
+
+    return head;
+
+
+};
+
+let x = [[1, 2, 3, 4, 5], [7, 9, 6, 6, 7, 8, 3, 0, 9, 5]];
+let y = [2, 5];
+let correct = [[1, 4, 3, 2, 5], [7, 9, 6, 6, 8, 7, 3, 0, 9, 5]];
+
+answerExplainationEl.textContent = "Given a singly linked list and an integer k, swap the elements found at node k from the head and k from the end";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let xList = listConstructor(x[i]);
+
+    let altered = swapNodes(xList.head, y[i]);
+
+    let alteredArray = listToArrayTypeTwo(altered);
+
+    let color = "The list [" + xCopy + "] with the nodes '" + y[i] + "' from the start and the end is [" + alteredArray + "]";
+
+    let proper = compareArrays(alteredArray, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SWAPPING NODES IN A LINKED LIST - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONTAINER WITH MOST WATER - MEDIUM - START 
+
+// You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line
+// are (i, 0) and (i, height[i]).
+
+// Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+// Return the maximum amount of water a container can store.
+
+// Notice that you may not slant the container.
+
+var maxArea = function (height) {
+
+    if (height.length < 2) {
+        return 0;
+    }
+
+    let i = 0;
+    let j = height.length - 1;
+    let tempArea = 0;
+    let maxArea = 0;
+
+    while (i != j) {
+
+        if (height[i] > height[j]) {
+            tempArea = height[j] * (j - i)
+            j--;
+        } else {
+            tempArea = height[i] * (j - i);
+            i++;
+        }
+
+        maxArea = tempArea > maxArea ? tempArea : maxArea;
+
+    }
+
+    return maxArea;
+
+};
+
+let x = [[1, 8, 6, 2, 5, 4, 8, 3, 7], [1, 1]];
+let correct = [49, 1];
+
+answerExplainationEl.textContent = "Given a singly linked list and an integer k, swap the elements found at node k from the head and k from the end";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let volume = maxArea(x[i]);
+
+    let color = "The greatest volume that can be obtained in [" + x[i] + "] is " + volume;
+
+    let proper = volume == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CONTAINER WITH MOST WATER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LAST STONE WEIGHT - EASY - START
+
+// You are given an array of integers stones where stones[i] is the weight of the ith stone.
+
+// We are playing a game with the stones. On each turn, we choose the heaviest two stones and smash them together.
+// Suppose the heaviest two stones have weights x and y with x <= y. The result of this smash is:
+
+// If x == y, both stones are destroyed, and
+// If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
+// At the end of the game, there is at most one stone left.
+
+// Return the smallest possible weight of the left stone. If there are no stones left, return 0.
+
+var lastStoneWeight = function (stones) {
+
+    while (stones.length > 1) {
+
+        stones.sort((a, b) => a - b);
+
+        let x = stones.pop();
+        let y = stones.pop();
+
+        if (x != y) {
+            stones.push(Math.abs(x - y));
+        }
+
+    }
+
+    return stones[0] ? stones[0] : 0;
+
+};
+
+let x = [[2, 7, 4, 1, 8, 1], [1], [2, 2], [8, 10, 4], [7, 6, 7, 6, 9]];
+let correct = [1, 1, 0, 2, 3];
+
+answerExplainationEl.textContent = "Given an array of weights of stones, smash pairs of them together (heaviest to lightest), returning the weight of the last remaining stone. equal sized stones destroy eachother, smaller ones break of equivalent material from the other";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let lastStone = lastStoneWeight(x[i]);
+
+    let color = "From the original array of weight of stones [" + xCopy + "], after smashing them together we get the last stone weight of " + lastStone;
+
+    let proper = lastStone == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LAST STONE WEIGHT - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - START 
+
+var letterCombinations = function (digits) {
+
+    if (!digits) return [];
+
+    let phone = { "2": ["a", "b", "c"], "3": ["d", "e", "f"], "4": ["g", "h", "i"], "5": ["j", "k", "l"], "6": ["m", "n", "o"], "7": ["p", "q", "r", "s"], "8": ["t", "u", "v"], "9": ["w", "x", "y", "z"] };
+
+    let combinations = [""];
+
+    for (let i = 0; i < digits.length; i++) {
+
+        let temp = [];
+
+        for (let j = 0; j < combinations.length; j++) {
+
+            let localAlpha = phone[digits[i]];
+
+            for (let k = 0; k < localAlpha.length; k++) {
+
+                temp.push(combinations[j] + localAlpha[k]);
+            }
+        }
+
+        combinations = temp;
+
+    }
+
+    return combinations;
+
+};
+
+let x = ["23", "", "2"];
+let correct = [["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"], [], ["a", "b", "c"]];
+
+answerExplainationEl.textContent = "Given a string of numbers, return all possible letter combinations that can be created by that number, using a phone's keys as a guide.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let combos = letterCombinations(x[i]);
+
+    let color = "Given the string of numbers '" + x[i] + "', the possible letter combinations are [" + combos + "]";
+
+    let proper = compareArrays(combos, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* LETTER COMBINATIONS OF A PHONE NUMBER - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CRITICAL CONNECTIONS IN A NETWORK - HARD - START 
+
+var criticalConnections = function (n, connections) {
+
+    const disc = Array(n).fill(0) //discovery time
+    const low = Array(n).fill(0) //low value
+
+    let time = 0;
+    const res = []
+    const graph = {}
+    const visited = new Set
+
+    for (let [u, v] of connections) {
+        if (!graph[u]) graph[u] = []
+        if (!graph[v]) graph[v] = []
+
+        graph[u].push(v)
+        graph[v].push(u)
+    }
+
+    function dfs(i, prev) {
+        visited.add(i)
+        time++
+        disc[i] = time
+        low[i] = disc[i]
+
+        for (let nei of graph[i]) {
+            if (!visited.has(nei)) {
+                dfs(nei, i)
+
+                low[i] = Math.min(low[i], low[nei])
+            } else if (nei !== prev) {
+                low[i] = Math.min(low[i], disc[nei])
+            }
+
+            if (low[nei] > disc[i]) {
+                res.push([i, nei])
+            }
+        }
+    }
+
+    dfs(0, -1)
+
+    return res
+};
+
+let x = [4, 2];
+let y = [[[0, 1], [1, 2], [2, 0], [1, 3]], [[0, 1]]];
+let correct = [[[3, 1]], [[0, 1]]];
+
+answerExplainationEl.textContent = "Given an array of server connections, return any critical connections i.e. those that if lost would disconnect servers from the network.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let critical = criticalConnections(x[i], y[i]);
+
+    let isAre = critical.length > 1 ? "connections are" : "connection is";
+
+    let color = "Given " + x[i] + " servers with [" + y[i] + "] connections, the critical " + isAre + " [" + critical + "]";
+
+    let proper = compareNestedArrays(critical, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* CRITICAL CONNECTIONS IN A NETWORK - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NEXT PERMUATION - MEDIUM - START */
+
+var nextPermutation = function (nums) {
+
+    //Weed out of small and simple arrays of nums
+    if (nums.length == 1) {
+        return nums;
+    } else if (nums.length == 2) {
+        return nums.reverse();
+    }
+
+    //When Supplied with an array and the indecies of two elements, returns the array with the elements swapped
+    let swap = function (array, idx1, idx2) {
+
+        let temp = array[idx1];
+
+        array[idx1] = array[idx2];
+        array[idx2] = temp;
+
+        return array;
+
+    }
+
+    //When Supploes with an array and the index of an element, this returns the next greatest element in the array (assumes there is one)
+    let nextGreaterIdx = function (array, targetIdx) {
+
+        let temp;
+        let leastGreaterIdx;
+
+        for (let i = 0; i < targetIdx; i++) {
+
+            if (array[i] > array[targetIdx]) {
+
+                if (!temp) {
+
+                    temp = array[i];
+                    leastGreaterIdx = i;
+
+                } else if (array[i] < temp && array[i] > array[targetIdx]) {
+
+                    leastGreaterIdx = i;
+                }
+            }
+        }
+
+        return leastGreaterIdx;
+
+    }
+
+    // Supplied with an array and an index at which to split the array, this function splits that array into two, sorts the first section, and returns a combined array
+    let sortSec = function (array, splitIdx) {
+
+        let part1 = array.slice(0, splitIdx);
+        let part2 = array.slice(splitIdx);
+
+        part1.sort((a, b) => (b - a));
+
+        return part1.concat(part2);
+
+    }
+
+    //reverse the array for easier use, instantiate the first element to be used in comparison
+    let numsRev = nums.reverse();
+    let last = nums[0];
+
+    //while loop control variables
+    let idx = 1;
+
+    while (true) {
+
+        //triggered when encountering the first lesser element in the array
+        if (numsRev[idx] < last) {
+
+            //find the index of the second element to swap
+            let swapIdx = nextGreaterIdx(numsRev, idx)
+
+            //swap the index of the next greater element with the lower element
+            numsRev = swap(numsRev, idx, swapIdx);
+
+            //sort the section of the array that will fall after the element in descending order
+            numsRev = sortSec(numsRev, idx);
+
+            //reverse the array
+            numsRev.reverse();
+
+            //exit the while loop
+            break;
+
+        }
+
+        idx++;
+
+        //triggered when the array has been run
+        if (idx === numsRev.length) {
+            //does not re-reverse the array, leaving it in the next permutation by default
+            //exit the while loop
+            break;
+        }
+
+    }
+
+    console.log(numsRev);
+
+    return numsRev;
+
+};
+
+let x = [[1, 2, 3], [3, 2, 1], [1, 1, 5], [1, 3, 2]];
+let correct = [[1, 3, 2], [1, 2, 3], [1, 5, 1], [2, 1, 3]];
+
+answerExplainationEl.textContent = "Given an array of integers, return the next greatest permuation of that array of integers. If the given array is already the greatest permutation, return the least greatest permuation.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let next = nextPermutation(x[i]);
+
+    let color = "Given the array [" + xCopy + "], the next greatest perumation is [" + next + "]";
+
+    let proper = compareArrays(next, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* NEXT PERMUATION - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+>>>>>>> 9690aaf38dfe89623ebbd6837a1f58e545a87ef0
