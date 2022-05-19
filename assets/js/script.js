@@ -51,7 +51,7 @@ function bstFromPreorder(preorder) {
 
 function binaryTreeConstructor(array) {
 
-    if (array.length === 0){
+    if (array.length === 0) {
         return null;
     }
 
@@ -6936,7 +6936,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BINARY TREE IN ORDER TRAVERSAL - EASY - START */
+/* BINARY TREE IN ORDER TRAVERSAL - EASY - START 
 
 // Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
