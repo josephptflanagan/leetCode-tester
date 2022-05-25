@@ -8907,133 +8907,131 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* UNIQUE PATHS II - MEDIUM - START*/
+/* UNIQUE PATHS II - MEDIUM - START
 
 var uniquePathsWithObstacles = function (obstacleGrid) {
 
-    /* PROBLEM STATEMENT
+    // PROBLEM STATEMENT
 
-    You are given an m x n integer array grid. There is a robot initially located at the top-left corner (i.e., grid[0][0]). 
-    The robot tries to move to the bottom-right corner (i.e., grid[m-1][n-1]). The robot can only move either down or right at any point in time.
+    //You are given an m x n integer array grid. There is a robot initially located at the top-left corner (i.e., grid[0][0]). 
+    //The robot tries to move to the bottom-right corner (i.e., grid[m-1][n-1]). The robot can only move either down or right at any point in time.
 
-    An obstacle and space are marked as 1 or 0 respectively in grid. A path that the robot takes cannot include any square that is an obstacle.
+    //An obstacle and space are marked as 1 or 0 respectively in grid. A path that the robot takes cannot include any square that is an obstacle.
 
-    Return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+    //Return the number of possible unique paths that the robot can take to reach the bottom-right corner.
 
-    The testcases are generated so that the answer will be less than or equal to 2 * 109.
+    //The testcases are generated so that the answer will be less than or equal to 2 * 109.
 
-    */
+// WORKS, BUT TOO SLOWLY
+// let m = obstacleGrid.length - 1; //maximum vertical index
+// let n = obstacleGrid[0].length - 1; //maximum horizontal index
+// // destination = [m, n];
 
-    /*WORKS, BUT TOO SLOWLY
-    let m = obstacleGrid.length - 1; //maximum vertical index
-    let n = obstacleGrid[0].length - 1; //maximum horizontal index
-    // destination = [m, n];
+// // a quick exit for unpathable grids
+// if (obstacleGrid[0][0] === 1 || obstacleGrid[m][n] === 1) {
 
-    // a quick exit for unpathable grids
-    if (obstacleGrid[0][0] === 1 || obstacleGrid[m][n] === 1) {
+//     return 0;
 
-        return 0;
+// // a quick exit for single item grids that are not unpathable
+// } else if (m === 0 && n === 0) {
 
-    // a quick exit for single item grids that are not unpathable
-    } else if (m === 0 && n === 0) {
+//     return 1;
 
-        return 1;
+// }
 
+// let origin = [0, 0]; //start point for the robot
+
+// let uniquePaths = 0; //return variable
+
+// let queue = [origin]; //initialize the queue with the origin as the first space
+
+// while (queue.length > 0) {
+
+//     //retrieve a new temporary origin to look for paths forward
+//     let currentOrigin = queue.shift();
+
+//     //not 100% necessary, but it does make the code easier to read
+//     let x = currentOrigin[0];
+//     let y = currentOrigin[1];
+
+//     //look right
+//     //first make sure the item to the right is on the grid
+//     if (y + 1 <= n) {
+
+//         //then check if the item to the right is the destination
+//         if (x == m && (y + 1) == n) {
+
+//             //if it is, add 1 to unique paths, and restart the loop
+//             uniquePaths++;
+//             continue;
+
+//             //otherwise, check if there's an obstacle in the grid space to the right
+//         } else if (obstacleGrid[x][y + 1] === 0) {
+
+//             //if there is an open space, add that as a new origin to the queue
+//             queue.push([x, y + 1]);
+
+//         }
+//     }
+
+//     //look down
+//     //first make sure the item below is on the grid
+//     if (x + 1 <= m) {
+
+//         //then check if the item below is the destination
+//         if ((x + 1) == m && y == n) {
+
+//             //if it is, add 1 to unique paths, and restart the loop
+//             uniquePaths++;
+//             continue;
+
+//             //otherwise, check if there's an obstacle in the grid space below
+//         } else if (obstacleGrid[x + 1][y] === 0) {
+
+//             //if there is an open space, add that as a new origin to the queue
+//             queue.push([x + 1, y]);
+
+//         }
+//     }
+// }
+
+// return uniquePaths;
+
+//Dynamic Programming Approach
+let m = obstacleGrid.length;
+let n = obstacleGrid[0].length;
+
+//creating an empty grid that is 1 element wider and 1 element taller composed of 0's
+const dp = [...Array(m + 1)].map((e) => Array(n + 1).fill(0));
+
+//"dp = [...Array(m+1)]" means create an array of m + 1 empty elements and concatenate it into an empty array, dp
+//"Array(n+1).fill(0))"  means create an array of n + 1 elements and populate each with a 0
+//".map((e)=> ^ABOVE^);" means fill each empty element of the m+1 long array with an array n+1 long full of zeros
+//
+
+//creating the path origin element
+dp[0][1] = 1;
+
+//these loops populate the dp grid with the number of paths that reach each individual element
+//obstacles block unique paths resulting in a zero, otherwise each element is the sum of the
+//    unique paths to reach the elements to their left and above them
+for (let i = 1; i < m + 1; i++) {
+
+    for (let j = 1; j < n + 1; j++) {
+
+        dp[i][j] = obstacleGrid[i - 1][j - 1] == 1 ? 0 : dp[i][j - 1] + dp[i - 1][j];
+        //  The top row and left column of the dp grid are used only as reference to fill the remaining dp grid
+        //     "obstacleGrid[i - 1][j - 1] == 1 ? 0" means check the obstacle grid for obstacles.
+        //         if there is one, populate that spot on the dp grid with a 0, other wise move on
+        //     "dp[i][j - 1] + dp[i - 1][j]" grabs the values of elements to the left and above the
+        //         current element and adds them, showing the total number of unique paths
+        //         to reach the current element
+        // 
     }
+}
 
-    let origin = [0, 0]; //start point for the robot
-
-    let uniquePaths = 0; //return variable
-
-    let queue = [origin]; //initialize the queue with the origin as the first space
-
-    while (queue.length > 0) {
-
-        //retrieve a new temporary origin to look for paths forward
-        let currentOrigin = queue.shift();
-
-        //not 100% necessary, but it does make the code easier to read
-        let x = currentOrigin[0];
-        let y = currentOrigin[1];
-
-        //look right
-        //first make sure the item to the right is on the grid
-        if (y + 1 <= n) {
-
-            //then check if the item to the right is the destination
-            if (x == m && (y + 1) == n) {
-
-                //if it is, add 1 to unique paths, and restart the loop
-                uniquePaths++;
-                continue;
-
-                //otherwise, check if there's an obstacle in the grid space to the right
-            } else if (obstacleGrid[x][y + 1] === 0) {
-
-                //if there is an open space, add that as a new origin to the queue
-                queue.push([x, y + 1]);
-
-            }
-        }
-
-        //look down
-        //first make sure the item below is on the grid
-        if (x + 1 <= m) {
-
-            //then check if the item below is the destination
-            if ((x + 1) == m && y == n) {
-
-                //if it is, add 1 to unique paths, and restart the loop
-                uniquePaths++;
-                continue;
-
-                //otherwise, check if there's an obstacle in the grid space below
-            } else if (obstacleGrid[x + 1][y] === 0) {
-
-                //if there is an open space, add that as a new origin to the queue
-                queue.push([x + 1, y]);
-
-            }
-        }
-    }
-
-    return uniquePaths;*/
-
-    //Dynamic Programming Approach
-    let m = obstacleGrid.length;
-    let n = obstacleGrid[0].length;
-
-    //creating an empty grid that is 1 element wider and 1 element taller composed of 0's
-    const dp = [...Array(m + 1)].map((e) => Array(n + 1).fill(0));
-    /*
-    "dp = [...Array(m+1)]" means create an array of m + 1 empty elements and concatenate it into an empty array, dp
-    "Array(n+1).fill(0))"  means create an array of n + 1 elements and populate each with a 0
-    ".map((e)=> ^ABOVE^);" means fill each empty element of the m+1 long array with an array n+1 long full of zeros
-    */
-
-    //creating the path origin element
-    dp[0][1] = 1;
-
-    //these loops populate the dp grid with the number of paths that reach each individual element
-    //obstacles block unique paths resulting in a zero, otherwise each element is the sum of the
-    //    unique paths to reach the elements to their left and above them
-    for (let i = 1; i < m + 1; i++) {
-
-        for (let j = 1; j < n + 1; j++) {
-
-            dp[i][j] = obstacleGrid[i - 1][j - 1] == 1 ? 0 : dp[i][j - 1] + dp[i - 1][j];
-            /* The top row and left column of the dp grid are used only as reference to fill the remaining dp grid
-                "obstacleGrid[i - 1][j - 1] == 1 ? 0" means check the obstacle grid for obstacles.
-                    if there is one, populate that spot on the dp grid with a 0, other wise move on
-                "dp[i][j - 1] + dp[i - 1][j]" grabs the values of elements to the left and above the
-                    current element and adds them, showing the total number of unique paths
-                    to reach the current element
-            */
-        }
-    }
-
-    //return the summed unique paths that have reached the destination element
-    return dp[m][n];
+//return the summed unique paths that have reached the destination element
+return dp[m][n];
 
 };
 
@@ -9062,5 +9060,335 @@ for (let i = 0; i < x.length; i++) {
 
 
 /* UNIQUE PATHS II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PATH LENGTH - AMAZON - START */
+
+//  Based on what I remember from my failed Amazon Evaluation
+// Given a 2D grid representing a map, with 0s representing no road, 1s representing a road, and 9 representing the destination,
+// starting from the top left return the shortest length traveled to reach the destination
+
+class Graph {
+    constructor() {
+        this.adjacencyList = {};
+    }
+    addVertex(vertex) {
+        if (!this.adjacencyList[vertex]) {
+            this.adjacencyList[vertex] = [];
+        }
+    }
+    addEdge(vertex1, vertex2) {
+        if (this.adjacencyList[vertex1] && this.adjacencyList[vertex2]) {
+            this.adjacencyList[vertex1].push(vertex2);
+            this.adjacencyList[vertex2].push(vertex1);
+        }
+    }
+    removeEdge(vertex1, vertex2) {
+        this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(v => v !== vertex2)
+        this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(v => v !== vertex1)
+    }
+    removeVertex(vertex) {
+        while (this.adjacencyList[vertex].length > 0) {
+            let adjacentVertex = this.adjacencyList[vertex].pop();
+            this.removeEdge(vertex, adjacentVertex);
+        }
+        delete this.adjacencyList[vertex];
+    }
+    DFSRecursive(start) {
+
+        let result = [];
+        let visited = {};
+        let adjacencyList = this.adjacencyList;
+
+        let dfs = function (vertex) {
+
+            if (!vertex) {
+                return null;
+            }
+
+            result.push(vertex);
+            visited[vertex] = true;
+            adjacencyList[vertex].forEach(neighbor => {
+                if (!visited[neighbor]) {
+                    dfs(neighbor)
+                }
+            })
+
+        }
+
+        dfs(start);
+
+        return result;
+
+    }
+    DFSIterative(start) {
+        let result = [];
+        let visited = {};
+        let stack = [start];
+        while (stack.length > 0) {
+
+            let vertex = stack.pop();
+
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                result.push(vertex);
+                this.adjacencyList[vertex].forEach(neighbor => {
+                    if (!visited[neighbor]) {
+                        stack.push(neighbor)
+                    }
+                })
+            }
+        }
+
+        return result;
+    }
+    BFS(start) {
+        let queue = [start];
+        let visited = {};
+        let result = [];
+
+        while (queue.length > 0) {
+
+            let vertex = queue.pop();
+
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                result.push(vertex);
+                this.adjacencyList[vertex].forEach(neighbor => {
+                    if (!visited[neighbor]) {
+                        queue.unshift(neighbor)
+                    }
+                })
+            }
+
+        }
+
+        return result;
+
+    }
+}
+
+class HeapNode {
+    constructor(val, priority) {
+        this.val = val;
+        this.priority = priority;
+    }
+}
+
+class PriorityQueue {
+    constructor() {
+        this.values = [];
+    }
+    enqueue(val, priority) {
+
+        let newNode = new HeapNode(val, priority);
+        this.values.push(newNode);
+        let idx = this.values.length - 1;
+        const element = this.values[idx];
+
+        while (idx > 0) {
+            let parentIdx = Math.floor((idx - 1) / 2);
+            let parent = this.values[parentIdx];
+            if (element.priority >= parent.priority) break;
+            this.values[parentIdx] = element;
+            this.values[idx] = parent;
+            idx = parentIdx;
+        }
+    }
+    dequeue() {
+
+        const min = this.values[0];
+        const end = this.values.pop();
+
+        if (this.values.length > 0) {
+
+            this.values[0] = end;
+            let idx = 0;
+            const length = this.values.length;
+            const element = this.values[0];
+
+            while (true) {
+
+                let leftChildIdx = 2 * idx + 1;
+                let rightChildIdx = 2 * idx + 2;
+                let leftChild, rightChild;
+                let swap = null;
+
+                if (leftChildIdx < length) {
+                    leftChild = this.values[leftChildIdx];
+                    if (leftChild.priority < element.priority) {
+                        swap = leftChildIdx;
+                    }
+                }
+                if (rightChildIdx < length) {
+                    rightChild = this.values[rightChildIdx];
+                    if (
+                        (swap === null && rightChild.priority < element.priority) ||
+                        (swap !== null && rightChild.priority < leftChild.priority)
+                    ) {
+                        swap = rightChildIdx;
+                    }
+                }
+                if (swap === null) break;
+
+                this.values[idx] = this.values[swap];
+                this.values[swap] = element;
+                idx = swap;
+
+            }
+        }
+
+        return min;
+
+    }
+}
+
+class WeightedGraph {
+    constructor() {
+        this.adjacencyList = {};
+    }
+    addVertex(vertex) {
+        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+    addEdge(vertex1, vertex2, weight) {
+        this.adjacencyList[vertex1].push({ node: vertex2, weight });
+        this.adjacencyList[vertex2].push({ node: vertex1, weight });
+    }
+    Dijkstra(start, finish) {
+        const nodes = new PriorityQueue();
+        const distances = {};
+        const previous = {};
+        let path = [] //to return at end
+        let smallest;
+        //build up initial state
+        for (let vertex in this.adjacencyList) {
+            if (vertex === start) {
+                distances[vertex] = 0;
+                nodes.enqueue(vertex, 0);
+            } else {
+                distances[vertex] = Infinity;
+                nodes.enqueue(vertex, Infinity);
+            }
+            previous[vertex] = null;
+        }
+        // as long as there is something to visit
+        while (nodes.values.length) {
+            smallest = nodes.dequeue().val;
+            if (smallest === finish) {
+                //WE ARE DONE
+                //BUILD UP PATH TO RETURN AT END
+                while (previous[smallest]) {
+                    path.push(smallest);
+                    smallest = previous[smallest];
+                }
+                break;
+            }
+            if (smallest || distances[smallest] !== Infinity) {
+                for (let neighbor in this.adjacencyList[smallest]) {
+                    //find neighboring node
+                    let nextNode = this.adjacencyList[smallest][neighbor];
+                    //calculate new distance to neighboring node
+                    let candidate = distances[smallest] + nextNode.weight;
+                    let nextNeighbor = nextNode.node;
+                    if (candidate < distances[nextNeighbor]) {
+                        //updating new smallest distance to neighbor
+                        distances[nextNeighbor] = candidate;
+                        //updating previous - How we got to neighbor
+                        previous[nextNeighbor] = smallest;
+                        //enqueue in priority queue with new priority
+                        nodes.enqueue(nextNeighbor, candidate);
+                    }
+                }
+            }
+        }
+        return path.concat(smallest).reverse();
+    }
+}
+
+
+var pathLength = function (grid) {
+
+    if (grid[0][0] == 9) {
+        return 0;
+    }
+
+    let gridGraph = new WeightedGraph();
+    let legend = {};
+    let shortest = -1;
+
+    let nameI = 0;
+
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+
+            if (i == 0 && j == 0) {
+                gridGraph.addVertex("Origin");
+                legend[[0, 0]] = "Origin";
+                continue;
+            }
+
+            if (grid[i][j] == 9) {
+                gridGraph.addVertex("Destination");
+                legend[[i, j]] = "Destination";
+            } else if (grid[i][j] == 1) {
+                let name = "Road" + nameI.toString();
+                gridGraph.addVertex(name);
+                legend[[i, j]] = name;
+                nameI++;
+            }
+        }
+    }
+
+    for (key in legend) {
+
+        let a = parseInt(key[0]);
+        let b = parseInt(key[2]);
+
+        let right = b + 1;
+        let down = a + 1;
+
+        let dir = [[a, right], [down, b]];
+
+        for (let i = 0; i < dir.length; i++) {
+
+            if (legend[dir[i]]) {
+                gridGraph.addEdge(legend[key], legend[dir[i]], 1);
+            }
+        }
+    }
+
+    let minimumVertecies = gridGraph.Dijkstra("Origin", "Destination").length;
+
+    if (minimumVertecies - 1 != 0) {
+        shortest = minimumVertecies - 1;
+    }
+
+    return shortest;
+
+}
+
+let x = [[[1, 0, 0], [1, 0, 0], [1, 9, 1]], [[1, 0, 0], [1, 0, 9], [1, 0, 1]], [[1, 1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 1, 0, 1], [1, 0, 1, 1, 1, 1, 0, 1], [1, 0, 1, 0, 0, 0, 0, 1], [1, 0, 1, 0, 9, 0, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 1, 1, 1, 0, 1, 1], [1, 1, 0, 0, 0, 1, 1, 0]]];
+let correct = [3, -1, 18];
+
+answerExplainationEl.textContent = "Given a 2D grid, starting from the top left, return the length of the shortest path to reach the destination.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let length = pathLength(x[i]);
+
+    let color = length != -1 ? "With the given grid, the shortest path to the destination is " + length : "With the given grid, there is no path to the destination";
+
+    let proper = (length == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PATH LENGTH - AMAZON - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
