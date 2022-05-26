@@ -8772,7 +8772,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NEXT PERMUATION - MEDIUM - START */
+/* NEXT PERMUATION - MEDIUM - START 
 
 var nextPermutation = function (nums) {
 
@@ -8904,5 +8904,163 @@ for (let i = 0; i < x.length; i++) {
 
 
 /* NEXT PERMUATION - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* UNIQUE PATHS II - MEDIUM - START*/
+
+var uniquePathsWithObstacles = function (obstacleGrid) {
+
+    /* PROBLEM STATEMENT
+
+    You are given an m x n integer array grid. There is a robot initially located at the top-left corner (i.e., grid[0][0]). 
+    The robot tries to move to the bottom-right corner (i.e., grid[m-1][n-1]). The robot can only move either down or right at any point in time.
+
+    An obstacle and space are marked as 1 or 0 respectively in grid. A path that the robot takes cannot include any square that is an obstacle.
+
+    Return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+    The testcases are generated so that the answer will be less than or equal to 2 * 109.
+
+    */
+
+    /*WORKS, BUT TOO SLOWLY
+    let m = obstacleGrid.length - 1; //maximum vertical index
+    let n = obstacleGrid[0].length - 1; //maximum horizontal index
+    // destination = [m, n];
+
+    // a quick exit for unpathable grids
+    if (obstacleGrid[0][0] === 1 || obstacleGrid[m][n] === 1) {
+
+        return 0;
+
+    // a quick exit for single item grids that are not unpathable
+    } else if (m === 0 && n === 0) {
+
+        return 1;
+
+    }
+
+    let origin = [0, 0]; //start point for the robot
+
+    let uniquePaths = 0; //return variable
+
+    let queue = [origin]; //initialize the queue with the origin as the first space
+
+    while (queue.length > 0) {
+
+        //retrieve a new temporary origin to look for paths forward
+        let currentOrigin = queue.shift();
+
+        //not 100% necessary, but it does make the code easier to read
+        let x = currentOrigin[0];
+        let y = currentOrigin[1];
+
+        //look right
+        //first make sure the item to the right is on the grid
+        if (y + 1 <= n) {
+
+            //then check if the item to the right is the destination
+            if (x == m && (y + 1) == n) {
+
+                //if it is, add 1 to unique paths, and restart the loop
+                uniquePaths++;
+                continue;
+
+                //otherwise, check if there's an obstacle in the grid space to the right
+            } else if (obstacleGrid[x][y + 1] === 0) {
+
+                //if there is an open space, add that as a new origin to the queue
+                queue.push([x, y + 1]);
+
+            }
+        }
+
+        //look down
+        //first make sure the item below is on the grid
+        if (x + 1 <= m) {
+
+            //then check if the item below is the destination
+            if ((x + 1) == m && y == n) {
+
+                //if it is, add 1 to unique paths, and restart the loop
+                uniquePaths++;
+                continue;
+
+                //otherwise, check if there's an obstacle in the grid space below
+            } else if (obstacleGrid[x + 1][y] === 0) {
+
+                //if there is an open space, add that as a new origin to the queue
+                queue.push([x + 1, y]);
+
+            }
+        }
+    }
+
+    return uniquePaths;*/
+
+    //Dynamic Programming Approach
+    let m = obstacleGrid.length;
+    let n = obstacleGrid[0].length;
+
+    //creating an empty grid that is 1 element wider and 1 element taller composed of 0's
+    const dp = [...Array(m + 1)].map((e) => Array(n + 1).fill(0));
+    /*
+    "dp = [...Array(m+1)]" means create an array of m + 1 empty elements and concatenate it into an empty array, dp
+    "Array(n+1).fill(0))"  means create an array of n + 1 elements and populate each with a 0
+    ".map((e)=> ^ABOVE^);" means fill each empty element of the m+1 long array with an array n+1 long full of zeros
+    */
+
+    //creating the path origin element
+    dp[0][1] = 1;
+
+    //these loops populate the dp grid with the number of paths that reach each individual element
+    //obstacles block unique paths resulting in a zero, otherwise each element is the sum of the
+    //    unique paths to reach the elements to their left and above them
+    for (let i = 1; i < m + 1; i++) {
+
+        for (let j = 1; j < n + 1; j++) {
+
+            dp[i][j] = obstacleGrid[i - 1][j - 1] == 1 ? 0 : dp[i][j - 1] + dp[i - 1][j];
+            /* The top row and left column of the dp grid are used only as reference to fill the remaining dp grid
+                "obstacleGrid[i - 1][j - 1] == 1 ? 0" means check the obstacle grid for obstacles.
+                    if there is one, populate that spot on the dp grid with a 0, other wise move on
+                "dp[i][j - 1] + dp[i - 1][j]" grabs the values of elements to the left and above the
+                    current element and adds them, showing the total number of unique paths
+                    to reach the current element
+            */
+        }
+    }
+
+    //return the summed unique paths that have reached the destination element
+    return dp[m][n];
+
+};
+
+let x = [[[0, 0, 0], [0, 1, 0], [0, 0, 0]], [[0, 1], [0, 0]], [[0]]];
+let correct = [2, 1, 1];
+
+answerExplainationEl.textContent = "Given a grid that can potentially contain obstacles, starting from the top left, find how many unique paths there are that can be taken to reach the bottom right";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    console.log("x[i]: ", x[i]);
+
+    let paths = uniquePathsWithObstacles(x[i]);
+
+    let color = "Given the grid [" + x[i] + "], there are " + paths + " unique paths to reach the destination";
+
+    let proper = (paths == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+
+/* UNIQUE PATHS II - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
