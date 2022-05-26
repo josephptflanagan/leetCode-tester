@@ -9063,7 +9063,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PATH LENGTH - AMAZON - START */
+/* PATH LENGTH - AMAZON - START 
 
 //  Based on what I remember from my failed Amazon Evaluation
 // Given a 2D grid representing a map, with 0s representing no road, 1s representing a road, and 9 representing the destination,
@@ -9390,5 +9390,50 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* PATH LENGTH - AMAZON - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NUMBER OF 1 BITS - EASY - START */
+
+var hammingWeight = function (n) {
+
+    return n.toString(2).split("0").join("").length; // convert the decimal represenation to binary, remove the 0s from the binary string, return the length of the string of 1s
+
+};
+
+//The function is supposed to supply an unsigned int. because there is no unsigned int in JS, LeetCode supplies a decimal representation of the binary string.
+//In order to make my function work here as it does on LeetCode, I have to do  my own conversion of binaryString to decimal representation.
+let leetCodeAdapter = function (n) {
+
+    return n.toString(10); //convert the binary string into a decimal representation
+
+}
+
+let x = ['00000000000000000000000000001011', '00000000000000000000000010000000', '11111111111111111111111111111101'];
+let correct = [3, 1, 31];
+
+answerExplainationEl.textContent = "Given a binary number as a string, return the Hamming Weight (the number of 1 bits).";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    console.log('x[i]:', x[i]);
+
+    let xCopy = x[i];
+
+    let oneBits = hammingWeight(leetCodeAdapter(x[i]));
+
+    let color = "For the binary string '" + xCopy + ",' the Hamming weight is " + oneBits;
+
+    let proper = (oneBits == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* NUMBER OF 1 BITS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
