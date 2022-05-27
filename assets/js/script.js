@@ -9393,7 +9393,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NUMBER OF 1 BITS - EASY - START */
+/* NUMBER OF 1 BITS - EASY - START 
 
 var hammingWeight = function (n) {
 
@@ -9435,5 +9435,56 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* NUMBER OF 1 BITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - START */
+
+var numberOfSteps = function (num) {
+
+    let steps = 0;
+
+    while (num > 0) {
+
+        // if (num % 2 !== 0) {
+        //     num--;
+        // } else {
+        //     num /= 2;
+        // }
+
+        num = num % 2 !== 0 ? num - 1 : num / 2; // Single line version of the above
+
+        steps++;
+
+    }
+
+    return steps;
+
+};
+
+let x = [14, 8, 123];
+let correct = [6, 4, 12];
+
+answerExplainationEl.textContent = "Given a calculator that can only divide by 2 or subtract one, how many steps does it take to reduce a given number to zero.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let operations = numberOfSteps(x[i]);
+
+    let color = "It takes " + operations + " operations to reduce " + xCopy + " to zero";
+
+    let proper = (operations == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
