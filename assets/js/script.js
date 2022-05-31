@@ -9438,7 +9438,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - START */
+/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - START 
 
 var numberOfSteps = function (num) {
 
@@ -9486,5 +9486,102 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - START */
+
+var hasAllCodes = function (s, k) {
+
+    // Works, but Too Slow
+    // function allBinaryPermutations(n) {
+
+    //     let perm = [];
+    //     let permCount = Math.pow(2, n);
+
+    //     for (let i = 0; i < permCount; i++) {
+
+    //         let currentPerm = i.toString(2).split("");
+
+    //         while (currentPerm.length < n) {
+    //             currentPerm.unshift("0");
+    //         }
+
+    //         perm.push(currentPerm.join(""));
+
+    //     }
+
+    //     return perm;
+
+    // }
+
+    // let allPermutations = allBinaryPermutations(k);
+
+    // for (let i = 0; i < allPermutations.length; i++) {
+
+    //     if (s.indexOf(allPermutations[i]) == -1) {
+    //         return false;
+    //     }
+
+    // }
+
+    // Works, but Still Too Slow
+    // let permCount = Math.pow(2, k);
+
+    // for (let i = 0; i < permCount; i++) {
+
+    //     let currentPerm = i.toString(2).split("");
+
+    //     while (currentPerm.length < k) {
+    //         currentPerm.unshift("0");
+    //     }
+
+    //     if (s.indexOf(currentPerm.join("")) == -1) {
+    //         return false;
+    //     }
+
+    // }
+
+    // return true;
+
+    const set = new Set();
+
+    //runs through the string adding unique substrings to the set
+    for (let i = k; i <= s.length; i++) {
+
+        set.add(s.slice(i - k, i));
+
+    }
+
+    //checks the size of the set compared to the size a complete set should be
+    return set.size == Math.pow(2, k);
+
+};
+
+let x = ["00110110", "0110", "0110", "00010100110010110111"];
+let y = [2, 1, 2, 3];
+let correct = [true, true, false, true];
+
+answerExplainationEl.textContent = "Given a binary string s and an integer k, return true if every binary code of length k is a substring of s. Otherwise, return false.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let hasCodes = hasAllCodes(x[i], y[i]);
+
+    let color = "The binary string '" + xCopy + (hasCodes ? "' contains every binary code of length " : "' does not contains every binary code of length ") + y[i];
+
+    let proper = (hasCodes == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
