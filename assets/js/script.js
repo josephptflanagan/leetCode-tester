@@ -9489,7 +9489,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - START */
+/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - START 
 
 var hasAllCodes = function (s, k) {
 
@@ -9583,5 +9583,56 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RUNNING SUM OF 1D ARRAY - EASY - START */
+
+//Works, but looking for a faster option
+// var runningSum = function (nums) {
+
+//     let runSum = [nums[0]];
+
+//     for (let i = 1; i < nums.length; i++) {
+//         runSum.push(nums[i] + runSum[i - 1]);
+//     }
+
+//     return runSum;
+
+// };
+
+//works, but is only marginally faster
+//var runningSum = ((nums, val = 0) => nums.map(x => val = val + x))
+
+//slightly faster
+var runningSum = function (nums) {
+    let sum = 0;
+    return nums.map(i => { sum += i; return sum })
+};
+
+let x = [[1, 2, 3, 4], [1, 1, 1, 1, 1], [3, 1, 2, 10, 1], [4]];
+let correct = [[1, 3, 6, 10], [1, 2, 3, 4, 5], [3, 4, 6, 16, 17], [4]];
+
+answerExplainationEl.textContent = "Given an array of integers, nums, return an array of the running sum of the elements of said array, nums.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let numsSums = runningSum(x[i]);
+
+    let color = "The running sum of the array [" + xCopy + "] is [" + numsSums + "]";
+
+    let proper = compareArrays(numsSums, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* RUNNING SUM OF 1D ARRAY - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
