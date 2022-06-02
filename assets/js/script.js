@@ -357,6 +357,25 @@ let listToArrayTypeTwo = function (head) {
     return array;
 
 }
+
+let displayNestedArray = function (array) {
+
+    let str = "[";
+
+    for (let i = 0; i < array.length; i++) {
+
+        str += "[" + array[i] + "]";
+
+        if (i !== array.length - 1) {
+            str += ",";
+        }
+
+    }
+
+    str += "]"
+
+    return str;
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -9586,7 +9605,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* RUNNING SUM OF 1D ARRAY - EASY - START */
+/* RUNNING SUM OF 1D ARRAY - EASY - START 
 
 //Works, but looking for a faster option
 // var runningSum = function (nums) {
@@ -9634,5 +9653,59 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* RUNNING SUM OF 1D ARRAY - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TRANSPOSE MATRIX - EASY - START */
+
+// Given a 2D integer array matrix, return the transpose of matrix.
+
+// The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+//[[1][2][3]]
+//[[4][5][6]]
+
+//[[1][4]]
+//[[2][5]]
+//[[3][6]]
+
+var transpose = function (matrix) {
+
+    let transposedArray = [...Array(matrix[0].length)].map((e) => Array(matrix.length).fill(0));
+
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            transposedArray[j][i] = matrix[i][j];
+        }
+    }
+
+    return transposedArray;
+
+};
+
+let x = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 3], [4, 5, 6]]];
+let correct = [[[1, 4, 7], [2, 5, 8], [3, 6, 9]], [[1, 4], [2, 5], [3, 6]]];
+
+answerExplainationEl.textContent = "Given a 2D integer array matrix, return the transpose of matrix.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let transposedX = transpose(x[i]);
+
+    let color = "The array " + displayNestedArray(xCopy) + " when transposed becomes " + displayNestedArray(transposedX);
+
+    let proper = compareNestedArrays(transposedX, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TRANSPOSE MATRIX - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
