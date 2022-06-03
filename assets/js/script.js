@@ -9656,7 +9656,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* TRANSPOSE MATRIX - EASY - START */
+/* TRANSPOSE MATRIX - EASY - START
 
 // Given a 2D integer array matrix, return the transpose of matrix.
 
@@ -9707,5 +9707,91 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* TRANSPOSE MATRIX - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RANGE SUM QUERY 2D - MEDIUM - START */
+
+// Given a 2D matrix matrix, handle multiple queries of the following type:
+// Calculate the sum of the elements of matrix inside the rectangle defined by its upper left corner (row1, col1) and lower right
+// corner (row2, col2).
+
+// Implement the NumMatrix class:
+// NumMatrix(int[][] matrix) Initializes the object with the integer matrix matrix.
+// int sumRegion(int row1, int col1, int row2, int col2) Returns the sum of the elements of matrix inside the rectangle defined 
+// by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+// @param {number[][]} matrix
+// var NumMatrix = function(matrix) {
+
+// };
+
+
+// @param {number} row1 
+// @param {number} col1 
+// @param {number} row2 
+// @param {number} col2
+// @return {number}
+// NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
+
+// };
+
+// Your NumMatrix object will be instantiated and called as such:
+// var obj = new NumMatrix(matrix)
+// var param_1 = obj.sumRegion(row1,col1,row2,col2)
+
+class NumMatrix {
+    constructor(matrix) {
+        this.matrix = matrix;
+    }
+    sumRegion(row1, col1, row2, col2) {
+
+        //Simple, Slow, but Fast Enough
+        let sum = 0;
+
+        for (let i = row1; i <= row2; i++) {
+            for (let j = col1; j <= col2; j++) {
+                sum += this.matrix[i][j];
+            }
+        }
+
+        return sum;
+
+        //Too Slow
+        // let region = [];
+
+        // for (let i = row1; i <= row2; i++) {
+        //     region = region.concat(this.matrix[i].slice(col1, col2 + 1));
+        // }
+
+        // return region.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    }
+}
+
+let x = [[3, 0, 1, 4, 2], [5, 6, 3, 2, 1], [1, 2, 0, 1, 5], [4, 1, 0, 1, 7], [1, 0, 3, 0, 5]]; //matrix elements
+let y = [[2, 1, 4, 3], [1, 1, 2, 2], [1, 2, 2, 4]] //sumRegion Coords
+let correct = [8, 11, 12]; //sums of sumRegion Coords
+
+answerExplainationEl.textContent = "Given a 2D integer matrix, and the coordinates of the top left and bottom right corners of a section of that matrix, return the sum of the elements within that region.";
+
+let baseMatrix = new NumMatrix(x);
+
+for (let i = 0; i < y.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    regionSum = baseMatrix.sumRegion(y[i][0], y[i][1], y[i][2], y[i][3]);
+
+    let color = "The sum of the elements of the matrix within the given region is " + regionSum;
+
+    let proper = regionSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* RANGE SUM QUERY 2D - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
