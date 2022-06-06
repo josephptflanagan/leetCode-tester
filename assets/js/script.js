@@ -9710,7 +9710,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* RANGE SUM QUERY 2D - MEDIUM - START */
+/* RANGE SUM QUERY 2D - MEDIUM - START 
 
 // Given a 2D matrix matrix, handle multiple queries of the following type:
 // Calculate the sum of the elements of matrix inside the rectangle defined by its upper left corner (row1, col1) and lower right
@@ -9793,5 +9793,56 @@ for (let i = 0; i < y.length; i++) {
 }
 
 /* RANGE SUM QUERY 2D - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INTERSECTION OF TWO LINKED LISTS - EASY - START */
+
+var getIntersectionNode = function (headA, headB) {
+
+    let map = new Map();
+
+    while (headA) {
+        map.set(headA, headA);
+        headA = headA.next;
+    }
+
+    while (headB) {
+        if (map.has(headB)) {
+            return headB;
+        }
+        headB = headB.next;
+    }
+
+    return null;
+
+};
+
+let x = [[4, 1, 8, 4, 5], [1, 9, 1, 2, 4], [2, 6, 4]]; //
+let y = [[5, 6, 1, 8, 4, 5], [3, 2, 4], [1, 5]]; //
+let correct = [8, 2, null];
+
+answerExplainationEl.textContent = "Given two singly linked lists that potentially intersect, return the value of the node at which they do intesect, otherwise return null.";
+
+for (let i = 0; i < y.length; i++) {
+
+    let listA = listConstructor(x[i]);
+    let listB = listConstructor(y[i]);
+
+    let listEl = document.createElement('li');
+
+    let intersection = getIntersectionNode(listA.head, listB.head);
+
+    let color = (intersection !== null) ? "The two lists intersect at a node valued at " + intersection : "The two lists do not intersect";
+
+    let proper = intersection == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INTERSECTION OF TWO LINKED LISTS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
