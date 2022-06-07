@@ -9796,7 +9796,7 @@ for (let i = 0; i < y.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* INTERSECTION OF TWO LINKED LISTS - EASY - START */
+/* INTERSECTION OF TWO LINKED LISTS - EASY - START 
 
 var getIntersectionNode = function (headA, headB) {
 
@@ -9824,7 +9824,7 @@ let correct = [8, 2, null];
 
 answerExplainationEl.textContent = "Given two singly linked lists that potentially intersect, return the value of the node at which they do intesect, otherwise return null.";
 
-for (let i = 0; i < y.length; i++) {
+for (let i = 0; i < x.length; i++) {
 
     let listA = listConstructor(x[i]);
     let listB = listConstructor(y[i]);
@@ -9836,6 +9836,58 @@ for (let i = 0; i < y.length; i++) {
     let color = (intersection !== null) ? "The two lists intersect at a node valued at " + intersection : "The two lists do not intersect";
 
     let proper = intersection == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INTERSECTION OF TWO LINKED LISTS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MERGE SORTED ARRAY - EASY - START */
+
+var merge = function (nums1, m, nums2, n) {
+
+    let a = m - 1; //nums1 Pointer
+    let b = n - 1; //nums2 Pointer
+
+    for (let i = nums1.length - 1; i >= 0 && b >= 0; i--) {
+
+        if (nums1[a] > nums2[b]) {
+
+            nums1[i] = nums1[a--];
+
+        } else {
+
+            nums1[i] = nums2[b--];
+
+        }
+    }
+
+};
+
+var w = [[1, 2, 3, 0, 0, 0], [1], [0]]; // nums1
+let x = [3, 1, 0]; // m
+let y = [[2, 5, 6], [], [1]]; // nums2
+let z = [3, 0, 1]; // n
+let correct = [[1, 2, 2, 3, 5, 6], [1], [1]];
+
+answerExplainationEl.textContent = "Given two sorted arrays to merge, and numbers representing the number of elements of each array that are to be merged, return a merged array";
+
+for (let i = 0; i < w.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    merge(w[i], x[i], y[i], z[i]);
+
+    console.log("w[i] now: ", w[i].slice());
+
+    let color = "When the two arrays are merged under the given conditions, they become [" + w[i] + "]";
+
+    let proper = compareArrays(w[i], correct[i]) ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
