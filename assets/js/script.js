@@ -9899,7 +9899,7 @@ for (let i = 0; i < w.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* REMOVE PALINDROMIC SUBSEQUENCES - EASY - START */
+/* REMOVE PALINDROMIC SUBSEQUENCES - EASY - START 
 
 // You are given a string s consisting only of letters 'a' and 'b'. In a single step you can remove one palindromic subsequence from s.
 
@@ -9980,5 +9980,67 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* REMOVE PALINDROMIC SUBSEQUENCES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - START */
+
+// Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up
+//  to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
+
+// Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.
+
+// The tests are generated such that there is exactly one solution. You may not use the same element twice.
+
+// Your solution must use only constant extra space.
+
+var twoSum = function (numbers, target) {
+
+    let dict = {};
+
+    for (let i = 0; i < numbers.length; i++) {
+
+        let remaining = target - numbers[i];
+
+        if (dict[numbers[i]] !== undefined) {
+
+            return [(dict[numbers[i]] + 1), (i + 1)];
+
+        } else {
+
+            dict[remaining] = i;
+
+        }
+
+    }
+
+
+};
+
+let x = [[2, 7, 11, 15], [2, 3, 4], [-1, 0], [0, 0, 3, 4]];
+let y = [9, 6, -1, 0]
+let correct = [[1, 2], [1, 3], [1, 2], [1, 2]];
+
+answerExplainationEl.textContent = "Given the ability to remove palindromes in one move, or individual elements in 1 move, return the number of moves to empty a string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let addendIndecies = twoSum(x[i], y[i]);
+
+    let color = "The target of '" + y[i] + "' can be reached through the summation of elements " + addendIndecies[0] + " and " + addendIndecies[1] + " in the array [" + xCopy + "]";
+
+    let proper = compareArrays(addendIndecies, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
