@@ -9983,7 +9983,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - START */
+/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - START 
 
 // Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up
 //  to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
@@ -10042,5 +10042,63 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LENGTH OF LONGEST SUBSCRIPT - START - MEDIUM */
+
+//Given a string s, find the length of the longest substring without repeating characters.
+
+var lengthOfLongestSubstring = function (s) {
+
+    let maxString = (s.length ? s[0] : "");
+
+    if (s) {
+
+        let tempString = "";
+
+        for (let i = 0; i < s.length; i++) {
+
+            if (!tempString.includes(s[i])) {
+
+                tempString += s[i];
+
+            } else {
+
+                tempString = tempString.slice(tempString.indexOf(s[i]) + 1) + s[i];
+
+            }
+
+            maxString = (tempString.length > maxString.length ? tempString : maxString);
+
+        }
+    }
+
+    return maxString.length;
+
+};
+
+let x = ["abcabcbb", "bbbbb", "pwwkew", "", " ", "au", "dvdf"];
+let correct = [3, 1, 3, 0, 1, 2, 3] //"abc, b, wke, none, , "au", "vdf"
+
+answerExplainationEl.textContent = "Given a string s, find the length of the longest subString without repeating characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longSub = lengthOfLongestSubstring(x[i])
+
+    let color = "The longest sub string in '" + x[i] + "' is " + longSub + " characters long";
+
+    let proper = longSub == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LENGTH OF LONGEST SUBSCRIPT - END - MEDIUM */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
