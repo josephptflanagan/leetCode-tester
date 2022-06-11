@@ -10113,6 +10113,28 @@ for (let i = 0; i < x.length; i++) {
 // Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
 
 var minOperations = function(nums, x) {
+
+    const n = nums.length; //for use in creation of sum
+    const sum = nums.reduce((r,n) => r + n, 0); //sum of the contents of nums array
+    const target = sum - x; //nums array sum less the supplied target, resulting in a target to work towards
+
+    let current = 0;
+    let ans = -1; //return element
+    
+    for (let l = 0, r = 0; r < n; r++) { //sliding window, moving r right
+        current += nums[r];
+        
+        while (current > target) { //as the sum 'current' grows larget than target, l moves right, current loses the left most element addend
+            current -= nums[l];
+            l++;
+        }
+        
+        if (current === target) { //'current' sum is equal to the sum of nums less x, makes ans the max of itself or r-l +1
+            ans = Math.max(ans, r - l + 1);
+        }
+    }
+
+    return ans === -1 ? -1 : n - ans; //returns -1 if no selection meets the criteria, or n-ans if it does
     
 };
 
@@ -10120,17 +10142,19 @@ let x = [[1,1,4,2,3],[5,6,7,8,9],[3,2,20,1,1,3]];
 let y = [5,4,10];
 let correct = [2,-1,5];
 
-answerExplainationEl.textContent = "Given a string s, find the length of the longest subString without repeating characters.";
+answerExplainationEl.textContent = "Given an array of integers and a target integer, determine the number of shifts and pops of the integer array that are required to reduce the target integer to zero";
 
 for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
 
-    let longSub = lengthOfLongestSubstring(x[i])
+    let xCopy = x[i].slice();
 
-    let color = "The longest sub string in '" + x[i] + "' is " + longSub + " characters long";
+    let operationCount = minOperations(x[i],y[i]);
 
-    let proper = longSub == correct[i] ? ", this is correct" : ", this is wrong";
+    let color =  operationCount !== -1 ? y[i] + " can be reduced to zero with " + operationCount + " operations on the array [" + xCopy + "]" : y[i] + " cannot be reduced to zero with any number of operations on [" + xCopy + "]";
+
+    let proper = operationCount == correct[i] ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
