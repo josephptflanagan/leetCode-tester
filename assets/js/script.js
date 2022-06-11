@@ -357,6 +357,25 @@ let listToArrayTypeTwo = function (head) {
     return array;
 
 }
+
+let displayNestedArray = function (array) {
+
+    let str = "[";
+
+    for (let i = 0; i < array.length; i++) {
+
+        str += "[" + array[i] + "]";
+
+        if (i !== array.length - 1) {
+            str += ",";
+        }
+
+    }
+
+    str += "]"
+
+    return str;
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -9063,7 +9082,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PATH LENGTH - AMAZON - START */
+/* PATH LENGTH - AMAZON - START 
 
 //  Based on what I remember from my failed Amazon Evaluation
 // Given a 2D grid representing a map, with 0s representing no road, 1s representing a road, and 9 representing the destination,
@@ -9392,5 +9411,733 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* PATH LENGTH - AMAZON - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NUMBER OF 1 BITS - EASY - START 
+
+var hammingWeight = function (n) {
+
+    return n.toString(2).split("0").join("").length; // convert the decimal represenation to binary, remove the 0s from the binary string, return the length of the string of 1s
+
+};
+
+//The function is supposed to supply an unsigned int. because there is no unsigned int in JS, LeetCode supplies a decimal representation of the binary string.
+//In order to make my function work here as it does on LeetCode, I have to do  my own conversion of binaryString to decimal representation.
+let leetCodeAdapter = function (n) {
+
+    return n.toString(10); //convert the binary string into a decimal representation
+
+}
+
+let x = ['00000000000000000000000000001011', '00000000000000000000000010000000', '11111111111111111111111111111101'];
+let correct = [3, 1, 31];
+
+answerExplainationEl.textContent = "Given a binary number as a string, return the Hamming Weight (the number of 1 bits).";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    console.log('x[i]:', x[i]);
+
+    let xCopy = x[i];
+
+    let oneBits = hammingWeight(leetCodeAdapter(x[i]));
+
+    let color = "For the binary string '" + xCopy + ",' the Hamming weight is " + oneBits;
+
+    let proper = (oneBits == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* NUMBER OF 1 BITS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - START 
+
+var numberOfSteps = function (num) {
+
+    let steps = 0;
+
+    while (num > 0) {
+
+        // if (num % 2 !== 0) {
+        //     num--;
+        // } else {
+        //     num /= 2;
+        // }
+
+        num = num % 2 !== 0 ? num - 1 : num / 2; // Single line version of the above
+
+        steps++;
+
+    }
+
+    return steps;
+
+};
+
+let x = [14, 8, 123];
+let correct = [6, 4, 12];
+
+answerExplainationEl.textContent = "Given a calculator that can only divide by 2 or subtract one, how many steps does it take to reduce a given number to zero.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let operations = numberOfSteps(x[i]);
+
+    let color = "It takes " + operations + " operations to reduce " + xCopy + " to zero";
+
+    let proper = (operations == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* NUMBER OF STEPS TO REDUCE A NUMBER TO ZERO - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - START 
+
+var hasAllCodes = function (s, k) {
+
+    // Works, but Too Slow
+    // function allBinaryPermutations(n) {
+
+    //     let perm = [];
+    //     let permCount = Math.pow(2, n);
+
+    //     for (let i = 0; i < permCount; i++) {
+
+    //         let currentPerm = i.toString(2).split("");
+
+    //         while (currentPerm.length < n) {
+    //             currentPerm.unshift("0");
+    //         }
+
+    //         perm.push(currentPerm.join(""));
+
+    //     }
+
+    //     return perm;
+
+    // }
+
+    // let allPermutations = allBinaryPermutations(k);
+
+    // for (let i = 0; i < allPermutations.length; i++) {
+
+    //     if (s.indexOf(allPermutations[i]) == -1) {
+    //         return false;
+    //     }
+
+    // }
+
+    // Works, but Still Too Slow
+    // let permCount = Math.pow(2, k);
+
+    // for (let i = 0; i < permCount; i++) {
+
+    //     let currentPerm = i.toString(2).split("");
+
+    //     while (currentPerm.length < k) {
+    //         currentPerm.unshift("0");
+    //     }
+
+    //     if (s.indexOf(currentPerm.join("")) == -1) {
+    //         return false;
+    //     }
+
+    // }
+
+    // return true;
+
+    const set = new Set();
+
+    //runs through the string adding unique substrings to the set
+    for (let i = k; i <= s.length; i++) {
+
+        set.add(s.slice(i - k, i));
+
+    }
+
+    //checks the size of the set compared to the size a complete set should be
+    return set.size == Math.pow(2, k);
+
+};
+
+let x = ["00110110", "0110", "0110", "00010100110010110111"];
+let y = [2, 1, 2, 3];
+let correct = [true, true, false, true];
+
+answerExplainationEl.textContent = "Given a binary string s and an integer k, return true if every binary code of length k is a substring of s. Otherwise, return false.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let hasCodes = hasAllCodes(x[i], y[i]);
+
+    let color = "The binary string '" + xCopy + (hasCodes ? "' contains every binary code of length " : "' does not contains every binary code of length ") + y[i];
+
+    let proper = (hasCodes == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* CHECK IF A STRING CONTAINS ALL BINARY CODES OF SIZE K - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RUNNING SUM OF 1D ARRAY - EASY - START 
+
+//Works, but looking for a faster option
+// var runningSum = function (nums) {
+
+//     let runSum = [nums[0]];
+
+//     for (let i = 1; i < nums.length; i++) {
+//         runSum.push(nums[i] + runSum[i - 1]);
+//     }
+
+//     return runSum;
+
+// };
+
+//works, but is only marginally faster
+//var runningSum = ((nums, val = 0) => nums.map(x => val = val + x))
+
+//slightly faster
+var runningSum = function (nums) {
+    let sum = 0;
+    return nums.map(i => { sum += i; return sum })
+};
+
+let x = [[1, 2, 3, 4], [1, 1, 1, 1, 1], [3, 1, 2, 10, 1], [4]];
+let correct = [[1, 3, 6, 10], [1, 2, 3, 4, 5], [3, 4, 6, 16, 17], [4]];
+
+answerExplainationEl.textContent = "Given an array of integers, nums, return an array of the running sum of the elements of said array, nums.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i];
+
+    let numsSums = runningSum(x[i]);
+
+    let color = "The running sum of the array [" + xCopy + "] is [" + numsSums + "]";
+
+    let proper = compareArrays(numsSums, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* RUNNING SUM OF 1D ARRAY - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TRANSPOSE MATRIX - EASY - START
+
+// Given a 2D integer array matrix, return the transpose of matrix.
+
+// The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+//[[1][2][3]]
+//[[4][5][6]]
+
+//[[1][4]]
+//[[2][5]]
+//[[3][6]]
+
+var transpose = function (matrix) {
+
+    let transposedArray = [...Array(matrix[0].length)].map((e) => Array(matrix.length).fill(0));
+
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            transposedArray[j][i] = matrix[i][j];
+        }
+    }
+
+    return transposedArray;
+
+};
+
+let x = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 3], [4, 5, 6]]];
+let correct = [[[1, 4, 7], [2, 5, 8], [3, 6, 9]], [[1, 4], [2, 5], [3, 6]]];
+
+answerExplainationEl.textContent = "Given a 2D integer array matrix, return the transpose of matrix.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let transposedX = transpose(x[i]);
+
+    let color = "The array " + displayNestedArray(xCopy) + " when transposed becomes " + displayNestedArray(transposedX);
+
+    let proper = compareNestedArrays(transposedX, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TRANSPOSE MATRIX - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RANGE SUM QUERY 2D - MEDIUM - START 
+
+// Given a 2D matrix matrix, handle multiple queries of the following type:
+// Calculate the sum of the elements of matrix inside the rectangle defined by its upper left corner (row1, col1) and lower right
+// corner (row2, col2).
+
+// Implement the NumMatrix class:
+// NumMatrix(int[][] matrix) Initializes the object with the integer matrix matrix.
+// int sumRegion(int row1, int col1, int row2, int col2) Returns the sum of the elements of matrix inside the rectangle defined 
+// by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+// @param {number[][]} matrix
+// var NumMatrix = function(matrix) {
+
+// };
+
+
+// @param {number} row1 
+// @param {number} col1 
+// @param {number} row2 
+// @param {number} col2
+// @return {number}
+// NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
+
+// };
+
+// Your NumMatrix object will be instantiated and called as such:
+// var obj = new NumMatrix(matrix)
+// var param_1 = obj.sumRegion(row1,col1,row2,col2)
+
+class NumMatrix {
+    constructor(matrix) {
+        this.matrix = matrix;
+    }
+    sumRegion(row1, col1, row2, col2) {
+
+        //Simple, Slow, but Fast Enough
+        let sum = 0;
+
+        for (let i = row1; i <= row2; i++) {
+            for (let j = col1; j <= col2; j++) {
+                sum += this.matrix[i][j];
+            }
+        }
+
+        return sum;
+
+        //Too Slow
+        // let region = [];
+
+        // for (let i = row1; i <= row2; i++) {
+        //     region = region.concat(this.matrix[i].slice(col1, col2 + 1));
+        // }
+
+        // return region.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    }
+}
+
+let x = [[3, 0, 1, 4, 2], [5, 6, 3, 2, 1], [1, 2, 0, 1, 5], [4, 1, 0, 1, 7], [1, 0, 3, 0, 5]]; //matrix elements
+let y = [[2, 1, 4, 3], [1, 1, 2, 2], [1, 2, 2, 4]] //sumRegion Coords
+let correct = [8, 11, 12]; //sums of sumRegion Coords
+
+answerExplainationEl.textContent = "Given a 2D integer matrix, and the coordinates of the top left and bottom right corners of a section of that matrix, return the sum of the elements within that region.";
+
+let baseMatrix = new NumMatrix(x);
+
+for (let i = 0; i < y.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    regionSum = baseMatrix.sumRegion(y[i][0], y[i][1], y[i][2], y[i][3]);
+
+    let color = "The sum of the elements of the matrix within the given region is " + regionSum;
+
+    let proper = regionSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* RANGE SUM QUERY 2D - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INTERSECTION OF TWO LINKED LISTS - EASY - START 
+
+var getIntersectionNode = function (headA, headB) {
+
+    let map = new Map();
+
+    while (headA) {
+        map.set(headA, headA);
+        headA = headA.next;
+    }
+
+    while (headB) {
+        if (map.has(headB)) {
+            return headB;
+        }
+        headB = headB.next;
+    }
+
+    return null;
+
+};
+
+let x = [[4, 1, 8, 4, 5], [1, 9, 1, 2, 4], [2, 6, 4]]; //
+let y = [[5, 6, 1, 8, 4, 5], [3, 2, 4], [1, 5]]; //
+let correct = [8, 2, null];
+
+answerExplainationEl.textContent = "Given two singly linked lists that potentially intersect, return the value of the node at which they do intesect, otherwise return null.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listA = listConstructor(x[i]);
+    let listB = listConstructor(y[i]);
+
+    let listEl = document.createElement('li');
+
+    let intersection = getIntersectionNode(listA.head, listB.head);
+
+    let color = (intersection !== null) ? "The two lists intersect at a node valued at " + intersection : "The two lists do not intersect";
+
+    let proper = intersection == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* INTERSECTION OF TWO LINKED LISTS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MERGE SORTED ARRAY - EASY - START 
+
+var merge = function (nums1, m, nums2, n) {
+
+    let a = m - 1; //nums1 Pointer
+    let b = n - 1; //nums2 Pointer
+
+    for (let i = nums1.length - 1; i >= 0 && b >= 0; i--) {
+
+        if (nums1[a] > nums2[b]) {
+
+            nums1[i] = nums1[a--];
+
+        } else {
+
+            nums1[i] = nums2[b--];
+
+        }
+    }
+
+};
+
+var w = [[1, 2, 3, 0, 0, 0], [1], [0]]; // nums1
+let x = [3, 1, 0]; // m
+let y = [[2, 5, 6], [], [1]]; // nums2
+let z = [3, 0, 1]; // n
+let correct = [[1, 2, 2, 3, 5, 6], [1], [1]];
+
+answerExplainationEl.textContent = "Given two sorted arrays to merge, and numbers representing the number of elements of each array that are to be merged, return a merged array";
+
+for (let i = 0; i < w.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    merge(w[i], x[i], y[i], z[i]);
+
+    console.log("w[i] now: ", w[i].slice());
+
+    let color = "When the two arrays are merged under the given conditions, they become [" + w[i] + "]";
+
+    let proper = compareArrays(w[i], correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MERGE SORTED ARRAY - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* REMOVE PALINDROMIC SUBSEQUENCES - EASY - START 
+
+// You are given a string s consisting only of letters 'a' and 'b'. In a single step you can remove one palindromic subsequence from s.
+
+// Return the minimum number of steps to make the given string empty.
+
+// A string is a subsequence of a given string if it is generated by deleting some characters of a given string without changing its order.
+//  Note that a subsequence does not necessarily need to be contiguous. <= this makes the question a trick question
+
+// A string is called palindrome if is one that reads the same backward as well as forward.
+
+//This is how to really do this, sans the joke of an answer caused by a stupid instruction
+// var longestPalindrome = function (s) {
+
+//     let longest = '';
+
+//     for (let i = 0; i < s.length; i++) {
+//         expandCheck(i, i);
+//         expandCheck(i, i + 1);
+//     }
+
+//     function expandCheck(l, r) {
+//         while (l >= 0 && r < s.length && s[l] === s[r]) {
+//             if (r - l + 1 > longest.length) {
+//                 longest = s.slice(l, r + 1);
+//             }
+//             l--;
+//             r++;
+//         }
+//     }
+
+//     return longest;
+
+// };
+
+// var removePalindromeSub = function (s) {
+
+//     let removals = 0;
+
+//     while (s.length > 0) {
+//         let currentPalindrome = longestPalindrome(s);
+//         let idx = s.indexOf(currentPalindrome);
+//         s = s.slice(0, idx) + s.slice(idx + currentPalindrome.length);
+//         removals++;
+//     }
+
+//     return removals;
+
+// };
+
+//this is how the question works due to the instruction: "Note that a subsequence does not necessarily need to be contiguous" 
+var removePalindromeSub = function (s) {
+
+    return s === s.split('').reverse().join('') ? 1 : 2;
+
+};
+
+let x = ["ababa", "abb", "baabb", "a", "bbaabaaa"];
+let correct = [1, 2, 2, 1, 2];
+
+answerExplainationEl.textContent = "Given the ability to remove palindromes in one move, or individual elements in 1 move, return the number of moves to empty a string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let moveCount = removePalindromeSub(x[i]);
+
+    let color = "With the given rules, the string '" + xCopy + "' can be reduced to being empty in " + moveCount + " moves";
+
+    let proper = moveCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* REMOVE PALINDROMIC SUBSEQUENCES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - START 
+
+// Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up
+//  to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
+
+// Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.
+
+// The tests are generated such that there is exactly one solution. You may not use the same element twice.
+
+// Your solution must use only constant extra space.
+
+var twoSum = function (numbers, target) {
+
+    let dict = {};
+
+    for (let i = 0; i < numbers.length; i++) {
+
+        let remaining = target - numbers[i];
+
+        if (dict[numbers[i]] !== undefined) {
+
+            return [(dict[numbers[i]] + 1), (i + 1)];
+
+        } else {
+
+            dict[remaining] = i;
+
+        }
+
+    }
+
+
+};
+
+let x = [[2, 7, 11, 15], [2, 3, 4], [-1, 0], [0, 0, 3, 4]];
+let y = [9, 6, -1, 0]
+let correct = [[1, 2], [1, 3], [1, 2], [1, 2]];
+
+answerExplainationEl.textContent = "Given the ability to remove palindromes in one move, or individual elements in 1 move, return the number of moves to empty a string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let addendIndecies = twoSum(x[i], y[i]);
+
+    let color = "The target of '" + y[i] + "' can be reached through the summation of elements " + addendIndecies[0] + " and " + addendIndecies[1] + " in the array [" + xCopy + "]";
+
+    let proper = compareArrays(addendIndecies, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TWO SUM II INPUT ARRAY IS SORTED - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LENGTH OF LONGEST SUBSCRIPT - START - MEDIUM
+
+//Given a string s, find the length of the longest substring without repeating characters.
+
+var lengthOfLongestSubstring = function (s) {
+
+    let maxString = (s.length ? s[0] : "");
+
+    if (s) {
+
+        let tempString = "";
+
+        for (let i = 0; i < s.length; i++) {
+
+            if (!tempString.includes(s[i])) {
+
+                tempString += s[i];
+
+            } else {
+
+                tempString = tempString.slice(tempString.indexOf(s[i]) + 1) + s[i];
+
+            }
+
+            maxString = (tempString.length > maxString.length ? tempString : maxString);
+
+        }
+    }
+
+    return maxString.length;
+
+};
+
+let x = ["abcabcbb", "bbbbb", "pwwkew", "", " ", "au", "dvdf"];
+let correct = [3, 1, 3, 0, 1, 2, 3] //"abc, b, wke, none, , "au", "vdf"
+
+answerExplainationEl.textContent = "Given a string s, find the length of the longest subString without repeating characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longSub = lengthOfLongestSubstring(x[i])
+
+    let color = "The longest sub string in '" + x[i] + "' is " + longSub + " characters long";
+
+    let proper = longSub == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LENGTH OF LONGEST SUBSCRIPT - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - START */
+
+// You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost
+//  element from the array nums and subtract its value from x. Note that this modifies the array for future operations.
+
+// Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
+
+var minOperations = function(nums, x) {
+    
+};
+
+let x = [[1,1,4,2,3],[5,6,7,8,9],[3,2,20,1,1,3]];
+let y = [5,4,10];
+let correct = [2,-1,5];
+
+answerExplainationEl.textContent = "Given a string s, find the length of the longest subString without repeating characters.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longSub = lengthOfLongestSubstring(x[i])
+
+    let color = "The longest sub string in '" + x[i] + "' is " + longSub + " characters long";
+
+    let proper = longSub == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
