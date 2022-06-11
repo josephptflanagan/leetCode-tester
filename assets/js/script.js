@@ -9360,6 +9360,8 @@ var pathLength = function (grid) {
 
     let minimumVertecies = gridGraph.Dijkstra("Origin", "Destination").length;
 
+    console.log (gridGraph.Dijkstra("Origin", "Destination"));
+
     if (minimumVertecies - 1 != 0) {
         shortest = minimumVertecies - 1;
     }
@@ -9368,8 +9370,8 @@ var pathLength = function (grid) {
 
 }
 
-let x = [[[1, 0, 0], [1, 0, 0], [1, 9, 1]], [[1, 0, 0], [1, 0, 9], [1, 0, 1]], [[1, 1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 1, 0, 1], [1, 0, 1, 1, 1, 1, 0, 1], [1, 0, 1, 0, 0, 0, 0, 1], [1, 0, 1, 0, 9, 0, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 1, 1, 1, 0, 1, 1], [1, 1, 0, 0, 0, 1, 1, 0]]];
-let correct = [3, -1, 18];
+let x = [[[1, 0, 0], [1, 0, 0], [1, 9, 1]], [[1, 0, 0], [1, 0, 9], [1, 0, 1]], [[1, 1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 1, 0, 1], [1, 0, 1, 1, 1, 1, 0, 1], [1, 0, 1, 0, 0, 0, 0, 1], [1, 0, 1, 0, 9, 0, 1, 1], [1, 0, 1, 0, 1, 0, 1, 0], [1, 0, 1, 1, 1, 0, 1, 1], [1, 1, 0, 0, 0, 1, 1, 0]],[[1,0,0,0,0,0],[1,0,0,0,0,0],[1,0,0,0,0,0],[1,0,0,0,0,0],[1,1,1,1,1,9],[0,0,0,0,0,0]]];
+let correct = [3, -1, 18,9];
 
 answerExplainationEl.textContent = "Given a 2D grid, starting from the top left, return the length of the shortest path to reach the destination.";
 
