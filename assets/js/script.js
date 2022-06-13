@@ -10105,42 +10105,42 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - START */
+/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - START 
 
 // You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost
 //  element from the array nums and subtract its value from x. Note that this modifies the array for future operations.
 
 // Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
 
-var minOperations = function(nums, x) {
+var minOperations = function (nums, x) {
 
     const n = nums.length; //for use in creation of sum
-    const sum = nums.reduce((r,n) => r + n, 0); //sum of the contents of nums array
+    const sum = nums.reduce((r, n) => r + n, 0); //sum of the contents of nums array
     const target = sum - x; //nums array sum less the supplied target, resulting in a target to work towards
 
     let current = 0;
     let ans = -1; //return element
-    
+
     for (let l = 0, r = 0; r < n; r++) { //sliding window, moving r right
         current += nums[r];
-        
+
         while (current > target) { //as the sum 'current' grows larget than target, l moves right, current loses the left most element addend
             current -= nums[l];
             l++;
         }
-        
+
         if (current === target) { //'current' sum is equal to the sum of nums less x, makes ans the max of itself or r-l +1
             ans = Math.max(ans, r - l + 1);
         }
     }
 
     return ans === -1 ? -1 : n - ans; //returns -1 if no selection meets the criteria, or n-ans if it does
-    
+
 };
 
-let x = [[1,1,4,2,3],[5,6,7,8,9],[3,2,20,1,1,3]];
-let y = [5,4,10];
-let correct = [2,-1,5];
+let x = [[1, 1, 4, 2, 3], [5, 6, 7, 8, 9], [3, 2, 20, 1, 1, 3]];
+let y = [5, 4, 10];
+let correct = [2, -1, 5];
 
 answerExplainationEl.textContent = "Given an array of integers and a target integer, determine the number of shifts and pops of the integer array that are required to reduce the target integer to zero";
 
@@ -10150,9 +10150,9 @@ for (let i = 0; i < x.length; i++) {
 
     let xCopy = x[i].slice();
 
-    let operationCount = minOperations(x[i],y[i]);
+    let operationCount = minOperations(x[i], y[i]);
 
-    let color =  operationCount !== -1 ? y[i] + " can be reduced to zero with " + operationCount + " operations on the array [" + xCopy + "]" : y[i] + " cannot be reduced to zero with any number of operations on [" + xCopy + "]";
+    let color = operationCount !== -1 ? y[i] + " can be reduced to zero with " + operationCount + " operations on the array [" + xCopy + "]" : y[i] + " cannot be reduced to zero with any number of operations on [" + xCopy + "]";
 
     let proper = operationCount == correct[i] ? ", this is correct" : ", this is wrong";
 
@@ -10163,5 +10163,55 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* TRIANGLE - MEDIUM - START */
+
+// Given a triangle array, return the minimum path sum from top to bottom.
+
+// For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row,
+//  you may move to either index i or index i + 1 on the next row.
+
+var minimumTotal = function (triangle) {
+
+    for (let i = triangle.length - 2; i > -1; i--) {
+
+        for (let j = 0; j < triangle[i].length; j++) {
+
+            triangle[i][j] += Math.min(triangle[i + 1][j], triangle[i + 1][j + 1]);
+
+        }
+
+    }
+
+    return triangle[0][0];
+
+};
+
+let x = [[[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]], [[-10]], [[-1], [2, 3], [1, -1, -3]]];
+let correct = [11, -10, -1];
+
+answerExplainationEl.textContent = "Given a triangular array, return the minimum path sum from top to bottom";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let minPath = minimumTotal(x[i]);
+
+    let color = "The minimum path from top to bottom in the triangular array " + displayNestedArray(xCopy) + " is " + minPath;
+
+    let proper = minPath == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TRIANGLE - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
