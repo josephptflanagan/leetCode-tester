@@ -10166,7 +10166,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* TRIANGLE - MEDIUM - START */
+/* TRIANGLE - MEDIUM - START 
 
 // Given a triangle array, return the minimum path sum from top to bottom.
 
@@ -10213,5 +10213,148 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* TRIANGLE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST STRING CHAIN - MEDIUM - START 
+
+// You are given an array of words where each word consists of lowercase English letters.
+
+// wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the
+//  other characters to make it equal to wordB.
+
+// For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
+// A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a
+//  predecessor of word3, and so on. A single word is trivially a word chain with k == 1.
+
+// Return the length of the longest possible word chain with words chosen from the given list of words.
+
+var longestStrChain = function (words) {
+
+    //sort words by length
+    let sorted = words.sort((a, b) => b.length - a.length);
+
+    //populate an array dp the same size as words, filled with ones, ensuring a minimum longest of 1 is returned
+    let dp = new Array(sorted.length).fill(1);
+
+    //checks if word2 is a longer word chain of word1
+    function longerStrChain(word1, word2) {
+
+        //quick rejection for equal length words
+        if (word1.length + 1 != word2.length) {
+            return false;
+        }
+
+        let first = 0;
+        let second = 0;
+
+        while (second < word2.length) {
+
+            if (word1[first] == word2[second]) {
+                first++;
+            }
+
+            second++;
+
+        }
+
+        return (first == word1.length && second == word2.length);
+
+    }
+
+    //cycle through the elements of the sorted words array for longer word chains
+    for (let i = 0; i < sorted.length; i++) {
+
+        for (let j = 0; j < i; j++) {
+
+            //if sorted[j] is a longer word chain of sorted[i], add it to the array
+            if (longerStrChain(sorted[i], sorted[j])) {
+
+                dp[i] = Math.max(dp[i], dp[j] + 1);
+
+            }
+        }
+    }
+
+    return Math.max(...dp);
+
+};
+
+let x = [["a", "b", "ba", "bca", "bda", "bdca"], ["xbc", "pcxbcf", "xb", "cxbc", "pcxbc"], ["abcd", "dbqca"]];
+let correct = [4, 5, 1];
+
+answerExplainationEl.textContent = "Given an array of strings, return the length of the longest possible word chain";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let longest = longestStrChain(x[i]);
+
+    let color = "Given the array of strings [" + xCopy + "], the longest word chain is " + longest + " characters long";
+
+    let proper = longest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST STRING CHAIN - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - START */
+
+//Given a string s, return the longest palindromic substring in s.
+
+var longestPalindrome = function (s) {
+
+    let longest = '';
+
+    for (let i = 0; i < s.length; i++) {
+        expandCheck(i, i);
+        expandCheck(i, i + 1);
+    }
+
+    function expandCheck(l, r) {
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            if (r - l + 1 > longest.length) {
+                longest = s.slice(l, r + 1);
+            }
+            l--;
+            r++;
+        }
+    }
+
+    return longest;
+
+};
+
+let x = ["babad", "cbbd", "a", "ac"];
+let correct = ["bab", "bb", "a", "a"];
+
+answerExplainationEl.textContent = "Given a string s, return the longest palindromic substring in s.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longPalindrome = longestPalindrome(x[i]);
+
+    let color = "Given the string '" + x[i] + ",' the longest palindrome is " + longPalindrome;
+
+    let proper = longPalindrome == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
