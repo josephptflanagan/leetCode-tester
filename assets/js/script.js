@@ -140,6 +140,44 @@ function bstConstructor(array) {
 
 }
 
+function leetCodeBTConstructor(array) {
+
+    if (array.length < 1) {
+        return null;
+    }
+
+    let root = new TreeNode(array.shift());
+    let queue = [root];
+
+    while (array.length > 0) {
+
+        let currentNode = queue.shift();
+
+        let leftChildVal = array.shift();
+        let rightChildVal = null;
+
+        if (array.length > 0) {
+            rightChildVal = array.shift();
+        }
+
+        if (leftChildVal !== null) {
+            let leftChild = new TreeNode(leftChildVal);
+            currentNode.left = leftChild;
+            queue.push(leftChild);
+        }
+
+        if (rightChildVal !== null) {
+            let rightChild = new TreeNode(rightChildVal);
+            currentNode.right = rightChild;
+            queue.push(rightChild);
+        }
+
+    }
+
+    return root;
+
+}
+
 function bstToArray(root) {
 
     let queue = [];
@@ -10307,7 +10345,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - START */
+/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - START 
 
 //Given a string s, return the longest palindromic substring in s.
 
@@ -10356,5 +10394,63 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* LONGEST PALINDROMIC SUBSTRING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BINARY TREE CAMERAS - HARD - START */
+
+// You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, 
+// itself, and its immediate children.
+
+// Return the minimum number of cameras needed to monitor all nodes of the tree.
+
+var minCameraCover = function (root) {
+
+    let camera = 0;
+    const postOrder = (root) => {
+        if (!root)
+            return 1;
+        const left = postOrder(root.left);
+        const right = postOrder(root.right);
+        if (left === -1 || right === -1) {
+            camera++;
+            return 0;
+        } else if (left === 0 || right === 0) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    const out = postOrder(root);
+    return out === -1 ? camera + 1 : camera;
+
+};
+
+let x = [[0, 0, null, 0, 0], [0, 0, null, 0, null, 0, null, null, 0]];
+let correct = [1, 2];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, and camera that can watch the parent and children of the node they are attached to, return the number of cameras required to watch all the nodes.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let xRoot = leetCodeBTConstructor(x[i]);
+
+    let cameraCount = minCameraCover(xRoot);
+
+    let color = "At least " + cameraCount + " cameras are required to cover every node of the tree [" + xCopy + "]";
+
+    let proper = cameraCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BINARY TREE CAMERAS - HARD - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
