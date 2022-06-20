@@ -10397,7 +10397,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BINARY TREE CAMERAS - HARD - START */
+/* BINARY TREE CAMERAS - HARD - START 
 
 // You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, 
 // itself, and its immediate children.
@@ -10406,23 +10406,38 @@ for (let i = 0; i < x.length; i++) {
 
 var minCameraCover = function (root) {
 
-    let camera = 0;
-    const postOrder = (root) => {
-        if (!root)
+    // It has camera : return 0
+    // It needs camera : return -1
+    // leaves, don't have or need a camera : return 1
+
+    let cameraCount = 0;
+    const helper = (root) => {
+
+        //caught at leaves
+        if (!root) {
             return 1;
-        const left = postOrder(root.left);
-        const right = postOrder(root.right);
+        }
+
+        const left = helper(root.left);
+        const right = helper(root.right);
+
         if (left === -1 || right === -1) {
-            camera++;
+
+            cameraCount++;
             return 0;
+
         } else if (left === 0 || right === 0) {
+
             return 1;
+
         } else {
+
             return -1;
+
         }
     }
-    const out = postOrder(root);
-    return out === -1 ? camera + 1 : camera;
+    const out = helper(root);
+    return out === -1 ? cameraCount + 1 : cameraCount;
 
 };
 
@@ -10452,5 +10467,76 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* BINARY TREE CAMERAS - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SHORT ENCODING OF WORDS - MEDIUM - START */
+
+// A valid encoding of an array of words is any reference string s and array of indices indices such that:
+
+// words.length == indices.length
+// The reference string s ends with the '#' character.
+// For each index indices[i], the substring of s starting from indices[i] and up to (but not including) the next '#' character is equal to words[i].
+
+// Given an array of words, return the length of the shortest reference string s possible of any valid encoding of words.
+
+var minimumLengthEncoding = function (words) {
+
+    //bring the longest words to the front of the array
+    words.sort((a, b) => b.length - a.length);
+
+    //instantiate encoded and indecies with the first, longest, word
+    let encoded = words.shift() + "#";
+    let indices = [0];
+
+    //loop through words, searching for the current word in the encoded section, adding the word if it isn't in the code, continuing on if it is
+    while (words.length > 0) {
+
+        let currentWord = words.shift() + "#";
+        let idx = encoded.indexOf(currentWord);
+
+        //if the word isn't in the code, add it
+        if (idx == -1) {
+
+            indices.push(encoded.length);
+            encoded += (currentWord);
+
+            //if the word is already in the code, simply add the word's address within the code to the indices array
+        } else {
+
+            indices.push(idx);
+
+        }
+
+    }
+
+    return encoded.length;
+
+};
+
+let x = [["time", "me", "bell"], ["t"], ["feipyxx", "e"]];
+let correct = [10, 2, 10];
+
+answerExplainationEl.textContent = "Given a series of words, return the length of the shortest valid encoding of those words.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let codeLength = minimumLengthEncoding(x[i]);
+
+    let color = "The shortest valid encoding of [" + xCopy + "] is " + codeLength + " characters long";
+
+    let proper = codeLength == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SHORT ENCODING OF WORDS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
