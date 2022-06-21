@@ -414,6 +414,12 @@ let displayNestedArray = function (array) {
 
     return str;
 }
+
+let pluralize = function (val) {
+
+    return val <= 0 || val > 1 ? "s" : "";
+
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -10470,7 +10476,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SHORT ENCODING OF WORDS - MEDIUM - START */
+/* SHORT ENCODING OF WORDS - MEDIUM - START 
 
 // A valid encoding of an array of words is any reference string s and array of indices indices such that:
 
@@ -10538,5 +10544,87 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* SHORT ENCODING OF WORDS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - START */
+
+// You are given an integer array heights representing the heights of buildings, some bricks, and some ladders.
+
+// You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
+
+// While moving from building i to building i+1 (0-indexed),
+
+// If the current building's height is greater than or equal to the next building's height, you do not need a ladder or bricks.
+// If the current building's height is less than the next building's height, you can either use one ladder or (h[i+1] - h[i]) bricks.
+
+// Return the furthest building index (0-indexed) you can reach if you use the given ladders and bricks optimally.
+
+var furthestBuilding = function (heights, bricks, ladders) {
+
+    let queue = new Array(ladders).fill(0);
+    let i = 1;
+
+    for (i; i < heights.length; i++) {
+
+        let diff = heights[i] - heights[i - 1];
+
+        if (diff > 0) { // positive difference means a ladder or bricks must be expended
+
+            if (diff > queue[0]) { // difference greater than shortest ladder?
+
+                let curr = queue.length - 1;  //find which ladder to replace, starting at longest
+
+                while (curr >= 0 && queue[curr] > diff) curr--; //while current ladder is longer, go down
+
+                bricks -= queue.shift(); // remove shortest ladder and convert to bricks.
+                queue.splice(curr, 0, diff); //add new ladder to queue.
+
+            } else {
+
+                bricks -= diff; // if no ladders remain, use bricks
+
+            }
+
+            if (bricks < 0) {
+
+                break; //if bricks are negative, exit loop.
+
+            }
+        }
+    }
+
+    return i - 1;
+
+};
+
+let x = [[4, 2, 7, 6, 9, 14, 12], [4, 12, 2, 7, 3, 18, 20, 3, 19], [14, 3, 19, 3]]; // buildings
+let y = [5, 10, 17]; // bricks
+let z = [1, 2, 0]; // ladders
+let correct = [4, 7, 3];
+
+answerExplainationEl.textContent = "Given an array of building heights, a number of bricks, and a number of ladders, return how far you can traverse the array of buildings";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+    let yCopy = y[i];
+    let zCopy = z[i];
+
+    let reached = furthestBuilding(x[i], y[i], z[i]);
+
+    let color = "Given the buildings [" + xCopy + "], " + yCopy + " brick" + pluralize(yCopy) + " and " + zCopy + " ladder" + pluralize(zCopy) + ", you can potentially reach building " + reached;
+
+    let proper = reached == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
