@@ -10547,7 +10547,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - START */
+/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - START 
 
 // You are given an integer array heights representing the heights of buildings, some bricks, and some ladders.
 
@@ -10626,5 +10626,46 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* FURTHEST BUILDING YOU CAN REACH - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - START */
+
+// Given an integer array nums and an integer k, return the kth largest element in the array.
+
+// Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+var findKthLargest = function (nums, k) {
+
+    nums.sort((a, b) => b - a);
+    return nums[k - 1];
+
+};
+
+let x = [[3, 2, 1, 5, 6, 4], [3, 2, 3, 1, 2, 4, 5, 5, 6]]; // nums
+let y = [2, 4]; // kth element
+let correct = [5, 4];
+
+answerExplainationEl.textContent = "Given an array of integers, return the kth largest element";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let kthLargest = findKthLargest(x[i], y[i]);
+
+    let color = "Given the array of integers [" + xCopy + "], the " + y[i] + "th largest element is " + kthLargest;
+
+    let proper = kthLargest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
