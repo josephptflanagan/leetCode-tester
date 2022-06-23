@@ -10629,7 +10629,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - START */
+/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - START 
 
 // Given an integer array nums and an integer k, return the kth largest element in the array.
 
@@ -10667,5 +10667,116 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* COURSE SCHEDULE III - HARD - START */
+
+// There are n different online courses numbered from 1 to n. You are given an array courses where courses[i] = [durationi, lastDayi] 
+// indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi.
+
+// You will start on the 1st day and you cannot take two or more courses simultaneously.
+
+// Return the maximum number of courses that you can take.
+
+class PriorityQueue {
+    constructor() {
+        this.queue = [];
+        this.totalTime = 0;
+    }
+
+    get length() {
+        return this.queue.length;
+    }
+
+    get maxDuration() {
+        return this.queue[this.queue.length - 1] || 0;
+    }
+
+    getInsertIndex(duration) {
+        let start = 0;
+        let end = this.queue.length - 1;
+        while (start <= end) {
+            const mid = Math.floor((start + end) / 2);
+            if (this.queue[mid] === duration) return mid;
+
+            if (duration < this.queue[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return start;
+    }
+
+    insert(duration) {
+        this.totalTime += duration;
+
+        if (!this.queue.length || duration > this.queue[this.queue.length - 1]) {
+            this.queue.push(duration);
+        } else if (duration < this.queue[0]) {
+            this.queue.unshift(duration);
+        } else {
+            this.queue.splice(this.getInsertIndex(duration), 0, duration);
+        }
+    }
+
+    swap(duration) {
+        if (duration < this.maxDuration) {
+            this.dequeue();
+            this.insert(duration);
+        }
+    }
+
+    enqueue([duration, deadline]) {
+        this.totalTime + duration > deadline ? this.swap(duration) : this.insert(duration);
+    }
+
+    dequeue() {
+        const duration = this.queue.pop() || 0;
+        this.totalTime -= duration;
+    }
+}
+
+var scheduleCourse = function (courses) {
+
+    //filter out courses that are too long, then sort the remainder
+    courses = courses.filter((a) => a[0] <= a[1]).sort((a, b) => a[1] - b[1]);
+
+    const priorityQueue = new PriorityQueue();
+
+    //attempt to enqueue all courses into the priorityQueue
+    for (const course of courses) {
+        priorityQueue.enqueue(course);
+    }
+
+    return priorityQueue.length;
+
+};
+
+let x = [[[100, 200], [200, 1300], [1000, 1250], [2000, 3200]], [[1, 2]], [[3, 2], [4, 3]], [[1, 19], [2, 2], [1, 17]]]; // courses
+let correct = [3, 1, 0, 3];
+
+answerExplainationEl.textContent = "Given lengths and end dates of possible courses that can be taken (that can only be taken one at a time), return the total number of courses that can be taken ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let courseCount = scheduleCourse(x[i]);
+
+    let color = "Given the courses " + displayNestedArray(xCopy) + ", you can potentially take " + courseCount;
+
+    let proper = courseCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* COURSE SCHEDULE III - HARD - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
