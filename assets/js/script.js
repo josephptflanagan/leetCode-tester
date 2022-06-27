@@ -10670,7 +10670,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* COURSE SCHEDULE III - HARD - START */
+/* COURSE SCHEDULE III - HARD - START 
 
 // There are n different online courses numbered from 1 to n. You are given an array courses where courses[i] = [durationi, lastDayi] 
 // indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi.
@@ -10778,5 +10778,49 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* COURSE SCHEDULE III - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START */
+
+// A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100
+//  are deci-binary, while 112 and 3001 are not.
+
+// Given a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that 
+// they sum up to n.
+
+// I found this solution online. It simply converts the string into an array, then it returns the highest number in the array.
+// This works because of the nature of deci-binary numbers, in that it will take a minium of one deci-binary number to remove each
+// level of integer present in the given number. i.e. 2222222222222 takes 2 deci-binary numbers to remove, so does 2222002000220.
+// 455234662349 takes 9 because of the sole 9 at the back. 
+// 455234662349 = 111111111111 + 111111111111 + 111011110111 + 111001110011 + 11000110001 + 110001 + 1 + 1 + 1 (9 operations)
+//                344123551238   233012440127   122001330016   011000220005   00000110004   000003   2   1   0
+// Therefore, the highest digit in a number determines the number of deci-binary digits it takes to sum to that number
+var minPartitions = (n => Math.max(...n));
+
+let x = ["32", "82734", "27346209830709182346"];
+let correct = [3, 8, 9];
+
+answerExplainationEl.textContent = " ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let deciBinaryCount = minPartitions(x[i]);
+
+    let xCopy = x[i];
+
+    let color = "The number " + xCopy + ", is the sum of a minimum of " + deciBinaryCount + " deci-binary numbers";
+
+    let proper = deciBinaryCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
