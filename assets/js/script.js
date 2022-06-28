@@ -10781,7 +10781,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START */
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START 
 
 // A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100
 //  are deci-binary, while 112 and 3001 are not.
@@ -10814,6 +10814,75 @@ for (let i = 0; i < x.length; i++) {
     let color = "The number " + xCopy + ", is the sum of a minimum of " + deciBinaryCount + " deci-binary numbers";
 
     let proper = deciBinaryCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START */
+
+// A string s is called good if there are no two different characters in s that have the same frequency.
+
+// Given a string s, return the minimum number of characters you need to delete to make s good.
+
+// The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab",
+//  the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+var minDeletions = function (s) {
+
+    //create a dictionary with each character acting as the key for the number of occurrences of that character; 
+    let dict = {};
+
+    //populate dict
+    for (let i = 0; i < s.length; i++) {
+        if (dict[s[i]]) {
+            dict[s[i]]++;
+        } else {
+            dict[s[i]] = 1;
+        }
+    }
+
+    // occurences works as an index of values while removals keeps track of the deletions required to fill occurences with unique values
+    let occurences = [];
+    let removals = 0;
+
+    for (key in dict) {
+
+        //if the character count already exists in occurences, or the character count hasn't already been worn down to zero, decrement the count. 
+        while (occurences.indexOf(dict[key]) != -1 && dict[key] != 0) {
+            dict[key]--;
+            removals++;
+        }
+
+        // once the character count is unique, or zero, add it to the occurences index
+        occurences.push(dict[key]);
+
+    }
+
+    return removals;
+
+};
+
+let x = ["aab", "aaabbbcc", "ceabaacb"];
+let correct = [0, 2, 2];
+
+answerExplainationEl.textContent = " Given a string of characters, return the number of character deletions required to have a unique number of each character in the string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let deletions = minDeletions(x[i]);
+
+    let color = "The string " + x[i] + " requires " + deletions + " deletions to create a good string";
+
+    let proper = deletions == correct[i] ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
