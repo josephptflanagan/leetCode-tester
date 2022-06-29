@@ -10825,7 +10825,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START */
+/* MINIMUM DELETIONS TO PRODUCE UNIQUE FREQUENCY STRINGS - MEDIUM - START 
 
 // A string s is called good if there are no two different characters in s that have the same frequency.
 
@@ -10890,6 +10890,58 @@ for (let i = 0; i < x.length; i++) {
 
 }
 
-/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - END */
+/* MINIMUM DELETIONS TO PRODUCE UNIQUE FREQUENCY STRINGS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - START */
+
+// You are given an array of people, people, which are the attributes of some people in a queue (not necessarily in order).
+// Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+
+// Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue,
+//  where queue[j] = [hj, kj] is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+
+var reconstructQueue = function (people) {
+
+    //sort people by num ahead in the case they are the same height, otherwise, sort by height
+    people.sort((a, b) => b[0] !== a[0] ? b[0] - a[0] : a[1] - b[1]);
+
+    const queue = [];
+
+    for (let i = 0; i < people.length; i++) {
+
+        //splice people into the queue based on the number of those ahead
+        queue.splice(people[i][1], 0, people[i]);
+
+    }
+
+    return queue;
+};
+
+let x = [[[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]], [[6, 0], [5, 0], [4, 0], [3, 2], [2, 2], [1, 4]]];
+let correct = [[[5, 0], [7, 0], [5, 2], [6, 1], [4, 4], [7, 1]], [[4, 0], [5, 0], [2, 2], [3, 2], [1, 4], [6, 0]]];
+
+answerExplainationEl.textContent = "Given an array of people represented by arrays composed of the person's height and the number of individuals of the same height or taller in front of them, return a properly sorted array";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let reconstructed = reconstructQueue(x[i]);
+
+    let color = "The array " + displayNestedArray(xCopy) + " is properly reconstruced as " + displayNestedArray(reconstructed);
+
+    let proper = compareNestedArrays(reconstructed, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
