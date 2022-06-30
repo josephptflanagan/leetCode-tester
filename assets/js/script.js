@@ -10894,7 +10894,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - START */
+/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - START 
 
 // You are given an array of people, people, which are the attributes of some people in a queue (not necessarily in order).
 // Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
@@ -10917,6 +10917,7 @@ var reconstructQueue = function (people) {
     }
 
     return queue;
+
 };
 
 let x = [[[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]], [[6, 0], [5, 0], [4, 0], [3, 2], [2, 2], [1, 4]]];
@@ -10943,5 +10944,62 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - START */
+
+// Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
+
+// In one move, you can increment or decrement an element of the array by 1.
+
+// Test cases are designed so that the answer will fit in a 32-bit integer.
+
+var minMoves2 = function (nums) {
+
+    // sort the array
+    nums.sort((a, b) => a - b);
+
+    //placeholder value for median and median index
+    let median, mIdx;
+
+    //find the median
+    if (nums.length % 2 === 0) {
+        mIdx = nums.length / 2;
+        median = (nums[mIdx] + nums[mIdx - 1]) / 2;
+    } else {
+        mIdx = (nums.length + 1) / 2;
+        median = nums[mIdx - 1];
+    }
+
+    //return the sum of the differences between the median and the individual elements of nums
+    return nums.reduce((diffSum, num) => diffSum + Math.abs(median - num), 0);
+
+};
+
+let x = [[1, 2, 3], [1, 10, 2, 9], [1, 0, 0, 8, 6]];
+let correct = [2, 16, 14];
+
+answerExplainationEl.textContent = "Given an array of integers and the ability to increment or decrement each element by one, how many of those steps would it take to reach an equal value for each element";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let moves = minMoves2(x[i]);
+
+    let color = "The array [" + xCopy + "] can be brought to equalibrium in " + moves + " moves";
+
+    let proper = moves == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
