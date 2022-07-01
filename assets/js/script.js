@@ -10947,7 +10947,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - START */
+/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - START
 
 // Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
 
@@ -11001,5 +11001,79 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAMIMUM UNITS ON A TRUCK - EASY - START */
+
+// You are assigned to put some amount of boxes onto one truck. You are given a 2D array boxTypes, where boxTypes[i] = [numberOfBoxesi, numberOfUnitsPerBoxi]:
+
+// numberOfBoxesi is the number of boxes of type i.
+// numberOfUnitsPerBoxi is the number of units in each box of the type i.
+
+// You are also given an integer truckSize, which is the maximum number of boxes that can be put on the truck. You can choose any boxes to put on the truck as long as the number of boxes does not exceed truckSize.
+
+// Return the maximum total number of units that can be put on the truck.
+
+var maximumUnits = function (boxTypes, truckSize) {
+
+    //sort by items per box descending
+    boxTypes.sort((a, b) => b[1] - a[1]);
+
+    //return element, items packed
+    let packed = 0;
+
+    //loop so long as there is space on the truck, and boxes that can be packed
+    while (truckSize > 0 && boxTypes.length > 0) {
+
+        //pack a box
+        let cbc = boxTypes[0][1]; //currentBoxCapacity
+        boxTypes[0][0]--;
+
+        //if there are no more boxes of type 0, remove that type from the array, next largest box moves up
+        if (boxTypes[0][0] === 0) {
+            boxTypes.shift();
+        }
+
+        //load the box on the truck
+        packed += cbc;
+        truckSize--;
+
+    }
+
+    return packed;
+
+};
+
+let x = [[[1, 3], [2, 2], [3, 1]], [[5, 10], [2, 5], [4, 7], [3, 9]]]; // box quantity, capacity
+//[[1,2],[2,2],[3,1]] means there is 1 box of type 0, type 0 boxes can hold 3 items each
+//                          there are 2 boxes of type 1, type 1 boxes can hold 2 items each
+//                          there are 3 boxes of type 2, type 2 boxes can hold 1 item each
+let y = [4, 10]; // box capacity per truck
+let correct = [8, 91]
+
+answerExplainationEl.textContent = "Given an array of boxes, boxTypes, where boxTypes[i]=[number of box i, number of units per box i], and a truck capacity, return the total number of units that can be moved.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    console.log("xCopy: ", xCopy);
+
+    let unitsMoved = maximumUnits(x[i], y[i]);
+
+    let color = "With the available boxes " + displayNestedArray(xCopy) + ", and a truck that can hold " + y[i] + " boxes, you can move " + unitsMoved + " items";
+
+    let proper = unitsMoved == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAMIMUM UNITS ON A TRUCK - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
