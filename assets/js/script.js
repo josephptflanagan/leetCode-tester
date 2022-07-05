@@ -11004,7 +11004,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAMIMUM UNITS ON A TRUCK - EASY - START */
+/* MAMIMUM UNITS ON A TRUCK - EASY - START 
 
 // You are assigned to put some amount of boxes onto one truck. You are given a 2D array boxTypes, where boxTypes[i] = [numberOfBoxesi, numberOfUnitsPerBoxi]:
 
@@ -11075,5 +11075,76 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MAMIMUM UNITS ON A TRUCK - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST CONSECUTIVE - MEDIUM - START */
+
+// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+// You must write an algorithm that runs in O(n) time.
+
+
+
+var longestConsecutive = function (nums) {
+
+    //quick return for empty arrays
+    if (nums.length === 0) {
+        return 0
+    }
+
+    //sort and remove duplicates
+    nums.sort((a, b) => b - a);
+    let numSet = new Set(nums);
+    nums = Array.from(numSet);
+
+    //loop vars
+    let lastNum = nums.pop();
+    let seqLen = 1;
+    let maxSeqLen = 1;
+
+    //loop through once for and find the longest consecutive sequence
+    while (nums.length > 0) {
+
+        let currentNum = nums.pop();
+
+        seqLen = currentNum === lastNum + 1 ? seqLen + 1 : 1;
+
+        maxSeqLen = seqLen > maxSeqLen ? seqLen : maxSeqLen;
+
+        lastNum = currentNum;
+
+    }
+
+    return maxSeqLen;
+
+};
+
+let x = [[100, 4, 200, 1, 3, 2], [0, 3, 7, 2, 5, 8, 4, 6, 0, 1], [], [1, 2, 0, 1]];
+let correct = [4, 9, 0, 3]
+
+answerExplainationEl.textContent = "Given an unsorted array of numbers, return the length of the longest consecutive sequence of numbers";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    console.log("xCopy: ", xCopy);
+
+    let longestCon = longestConsecutive(x[i]);
+
+    let color = "Given the array [" + xCopy + "], the longest consecutive sequence is " + longestCon + " characters long";
+
+    let proper = longestCon == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST CONSECUTIVE - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
