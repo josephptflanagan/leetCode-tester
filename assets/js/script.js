@@ -420,6 +420,52 @@ let pluralize = function (val) {
     return val <= 0 || val > 1 ? "s" : "";
 
 }
+
+function suffix(num) {
+
+    let numString = num.toString();
+
+    if (numString[numString.length - 1] == "1") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "st";
+            }
+        } else {
+            numString += "st";
+        }
+
+    } if (numString[numString.length - 1] == "2") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "nd";
+            }
+        } else {
+            numString += "nd";
+        }
+    } else if (numString[numString.length - 1] == "3") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "rd";
+            }
+        } else {
+            numString += "rd";
+        }
+    } else {
+        numString += "th";
+    }
+
+    return numString
+
+}
 /* TWO SUM ALGORITHM START - EASY
 
 let twoSum = function(nums, target) {
@@ -11078,7 +11124,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST CONSECUTIVE - MEDIUM - START */
+/* LONGEST CONSECUTIVE - MEDIUM - START 
 
 // Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
 
@@ -11146,5 +11192,51 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* LONGEST CONSECUTIVE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIBONACCI NUMBER - EASY - START */
+
+// The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the
+// sum of the two preceding ones, starting from 0 and 1. That is,
+
+// F(0) = 0, F(1) = 1
+// F(n) = F(n - 1) + F(n - 2), for n > 1.
+
+// Given n, calculate F(n).
+
+// Constraints:
+// 0 <= n <= 30
+
+var fib = function (n) {
+
+    const Fibonacci = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040]
+
+    return Fibonacci[n];
+
+};
+
+let x = [2, 3, 4];
+let correct = [1, 2, 3]
+
+answerExplainationEl.textContent = "Given a number, return the corresponding number in a Fibonacci sequence.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let fibonacci = fib(x[i]);
+
+    let color = "The " + suffix(x[i]) + " number in a Fibonacci sequence is " + fibonacci;
+
+    let proper = fibonacci == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIBONACCI NUMBER - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
