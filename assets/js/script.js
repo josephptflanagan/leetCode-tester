@@ -10105,7 +10105,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - START */
+/* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - START 
 
 // You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost
 //  element from the array nums and subtract its value from x. Note that this modifies the array for future operations.
@@ -10163,5 +10163,71 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIUMUM OPERATIONS TO REDUCE X TO ZERO - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DETECT CAPITAL - EASY - START */
+
+//We define the usage of capitals in a word to be right when one of the following cases holds:
+
+// All letters in this word are capitals, like "USA".
+// All letters in this word are not capitals, like "leetcode".
+// Only the first letter in this word is capital, like "Google".
+
+// Given a string word, return true if the usage of capitals in it is right.
+
+var detectCapitalUse = function(word) {
+    
+    if (word.length == 1){ //quick return for single letter words
+        return true;
+    }
+
+    let capsMax = 90; //stores the upper range of capital characters
+
+    let zero = word.charCodeAt(0); //finds the code for the first character of the word
+
+    let begin = zero <= capsMax; //checking the first character of the word, if a capital, returns true, else, false
+    
+    let sum = begin ? 1: 0;
+
+    for (let i = 1; i < word.length; i++){
+
+        let currentCharCode = word.charCodeAt(i);
+        sum += currentCharCode <= capsMax ? 1 : 0;
+
+    }
+
+    if (begin == true){
+        return (sum === 1 || sum === word.length);
+    } else {
+        return (sum === 0)
+    }
+
+};
+
+let x = ["USA", "FlaG", "uSA", "UsA", "Usa", "A", "AA", "Aa", "aA"];
+let correct = [true, false, false, false, true, true, true, true, false];
+
+answerExplainationEl.textContent = "Given a word, return wether the word makes proper use of capital letters";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let properCapitals = detectCapitalUse(x[i]);
+
+    let color =  properCapitals !== false ? x[i] + " is in accordance with capitalization rules": x[i] + " doesn't follow capitalization rules";
+
+    let proper = properCapitals == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* DETECT CAPITAL - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
