@@ -140,6 +140,44 @@ function bstConstructor(array) {
 
 }
 
+function leetCodeBTConstructor(array) {
+
+    if (array.length < 1) {
+        return null;
+    }
+
+    let root = new TreeNode(array.shift());
+    let queue = [root];
+
+    while (array.length > 0) {
+
+        let currentNode = queue.shift();
+
+        let leftChildVal = array.shift();
+        let rightChildVal = null;
+
+        if (array.length > 0) {
+            rightChildVal = array.shift();
+        }
+
+        if (leftChildVal !== null) {
+            let leftChild = new TreeNode(leftChildVal);
+            currentNode.left = leftChild;
+            queue.push(leftChild);
+        }
+
+        if (rightChildVal !== null) {
+            let rightChild = new TreeNode(rightChildVal);
+            currentNode.right = rightChild;
+            queue.push(rightChild);
+        }
+
+    }
+
+    return root;
+
+}
+
 function bstToArray(root) {
 
     let queue = [];
@@ -375,6 +413,58 @@ let displayNestedArray = function (array) {
     str += "]"
 
     return str;
+}
+
+let pluralize = function (val) {
+
+    return val <= 0 || val > 1 ? "s" : "";
+
+}
+
+function suffix(num) {
+
+    let numString = num.toString();
+
+    if (numString[numString.length - 1] == "1") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "st";
+            }
+        } else {
+            numString += "st";
+        }
+
+    } if (numString[numString.length - 1] == "2") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "nd";
+            }
+        } else {
+            numString += "nd";
+        }
+    } else if (numString[numString.length - 1] == "3") {
+
+        if (numString.length > 1) {
+            if (numString[numString.length - 2] == "1") {
+                numString += "th";
+            } else {
+                numString += "rd";
+            }
+        } else {
+            numString += "rd";
+        }
+    } else {
+        numString += "th";
+    }
+
+    return numString
+
 }
 /* TWO SUM ALGORITHM START - EASY
 
@@ -10112,35 +10202,35 @@ for (let i = 0; i < x.length; i++) {
 
 // Return the minimum number of operations to reduce x to exactly 0 if it is possible, otherwise, return -1.
 
-var minOperations = function(nums, x) {
+var minOperations = function (nums, x) {
 
     const n = nums.length; //for use in creation of sum
-    const sum = nums.reduce((r,n) => r + n, 0); //sum of the contents of nums array
+    const sum = nums.reduce((r, n) => r + n, 0); //sum of the contents of nums array
     const target = sum - x; //nums array sum less the supplied target, resulting in a target to work towards
 
     let current = 0;
     let ans = -1; //return element
-    
+
     for (let l = 0, r = 0; r < n; r++) { //sliding window, moving r right
         current += nums[r];
-        
+
         while (current > target) { //as the sum 'current' grows larget than target, l moves right, current loses the left most element addend
             current -= nums[l];
             l++;
         }
-        
+
         if (current === target) { //'current' sum is equal to the sum of nums less x, makes ans the max of itself or r-l +1
             ans = Math.max(ans, r - l + 1);
         }
     }
 
     return ans === -1 ? -1 : n - ans; //returns -1 if no selection meets the criteria, or n-ans if it does
-    
+
 };
 
-let x = [[1,1,4,2,3],[5,6,7,8,9],[3,2,20,1,1,3]];
-let y = [5,4,10];
-let correct = [2,-1,5];
+let x = [[1, 1, 4, 2, 3], [5, 6, 7, 8, 9], [3, 2, 20, 1, 1, 3]];
+let y = [5, 4, 10];
+let correct = [2, -1, 5];
 
 answerExplainationEl.textContent = "Given an array of integers and a target integer, determine the number of shifts and pops of the integer array that are required to reduce the target integer to zero";
 
@@ -10150,9 +10240,9 @@ for (let i = 0; i < x.length; i++) {
 
     let xCopy = x[i].slice();
 
-    let operationCount = minOperations(x[i],y[i]);
+    let operationCount = minOperations(x[i], y[i]);
 
-    let color =  operationCount !== -1 ? y[i] + " can be reduced to zero with " + operationCount + " operations on the array [" + xCopy + "]" : y[i] + " cannot be reduced to zero with any number of operations on [" + xCopy + "]";
+    let color = operationCount !== -1 ? y[i] + " can be reduced to zero with " + operationCount + " operations on the array [" + xCopy + "]" : y[i] + " cannot be reduced to zero with any number of operations on [" + xCopy + "]";
 
     let proper = operationCount == correct[i] ? ", this is correct" : ", this is wrong";
 
@@ -10166,6 +10256,991 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
+/* TRIANGLE - MEDIUM - START 
+
+// Given a triangle array, return the minimum path sum from top to bottom.
+
+// For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row,
+//  you may move to either index i or index i + 1 on the next row.
+
+var minimumTotal = function (triangle) {
+
+    for (let i = triangle.length - 2; i > -1; i--) {
+
+        for (let j = 0; j < triangle[i].length; j++) {
+
+            triangle[i][j] += Math.min(triangle[i + 1][j], triangle[i + 1][j + 1]);
+
+        }
+
+    }
+
+    return triangle[0][0];
+
+};
+
+let x = [[[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]], [[-10]], [[-1], [2, 3], [1, -1, -3]]];
+let correct = [11, -10, -1];
+
+answerExplainationEl.textContent = "Given a triangular array, return the minimum path sum from top to bottom";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let minPath = minimumTotal(x[i]);
+
+    let color = "The minimum path from top to bottom in the triangular array " + displayNestedArray(xCopy) + " is " + minPath;
+
+    let proper = minPath == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* TRIANGLE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST STRING CHAIN - MEDIUM - START 
+
+// You are given an array of words where each word consists of lowercase English letters.
+
+// wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the
+//  other characters to make it equal to wordB.
+
+// For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
+// A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a
+//  predecessor of word3, and so on. A single word is trivially a word chain with k == 1.
+
+// Return the length of the longest possible word chain with words chosen from the given list of words.
+
+var longestStrChain = function (words) {
+
+    //sort words by length
+    let sorted = words.sort((a, b) => b.length - a.length);
+
+    //populate an array dp the same size as words, filled with ones, ensuring a minimum longest of 1 is returned
+    let dp = new Array(sorted.length).fill(1);
+
+    //checks if word2 is a longer word chain of word1
+    function longerStrChain(word1, word2) {
+
+        //quick rejection for equal length words
+        if (word1.length + 1 != word2.length) {
+            return false;
+        }
+
+        let first = 0;
+        let second = 0;
+
+        while (second < word2.length) {
+
+            if (word1[first] == word2[second]) {
+                first++;
+            }
+
+            second++;
+
+        }
+
+        return (first == word1.length && second == word2.length);
+
+    }
+
+    //cycle through the elements of the sorted words array for longer word chains
+    for (let i = 0; i < sorted.length; i++) {
+
+        for (let j = 0; j < i; j++) {
+
+            //if sorted[j] is a longer word chain of sorted[i], add it to the array
+            if (longerStrChain(sorted[i], sorted[j])) {
+
+                dp[i] = Math.max(dp[i], dp[j] + 1);
+
+            }
+        }
+    }
+
+    return Math.max(...dp);
+
+};
+
+let x = [["a", "b", "ba", "bca", "bda", "bdca"], ["xbc", "pcxbcf", "xb", "cxbc", "pcxbc"], ["abcd", "dbqca"]];
+let correct = [4, 5, 1];
+
+answerExplainationEl.textContent = "Given an array of strings, return the length of the longest possible word chain";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let longest = longestStrChain(x[i]);
+
+    let color = "Given the array of strings [" + xCopy + "], the longest word chain is " + longest + " characters long";
+
+    let proper = longest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST STRING CHAIN - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - START 
+
+//Given a string s, return the longest palindromic substring in s.
+
+var longestPalindrome = function (s) {
+
+    let longest = '';
+
+    for (let i = 0; i < s.length; i++) {
+        expandCheck(i, i);
+        expandCheck(i, i + 1);
+    }
+
+    function expandCheck(l, r) {
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            if (r - l + 1 > longest.length) {
+                longest = s.slice(l, r + 1);
+            }
+            l--;
+            r++;
+        }
+    }
+
+    return longest;
+
+};
+
+let x = ["babad", "cbbd", "a", "ac"];
+let correct = ["bab", "bb", "a", "a"];
+
+answerExplainationEl.textContent = "Given a string s, return the longest palindromic substring in s.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longPalindrome = longestPalindrome(x[i]);
+
+    let color = "Given the string '" + x[i] + ",' the longest palindrome is " + longPalindrome;
+
+    let proper = longPalindrome == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST PALINDROMIC SUBSTRING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BINARY TREE CAMERAS - HARD - START 
+
+// You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, 
+// itself, and its immediate children.
+
+// Return the minimum number of cameras needed to monitor all nodes of the tree.
+
+var minCameraCover = function (root) {
+
+    // It has camera : return 0
+    // It needs camera : return -1
+    // leaves, don't have or need a camera : return 1
+
+    let cameraCount = 0;
+    const helper = (root) => {
+
+        //caught at leaves
+        if (!root) {
+            return 1;
+        }
+
+        const left = helper(root.left);
+        const right = helper(root.right);
+
+        if (left === -1 || right === -1) {
+
+            cameraCount++;
+            return 0;
+
+        } else if (left === 0 || right === 0) {
+
+            return 1;
+
+        } else {
+
+            return -1;
+
+        }
+    }
+    const out = helper(root);
+    return out === -1 ? cameraCount + 1 : cameraCount;
+
+};
+
+let x = [[0, 0, null, 0, 0], [0, 0, null, 0, null, 0, null, null, 0]];
+let correct = [1, 2];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, and camera that can watch the parent and children of the node they are attached to, return the number of cameras required to watch all the nodes.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let xRoot = leetCodeBTConstructor(x[i]);
+
+    let cameraCount = minCameraCover(xRoot);
+
+    let color = "At least " + cameraCount + " cameras are required to cover every node of the tree [" + xCopy + "]";
+
+    let proper = cameraCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* BINARY TREE CAMERAS - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SHORT ENCODING OF WORDS - MEDIUM - START 
+
+// A valid encoding of an array of words is any reference string s and array of indices indices such that:
+
+// words.length == indices.length
+// The reference string s ends with the '#' character.
+// For each index indices[i], the substring of s starting from indices[i] and up to (but not including) the next '#' character is equal to words[i].
+
+// Given an array of words, return the length of the shortest reference string s possible of any valid encoding of words.
+
+var minimumLengthEncoding = function (words) {
+
+    //bring the longest words to the front of the array
+    words.sort((a, b) => b.length - a.length);
+
+    //instantiate encoded and indecies with the first, longest, word
+    let encoded = words.shift() + "#";
+    let indices = [0];
+
+    //loop through words, searching for the current word in the encoded section, adding the word if it isn't in the code, continuing on if it is
+    while (words.length > 0) {
+
+        let currentWord = words.shift() + "#";
+        let idx = encoded.indexOf(currentWord);
+
+        //if the word isn't in the code, add it
+        if (idx == -1) {
+
+            indices.push(encoded.length);
+            encoded += (currentWord);
+
+            //if the word is already in the code, simply add the word's address within the code to the indices array
+        } else {
+
+            indices.push(idx);
+
+        }
+
+    }
+
+    return encoded.length;
+
+};
+
+let x = [["time", "me", "bell"], ["t"], ["feipyxx", "e"]];
+let correct = [10, 2, 10];
+
+answerExplainationEl.textContent = "Given a series of words, return the length of the shortest valid encoding of those words.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let codeLength = minimumLengthEncoding(x[i]);
+
+    let color = "The shortest valid encoding of [" + xCopy + "] is " + codeLength + " characters long";
+
+    let proper = codeLength == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* SHORT ENCODING OF WORDS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - START 
+
+// You are given an integer array heights representing the heights of buildings, some bricks, and some ladders.
+
+// You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
+
+// While moving from building i to building i+1 (0-indexed),
+
+// If the current building's height is greater than or equal to the next building's height, you do not need a ladder or bricks.
+// If the current building's height is less than the next building's height, you can either use one ladder or (h[i+1] - h[i]) bricks.
+
+// Return the furthest building index (0-indexed) you can reach if you use the given ladders and bricks optimally.
+
+var furthestBuilding = function (heights, bricks, ladders) {
+
+    let queue = new Array(ladders).fill(0);
+    let i = 1;
+
+    for (i; i < heights.length; i++) {
+
+        let diff = heights[i] - heights[i - 1];
+
+        if (diff > 0) { // positive difference means a ladder or bricks must be expended
+
+            if (diff > queue[0]) { // difference greater than shortest ladder?
+
+                let curr = queue.length - 1;  //find which ladder to replace, starting at longest
+
+                while (curr >= 0 && queue[curr] > diff) curr--; //while current ladder is longer, go down
+
+                bricks -= queue.shift(); // remove shortest ladder and convert to bricks.
+                queue.splice(curr, 0, diff); //add new ladder to queue.
+
+            } else {
+
+                bricks -= diff; // if no ladders remain, use bricks
+
+            }
+
+            if (bricks < 0) {
+
+                break; //if bricks are negative, exit loop.
+
+            }
+        }
+    }
+
+    return i - 1;
+
+};
+
+let x = [[4, 2, 7, 6, 9, 14, 12], [4, 12, 2, 7, 3, 18, 20, 3, 19], [14, 3, 19, 3]]; // buildings
+let y = [5, 10, 17]; // bricks
+let z = [1, 2, 0]; // ladders
+let correct = [4, 7, 3];
+
+answerExplainationEl.textContent = "Given an array of building heights, a number of bricks, and a number of ladders, return how far you can traverse the array of buildings";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+    let yCopy = y[i];
+    let zCopy = z[i];
+
+    let reached = furthestBuilding(x[i], y[i], z[i]);
+
+    let color = "Given the buildings [" + xCopy + "], " + yCopy + " brick" + pluralize(yCopy) + " and " + zCopy + " ladder" + pluralize(zCopy) + ", you can potentially reach building " + reached;
+
+    let proper = reached == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FURTHEST BUILDING YOU CAN REACH - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - START 
+
+// Given an integer array nums and an integer k, return the kth largest element in the array.
+
+// Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+var findKthLargest = function (nums, k) {
+
+    nums.sort((a, b) => b - a);
+    return nums[k - 1];
+
+};
+
+let x = [[3, 2, 1, 5, 6, 4], [3, 2, 3, 1, 2, 4, 5, 5, 6]]; // nums
+let y = [2, 4]; // kth element
+let correct = [5, 4];
+
+answerExplainationEl.textContent = "Given an array of integers, return the kth largest element";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let kthLargest = findKthLargest(x[i], y[i]);
+
+    let color = "Given the array of integers [" + xCopy + "], the " + y[i] + "th largest element is " + kthLargest;
+
+    let proper = kthLargest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* KTH LARGEST ELEMENT IN AN ARRAY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* COURSE SCHEDULE III - HARD - START 
+
+// There are n different online courses numbered from 1 to n. You are given an array courses where courses[i] = [durationi, lastDayi] 
+// indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi.
+
+// You will start on the 1st day and you cannot take two or more courses simultaneously.
+
+// Return the maximum number of courses that you can take.
+
+class PriorityQueue {
+    constructor() {
+        this.queue = [];
+        this.totalTime = 0;
+    }
+
+    get length() {
+        return this.queue.length;
+    }
+
+    get maxDuration() {
+        return this.queue[this.queue.length - 1] || 0;
+    }
+
+    getInsertIndex(duration) {
+        let start = 0;
+        let end = this.queue.length - 1;
+        while (start <= end) {
+            const mid = Math.floor((start + end) / 2);
+            if (this.queue[mid] === duration) return mid;
+
+            if (duration < this.queue[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return start;
+    }
+
+    insert(duration) {
+        this.totalTime += duration;
+
+        if (!this.queue.length || duration > this.queue[this.queue.length - 1]) {
+            this.queue.push(duration);
+        } else if (duration < this.queue[0]) {
+            this.queue.unshift(duration);
+        } else {
+            this.queue.splice(this.getInsertIndex(duration), 0, duration);
+        }
+    }
+
+    swap(duration) {
+        if (duration < this.maxDuration) {
+            this.dequeue();
+            this.insert(duration);
+        }
+    }
+
+    enqueue([duration, deadline]) {
+        this.totalTime + duration > deadline ? this.swap(duration) : this.insert(duration);
+    }
+
+    dequeue() {
+        const duration = this.queue.pop() || 0;
+        this.totalTime -= duration;
+    }
+}
+
+var scheduleCourse = function (courses) {
+
+    //filter out courses that are too long, then sort the remainder
+    courses = courses.filter((a) => a[0] <= a[1]).sort((a, b) => a[1] - b[1]);
+
+    const priorityQueue = new PriorityQueue();
+
+    //attempt to enqueue all courses into the priorityQueue
+    for (const course of courses) {
+        priorityQueue.enqueue(course);
+    }
+
+    return priorityQueue.length;
+
+};
+
+let x = [[[100, 200], [200, 1300], [1000, 1250], [2000, 3200]], [[1, 2]], [[3, 2], [4, 3]], [[1, 19], [2, 2], [1, 17]]]; // courses
+let correct = [3, 1, 0, 3];
+
+answerExplainationEl.textContent = "Given lengths and end dates of possible courses that can be taken (that can only be taken one at a time), return the total number of courses that can be taken ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let courseCount = scheduleCourse(x[i]);
+
+    let color = "Given the courses " + displayNestedArray(xCopy) + ", you can potentially take " + courseCount;
+
+    let proper = courseCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* COURSE SCHEDULE III - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - START 
+
+// A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100
+//  are deci-binary, while 112 and 3001 are not.
+
+// Given a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that 
+// they sum up to n.
+
+// I found this solution online. It simply converts the string into an array, then it returns the highest number in the array.
+// This works because of the nature of deci-binary numbers, in that it will take a minium of one deci-binary number to remove each
+// level of integer present in the given number. i.e. 2222222222222 takes 2 deci-binary numbers to remove, so does 2222002000220.
+// 455234662349 takes 9 because of the sole 9 at the back. 
+// 455234662349 = 111111111111 + 111111111111 + 111011110111 + 111001110011 + 11000110001 + 110001 + 1 + 1 + 1 (9 operations)
+//                344123551238   233012440127   122001330016   011000220005   00000110004   000003   2   1   0
+// Therefore, the highest digit in a number determines the number of deci-binary digits it takes to sum to that number
+var minPartitions = (n => Math.max(...n));
+
+let x = ["32", "82734", "27346209830709182346"];
+let correct = [3, 8, 9];
+
+answerExplainationEl.textContent = " ";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let deciBinaryCount = minPartitions(x[i]);
+
+    let xCopy = x[i];
+
+    let color = "The number " + xCopy + ", is the sum of a minimum of " + deciBinaryCount + " deci-binary numbers";
+
+    let proper = deciBinaryCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* PARTITIONING INTO MINIMUM NUMBER OF DECI-BINARY NUMBERS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM DELETIONS TO PRODUCE UNIQUE FREQUENCY STRINGS - MEDIUM - START 
+
+// A string s is called good if there are no two different characters in s that have the same frequency.
+
+// Given a string s, return the minimum number of characters you need to delete to make s good.
+
+// The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab",
+//  the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+var minDeletions = function (s) {
+
+    //create a dictionary with each character acting as the key for the number of occurrences of that character; 
+    let dict = {};
+
+    //populate dict
+    for (let i = 0; i < s.length; i++) {
+        if (dict[s[i]]) {
+            dict[s[i]]++;
+        } else {
+            dict[s[i]] = 1;
+        }
+    }
+
+    // occurences works as an index of values while removals keeps track of the deletions required to fill occurences with unique values
+    let occurences = [];
+    let removals = 0;
+
+    for (key in dict) {
+
+        //if the character count already exists in occurences, or the character count hasn't already been worn down to zero, decrement the count. 
+        while (occurences.indexOf(dict[key]) != -1 && dict[key] != 0) {
+            dict[key]--;
+            removals++;
+        }
+
+        // once the character count is unique, or zero, add it to the occurences index
+        occurences.push(dict[key]);
+
+    }
+
+    return removals;
+
+};
+
+let x = ["aab", "aaabbbcc", "ceabaacb"];
+let correct = [0, 2, 2];
+
+answerExplainationEl.textContent = " Given a string of characters, return the number of character deletions required to have a unique number of each character in the string";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let deletions = minDeletions(x[i]);
+
+    let color = "The string " + x[i] + " requires " + deletions + " deletions to create a good string";
+
+    let proper = deletions == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MINIMUM DELETIONS TO PRODUCE UNIQUE FREQUENCY STRINGS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - START 
+
+// You are given an array of people, people, which are the attributes of some people in a queue (not necessarily in order).
+// Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+
+// Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue,
+//  where queue[j] = [hj, kj] is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+
+var reconstructQueue = function (people) {
+
+    //sort people by num ahead in the case they are the same height, otherwise, sort by height
+    people.sort((a, b) => b[0] !== a[0] ? b[0] - a[0] : a[1] - b[1]);
+
+    const queue = [];
+
+    for (let i = 0; i < people.length; i++) {
+
+        //splice people into the queue based on the number of those ahead
+        queue.splice(people[i][1], 0, people[i]);
+
+    }
+
+    return queue;
+
+};
+
+let x = [[[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]], [[6, 0], [5, 0], [4, 0], [3, 2], [2, 2], [1, 4]]];
+let correct = [[[5, 0], [7, 0], [5, 2], [6, 1], [4, 4], [7, 1]], [[4, 0], [5, 0], [2, 2], [3, 2], [1, 4], [6, 0]]];
+
+answerExplainationEl.textContent = "Given an array of people represented by arrays composed of the person's height and the number of individuals of the same height or taller in front of them, return a properly sorted array";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let reconstructed = reconstructQueue(x[i]);
+
+    let color = "The array " + displayNestedArray(xCopy) + " is properly reconstruced as " + displayNestedArray(reconstructed);
+
+    let proper = compareNestedArrays(reconstructed, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* QUEUE RECONSTRUCTION BY HEIGHT - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - START
+
+// Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
+
+// In one move, you can increment or decrement an element of the array by 1.
+
+// Test cases are designed so that the answer will fit in a 32-bit integer.
+
+var minMoves2 = function (nums) {
+
+    // sort the array
+    nums.sort((a, b) => a - b);
+
+    //placeholder value for median and median index
+    let median, mIdx;
+
+    //find the median
+    if (nums.length % 2 === 0) {
+        mIdx = nums.length / 2;
+        median = (nums[mIdx] + nums[mIdx - 1]) / 2;
+    } else {
+        mIdx = (nums.length + 1) / 2;
+        median = nums[mIdx - 1];
+    }
+
+    //return the sum of the differences between the median and the individual elements of nums
+    return nums.reduce((diffSum, num) => diffSum + Math.abs(median - num), 0);
+
+};
+
+let x = [[1, 2, 3], [1, 10, 2, 9], [1, 0, 0, 8, 6]];
+let correct = [2, 16, 14];
+
+answerExplainationEl.textContent = "Given an array of integers and the ability to increment or decrement each element by one, how many of those steps would it take to reach an equal value for each element";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let moves = minMoves2(x[i]);
+
+    let color = "The array [" + xCopy + "] can be brought to equalibrium in " + moves + " moves";
+
+    let proper = moves == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MINIMUM MOVES TO EQUAL ARRAY ELEMENTS II - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAMIMUM UNITS ON A TRUCK - EASY - START 
+
+// You are assigned to put some amount of boxes onto one truck. You are given a 2D array boxTypes, where boxTypes[i] = [numberOfBoxesi, numberOfUnitsPerBoxi]:
+
+// numberOfBoxesi is the number of boxes of type i.
+// numberOfUnitsPerBoxi is the number of units in each box of the type i.
+
+// You are also given an integer truckSize, which is the maximum number of boxes that can be put on the truck. You can choose any boxes to put on the truck as long as the number of boxes does not exceed truckSize.
+
+// Return the maximum total number of units that can be put on the truck.
+
+var maximumUnits = function (boxTypes, truckSize) {
+
+    //sort by items per box descending
+    boxTypes.sort((a, b) => b[1] - a[1]);
+
+    //return element, items packed
+    let packed = 0;
+
+    //loop so long as there is space on the truck, and boxes that can be packed
+    while (truckSize > 0 && boxTypes.length > 0) {
+
+        //pack a box
+        let cbc = boxTypes[0][1]; //currentBoxCapacity
+        boxTypes[0][0]--;
+
+        //if there are no more boxes of type 0, remove that type from the array, next largest box moves up
+        if (boxTypes[0][0] === 0) {
+            boxTypes.shift();
+        }
+
+        //load the box on the truck
+        packed += cbc;
+        truckSize--;
+
+    }
+
+    return packed;
+
+};
+
+let x = [[[1, 3], [2, 2], [3, 1]], [[5, 10], [2, 5], [4, 7], [3, 9]]]; // box quantity, capacity
+//[[1,2],[2,2],[3,1]] means there is 1 box of type 0, type 0 boxes can hold 3 items each
+//                          there are 2 boxes of type 1, type 1 boxes can hold 2 items each
+//                          there are 3 boxes of type 2, type 2 boxes can hold 1 item each
+let y = [4, 10]; // box capacity per truck
+let correct = [8, 91]
+
+answerExplainationEl.textContent = "Given an array of boxes, boxTypes, where boxTypes[i]=[number of box i, number of units per box i], and a truck capacity, return the total number of units that can be moved.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    console.log("xCopy: ", xCopy);
+
+    let unitsMoved = maximumUnits(x[i], y[i]);
+
+    let color = "With the available boxes " + displayNestedArray(xCopy) + ", and a truck that can hold " + y[i] + " boxes, you can move " + unitsMoved + " items";
+
+    let proper = unitsMoved == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* MAMIMUM UNITS ON A TRUCK - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST CONSECUTIVE - MEDIUM - START 
+
+// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+// You must write an algorithm that runs in O(n) time.
+
+
+
+var longestConsecutive = function (nums) {
+
+    //quick return for empty arrays
+    if (nums.length === 0) {
+        return 0
+    }
+
+    //sort and remove duplicates
+    nums.sort((a, b) => b - a);
+    let numSet = new Set(nums);
+    nums = Array.from(numSet);
+
+    //loop vars
+    let lastNum = nums.pop();
+    let seqLen = 1;
+    let maxSeqLen = 1;
+
+    //loop through once for and find the longest consecutive sequence
+    while (nums.length > 0) {
+
+        let currentNum = nums.pop();
+
+        seqLen = currentNum === lastNum + 1 ? seqLen + 1 : 1;
+
+        maxSeqLen = seqLen > maxSeqLen ? seqLen : maxSeqLen;
+
+        lastNum = currentNum;
+
+    }
+
+    return maxSeqLen;
+
+};
+
+let x = [[100, 4, 200, 1, 3, 2], [0, 3, 7, 2, 5, 8, 4, 6, 0, 1], [], [1, 2, 0, 1]];
+let correct = [4, 9, 0, 3]
+
+answerExplainationEl.textContent = "Given an unsorted array of numbers, return the length of the longest consecutive sequence of numbers";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    console.log("xCopy: ", xCopy);
+
+    let longestCon = longestConsecutive(x[i]);
+
+    let color = "Given the array [" + xCopy + "], the longest consecutive sequence is " + longestCon + " characters long";
+
+    let proper = longestCon == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* LONGEST CONSECUTIVE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FIBONACCI NUMBER - EASY - START 
+
+// The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the
+// sum of the two preceding ones, starting from 0 and 1. That is,
+
+// F(0) = 0, F(1) = 1
+// F(n) = F(n - 1) + F(n - 2), for n > 1.
+
+// Given n, calculate F(n).
+
+// Constraints:
+// 0 <= n <= 30
+
+var fib = function (n) {
+
+    const Fibonacci = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040]
+
+    return Fibonacci[n];
+
+};
+
+let x = [2, 3, 4];
+let correct = [1, 2, 3]
+
+answerExplainationEl.textContent = "Given a number, return the corresponding number in a Fibonacci sequence.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let fibonacci = fib(x[i]);
+
+    let color = "The " + suffix(x[i]) + " number in a Fibonacci sequence is " + fibonacci;
+
+    let proper = fibonacci == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+
+/* FIBONACCI NUMBER - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
 /* DETECT CAPITAL - EASY - START */
 
 //We define the usage of capitals in a word to be right when one of the following cases holds:
@@ -10176,9 +11251,9 @@ for (let i = 0; i < x.length; i++) {
 
 // Given a string word, return true if the usage of capitals in it is right.
 
-var detectCapitalUse = function(word) {
-    
-    if (word.length == 1){ //quick return for single letter words
+var detectCapitalUse = function (word) {
+
+    if (word.length == 1) { //quick return for single letter words
         return true;
     }
 
@@ -10187,17 +11262,17 @@ var detectCapitalUse = function(word) {
     let zero = word.charCodeAt(0); //finds the code for the first character of the word
 
     let begin = zero <= capsMax; //checking the first character of the word, if a capital, returns true, else, false
-    
-    let sum = begin ? 1: 0;
 
-    for (let i = 1; i < word.length; i++){
+    let sum = begin ? 1 : 0;
+
+    for (let i = 1; i < word.length; i++) {
 
         let currentCharCode = word.charCodeAt(i);
         sum += currentCharCode <= capsMax ? 1 : 0;
 
     }
 
-    if (begin == true){
+    if (begin == true) {
         return (sum === 1 || sum === word.length);
     } else {
         return (sum === 0)
@@ -10207,27 +11282,22 @@ var detectCapitalUse = function(word) {
 
 let x = ["USA", "FlaG", "uSA", "UsA", "Usa", "A", "AA", "Aa", "aA"];
 let correct = [true, false, false, false, true, true, true, true, false];
-
+    
 answerExplainationEl.textContent = "Given a word, return wether the word makes proper use of capital letters";
 
 for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
 
-    let xCopy = x[i].slice();
-
     let properCapitals = detectCapitalUse(x[i]);
 
-    let color =  properCapitals !== false ? x[i] + " is in accordance with capitalization rules": x[i] + " doesn't follow capitalization rules";
+    let color = properCapitals !== false ? x[i] + " is in accordance with capitalization rules" : x[i] + " doesn't follow capitalization rules";
 
     let proper = properCapitals == correct[i] ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
     answerListEl.appendChild(listEl);
-
 }
 
 /* DETECT CAPITAL - EASY - END */
-
-/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
