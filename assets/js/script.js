@@ -11241,7 +11241,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* DETECT CAPITAL - EASY - START */
+/* DETECT CAPITAL - EASY - START 
 
 //We define the usage of capitals in a word to be right when one of the following cases holds:
 
@@ -11301,3 +11301,74 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* DETECT CAPITAL - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DELETE COLUMNS TO MAKE SORTED - EASY - START */
+
+// You are given an array of n strings strs, all of the same length.
+
+// The strings can be arranged such that there is one on each line, making a grid. For example, strs = ["abc", "bce", "cae"] can be arranged as:
+
+// abc
+// bce
+// cae
+
+// You want to delete the columns that are not sorted lexicographically. In the above example (0-indexed), columns 0 ('a', 'b', 'c') and 2 ('c', 'e', 'e') are sorted while column 1 ('b', 'c', 'a') is not, so you would delete column 1.
+
+// Return the number of columns that you will delete.
+
+var minDeletionSize = function(strs) {
+    
+    let deletions = 0;
+
+    for (let i = 0; i < strs[0].length;i++){
+
+        let last = "";
+
+        for(let j = 0; j < strs.length;j++){
+
+            if (last == ""){
+
+                last = strs[j][i];
+                
+            } else {
+
+                if (last > strs[j][i]){
+                    deletions += 1;
+                    break;
+                }
+
+                last = strs[j][i];
+
+            }
+            
+        }
+
+    }
+
+    return deletions;
+
+};
+
+let x = [["cba","daf","ghi"], ["a","b"], ["zyx","wvu","tsr"]];
+let correct = [1,0,3];
+    
+answerExplainationEl.textContent = "Given an array of strings of the same length and arranged like a grid, return the number of columns of the grid that are not lexigraphically sorted and have to be deleted";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let deletedColumns = minDeletionSize(x[i]);
+
+    let color = deletedColumns > 0 ? "you have to delete " + deletedColumns + " to have all the columns sorted lexigraphically" : "All columns are sorted lexigraphically, none have to be deleted";
+
+    let proper = deletedColumns == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* DELETE COLUMNS TO MAKE SORTED - EASY - END */
