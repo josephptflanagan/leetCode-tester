@@ -11304,7 +11304,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* DELETE COLUMNS TO MAKE SORTED - EASY - START */
+/* DELETE COLUMNS TO MAKE SORTED - EASY - START 
 
 // You are given an array of n strings strs, all of the same length.
 
@@ -11341,10 +11341,8 @@ var minDeletionSize = function(strs) {
 
                 last = strs[j][i];
 
-            }
-            
+            }            
         }
-
     }
 
     return deletions;
@@ -11372,3 +11370,75 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* DELETE COLUMNS TO MAKE SORTED - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* WORD PATTERN - EASY - START */
+
+// Given a pattern and a string s, find if s follows the same pattern.
+
+// Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+
+var wordPattern = function(pattern, s) {
+
+    let sArr = s.split(" ");
+
+    if (pattern.length != sArr.length) return false; //quick eject for mismatch of pattern and sentence length
+
+    let dict = {};
+
+    let patternIdx = 0;
+    let generatedPattern = [];
+    let outOfKeys = false;
+    let patternSet = Array.from(new Set(pattern.split("")));
+
+    for (let i = 0; i < pattern.length; i++){
+        
+        if (!dict[sArr[i]]){
+
+            if(outOfKeys){
+                return false;
+            }
+
+            dict[sArr[i]] = patternSet[patternIdx];
+
+            if(patternIdx + 1 < patternSet.length){
+                patternIdx++;
+            } else {
+                outOfKeys = true;
+            }
+            
+        }
+
+        generatedPattern.push(dict[sArr[i]])
+
+        if (pattern[i] != generatedPattern[i]) return false;
+
+    }
+
+    return true;
+    
+};
+
+let x = ["abba", "abba", "aaaa","e"];
+let y = ["dog cat cat dog", "dog cat cat fish", "dog cat cat dog","eukera"];
+let correct = [true, false, false, true];
+    
+answerExplainationEl.textContent = "Given a word pattern and a sentence, determine if the sentence fits the word pattern";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let matched = wordPattern(x[i],y[i]);
+
+    let color = matched ? "The sentence "+ y[i] +" matches the pattern " + x[i] : "The sentence "+ y[i] +" does not match the pattern " + x[i];
+
+    let proper = matched == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* WORD PATTERN - EASY - END */
