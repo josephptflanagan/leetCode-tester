@@ -11373,7 +11373,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* WORD PATTERN - EASY - START */
+/* WORD PATTERN - EASY - START 
 
 // Given a pattern and a string s, find if s follows the same pattern.
 
@@ -11442,3 +11442,94 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* WORD PATTERN - EASY - END */
+
+/* MINIMUM ROUNDS TO COMPLETE ALL TASKS - MEDIUM - START */
+
+//You are given a 0-indexed integer array tasks, where tasks[i] represents the difficulty level of a task. In each round, you can complete either 
+//2 or 3 tasks of the same difficulty level.
+
+//Return the minimum rounds required to complete all the tasks, or -1 if it is not possible to complete all the tasks.
+
+var minimumRounds = function (tasks) {
+
+    let reducer = function (num){
+        
+        let reductions = 0;
+
+        while (num > 0){
+
+            if (num <= 3){
+
+                reductions ++;
+                break;
+
+            } else {
+
+                num-=3; //interestingly, the 2 or 3 requirement doesn't really matter too much here. 
+                reductions ++; //(e.g. 4 - 3 = 1, 1 <= 3, add a reduction and break, 2 reductions, same as reducing by 2 twice)
+                // or 2 - 3 = -1, +1 to reduction, breaks the loop, same as 2 - 2, 1 reduction = 1 reduction
+
+            }
+
+        }
+
+        return reductions;
+
+    }
+
+    if (tasks.length < 2) { //quick eject for single item task lists
+        return -1;
+    }
+
+    let dict = {};
+    let sum = 0;
+
+    for (let i = 0; i < tasks.length; i++) { //converts the tasks array into a object
+
+        if (!dict[tasks[i]]) {
+
+            dict[tasks[i]] = 1;
+
+        } else {
+
+            dict[tasks[i]] += 1;
+
+        }
+    }
+
+    for (key in dict){ 
+
+        if (dict[key] < 2){ 
+            return -1; //semi quick eject for tasks with single occurrence tasks
+        }
+
+        sum += reducer(dict[key]); //finds the number of 2 or 3 reductions to reduce each group of tasks to zero
+
+    }
+
+    return sum;
+
+
+};
+
+let x = [[2, 2, 3, 3, 2, 4, 4, 4, 4, 4], [2, 3, 3]];
+let correct = [4, -1];
+
+answerExplainationEl.textContent = "Given a series of tasks of varying difficulty, and the ability to complete 2 or 3 tasks of the same difficulty in the same round, return the number of rounds it would take to complete the given list of tasks, or -1 if you cannot complete the given list of tasks, given the 2 to 3 at a time restriction";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let rounds = minimumRounds(x[i]);
+
+    let color = rounds != -1 ? "The given tasks can be completed in " + rounds + " rounds" : "The given tasks cannot be completed";
+
+    let proper = rounds == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* MINIMUM ROUNDS TO COMPLETE ALL TASKS - MEDIUM - END */
