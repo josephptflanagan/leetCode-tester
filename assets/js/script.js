@@ -11443,7 +11443,9 @@ for (let i = 0; i < x.length; i++) {
 
 /* WORD PATTERN - EASY - END */
 
-/* MINIMUM ROUNDS TO COMPLETE ALL TASKS - MEDIUM - START */
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM ROUNDS TO COMPLETE ALL TASKS - MEDIUM - START 
 
 //You are given a 0-indexed integer array tasks, where tasks[i] represents the difficulty level of a task. In each round, you can complete either 
 //2 or 3 tasks of the same difficulty level.
@@ -11533,3 +11535,61 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIMUM ROUNDS TO COMPLETE ALL TASKS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - START */
+
+// There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons are represented as a 2D integer array points
+// where points[i] = [xstart, xend] denotes a balloon whose horizontal diameter stretches between xstart and xend. You do not know the
+// exact y-coordinates of the balloons.
+
+// Arrows can be shot up directly vertically (in the positive y-direction) from different points along the x-axis. A balloon with xstart and xend is
+// burst by an arrow shot at x if xstart <= x <= xend. There is no limit to the number of arrows that can be shot. A shot arrow keeps traveling up
+// infinitely, bursting any balloons in its path.
+
+// Given the array points, return the minimum number of arrows that must be shot to burst all balloons.
+
+var findMinArrowShots = function(points) {
+
+    points.sort((a,b) => a[1] - b[1]); //sort points to line them up by location
+
+    let count = 1; //number of arrows
+    let pos = points[0][1]; //starting point (max of first balloon)
+
+    for(let i=1; i < points.length; i++){
+
+        if (pos >= points[i][0]) continue; //if the max of the last balloon is greater than the min of the next, continue
+                                           //otherwise
+        count++;                           //add an arrow
+        pos = points[i][1];                //move on to the next balloon
+
+    }
+
+    return count;
+
+};
+
+let x = [[[10,16],[2,8],[1,6],[7,12]],[[1,2],[3,4],[5,6],[7,8]], [[1,2],[2,3],[3,4],[4,5]]];
+let correct = [2,4,2];
+
+answerExplainationEl.textContent = "Given a series of overlapping balloons, what is the minimum number of arrows required to burst all the balloons";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let miniumumArrows = findMinArrowShots(x[i]);
+
+    let color = "It takes at least " + miniumumArrows + " arrows to burst all the balloons";
+
+    let proper = miniumumArrows == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
