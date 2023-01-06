@@ -11538,7 +11538,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - START */
+/* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - START 
 
 // There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons are represented as a 2D integer array points
 // where points[i] = [xstart, xend] denotes a balloon whose horizontal diameter stretches between xstart and xend. You do not know the
@@ -11591,5 +11591,62 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MINIMUM NUMBER OF ARROWS TO BURST BALLOONS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM ICE CREAM BARS - MEDIUM - START */
+
+// It is a sweltering summer day, and a boy wants to buy some ice cream bars.
+
+// At the store, there are n ice cream bars. You are given an array costs of length n, where costs[i] is the price of the ith ice cream bar in
+// coins. The boy initially has coins coins to spend, and he wants to buy as many ice cream bars as possible. 
+
+// Return the maximum number of ice cream bars the boy can buy with coins coins.
+
+// Note: The boy can buy the ice cream bars in any order.
+
+var maxIceCream = function(costs, coins) {
+
+    let sortedCosts = costs.sort((a,b) => b-a);
+    let bars = 0;
+
+    while (coins > 0 && sortedCosts.length > 0){
+
+        let currentBar = sortedCosts.pop();
+
+        coins -= currentBar;
+
+        if (coins>=0){
+            bars++;
+        }
+
+    }
+    
+    return bars;
+
+};
+
+let x = [[1,3,2,4,1], [10,6,8,7,7,8], [1,6,3,1,2,5]];
+let y = [7,5,20]
+let correct = [4,0,6];
+
+answerExplainationEl.textContent = "Given an array of ice cream bars by price, and a number of coins held by a boy, return the number of ice cream bars that a boy can purchase";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let purchased = maxIceCream(x[i], y[i]);
+
+    let color = purchased > 0 ? "The boy can purchase " + purchased + " ice cream bars" : "The boy cannot purchase any ice cream bars";
+
+    let proper = purchased == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* MAXIMUM ICE CREAM BARS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
