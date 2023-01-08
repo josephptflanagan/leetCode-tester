@@ -11594,7 +11594,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM ICE CREAM BARS - MEDIUM - START */
+/* MAXIMUM ICE CREAM BARS - MEDIUM - START 
 
 // It is a sweltering summer day, and a boy wants to buy some ice cream bars.
 
@@ -11648,5 +11648,151 @@ for (let i = 0; i < x.length; i++) {
 }
 
 /* MAXIMUM ICE CREAM BARS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAX POINTS ON A LINE - HARD - START
+
+// Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same
+// straight line.
+
+var maxPoints = function(points) {
+    
+    if (points.length === 1) return 1; //quick ejection for single point data sets
+    
+    const slopes = {}; //an object to contain the equations of each line between two points
+    let dx; //delta x
+    let dy; //delta y
+    let xbase; //the x coordinate of the starting point
+    let ybase; //the y coordinate of the starting point
+    let xref; //the x coordinate of the ending point
+    let yref; //the y coordinate of the ending point
+    let key; //constructed equations for the slopes obj
+    
+    for(let i = 0; i < points.length; i++) {
+
+        [xbase, ybase] = points[i]; //extracting the coords of the starting point
+        
+        for(let j = i + 1; j < points.length; j++) {                       
+            
+            [xref, yref] = points[j]; //extracting the coords of the ending point
+            
+            if (xref === xbase) {
+                key = `x = ${xref}`; //quick creation of a vertical line equation
+                
+            } else {
+
+                dx = xref - xbase; //change in x
+                dy = yref - ybase; //change in y
+                
+                let m = dy / dx; //slope
+                let b = yref - m * xref; // x axis intercept
+                
+                m = m.toFixed(4); //convert to string, 4 digits long
+                b = b.toFixed(4);
+                
+                key = `y = ${m}x + ${b}`;  //construct equation
+
+            }
+            
+            slopes[key] || (slopes[key] = 0); //add equation to slopes obj if not present
+            slopes[key]++; //add to the number of times that equation has been seen
+        }
+    }
+    
+    const maxLinear = Math.max(...Object.values(slopes)); //capture the number of times that the most common equation appears.
+    
+    if (maxLinear === 2) { //if the equation only shows up twice in slopes, and is found to be the max, 2 is correct
+        return 2;
+    }
+    
+    for(let i = 1; i <= 300; i++) { //otherwise, we have to remove duplicates
+        if (i * (i - 1) / 2 === maxLinear) {
+            return i;
+        }
+    }
+    
+    return 0; //final catch for no max linear connections
+
+};
+
+let x = [[[1,1],[2,2],[3,3]],[[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]];
+let correct = [3,4];
+
+answerExplainationEl.textContent = "Given an array of x y coordinates of points on a graph, return the highest number of points that lie on the same line";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let pointCount = maxPoints(x[i]);
+
+    let color = "There are at most " + pointCount + " points that lie on the same line";
+
+    let proper = pointCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+}
+
+/* MAX POINTS ON A LINE - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* GAS STATION - MEDIUM - START */
+
+// There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+
+// You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey
+// with an empty tank at one of the gas stations.
+
+// Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise
+// return -1. If there exists a solution, it is guaranteed to be unique
+
+var canCompleteCircuit = function(gas, cost) {
+    
+    let origin = 0;
+    let tank = 0;
+    let total = 0;
+
+    for (let i = 0; i < gas.length; i++) {
+
+        tank += gas[i] - cost[i];
+        total += gas[i] - cost[i];
+
+        if (tank < 0) {
+            origin = i + 1;
+            tank = 0;
+        }
+
+    }
+
+    return (total >= 0) ? origin : -1;
+
+};
+
+let x = [[1,2,3,4,5], [2,3,4],[1,2,3,4,5]];
+let y = [[3,4,5,1,2],[3,4,3],[3,4,5,1,2]]
+let correct = [3,-1, 3];
+
+answerExplainationEl.textContent = "Given a series of gas stations with a certain amount of gas, set a certain distance apart, determine if a cycle through all gas stations can be completed";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let origin = canCompleteCircuit(x[i], y[i]);
+
+    let color = (origin > -1) ? "It is possible to start a circuit of the stations if you start at station " + origin : "It is not possible to complete a circuit of the stations";
+
+    let proper = (origin == correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* GAS STATION - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
