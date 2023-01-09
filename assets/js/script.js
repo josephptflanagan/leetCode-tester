@@ -246,6 +246,9 @@ function isAlphaNum(char) {
 
 function compareArrays(arr1, arr2) {
 
+    console.log("arr1: ", arr1);
+    console.log("arr2: ", arr2);
+
     if (arr1.length !== arr2.length) {
         return false;
     }
@@ -11740,7 +11743,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* GAS STATION - MEDIUM - START */
+/* GAS STATION - MEDIUM - START 
 
 // There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
 
@@ -11794,5 +11797,65 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* GAS STATION - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BINARY TREE PREORDER TRAVERSAL - EASY - START */
+
+// Given the root of a binary tree, return the preorder traversal of its nodes' values.
+
+let prepFunc = function(arr){
+
+    if(!arr[0]){
+        return [];
+    }
+
+    return bstConstructor(arr);
+
+}
+
+var preorderTraversal = function(root) {
+
+    let dfsPreOrder = function(root){ //depth first search - pre order
+
+        let data = [];
+
+        function traverse (node){
+            if(!node) return;
+            data.push(node.val);
+            traverse(node.left);
+            traverse(node.right);
+        }
+        traverse(root);
+        return data;
+    }
+
+    return dfsPreOrder(root);
+    
+};
+
+let x = [[1,null,2,3],[],[1]];
+let correct = [[1,2,3],[],[1]];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, return the preorder traversal of its nodes' values.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let dfsTree = prepFunc(x[i]);
+
+    let dfsData = preorderTraversal(dfsTree);
+
+    let color = "the value of the nodes in the tree are [" + dfsData + "]";
+
+    let proper = compareArrays(dfsData, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* BINARY TREE PREORDER TRAVERSAL - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
