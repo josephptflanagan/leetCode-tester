@@ -246,9 +246,6 @@ function isAlphaNum(char) {
 
 function compareArrays(arr1, arr2) {
 
-    console.log("arr1: ", arr1);
-    console.log("arr2: ", arr2);
-
     if (arr1.length !== arr2.length) {
         return false;
     }
@@ -11800,7 +11797,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BINARY TREE PREORDER TRAVERSAL - EASY - START */
+/* BINARY TREE PREORDER TRAVERSAL - EASY - START 
 
 // Given the root of a binary tree, return the preorder traversal of its nodes' values.
 
@@ -11857,5 +11854,59 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* BINARY TREE PREORDER TRAVERSAL - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SAME TREE - EASY - START */
+
+// Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+// Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+var isSameTree = function (p, q) {
+
+    let check = true;
+
+    let iterate = (node1,node2) => {
+        if(!node1 && !node2) return;
+
+        if(node1?.val != node2?.val) {
+            check = false;
+            return;
+        }
+        iterate(node1?.left,node2?.left)
+        iterate(node1?.right,node2?.right)
+    }
+
+    iterate(p,q)
+    return check;
+    
+};
+
+let x = [[1, 2, 3], [1, 2],[],[],[0]];
+let y = [[1, 2, 3], [1, null, 2],[0],[],[1]];
+let correct = [true, false,false,true,false];
+
+answerExplainationEl.textContent = "Given the roots of two binary tree, determine if they are equal to each other";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let treeP = leetCodeBTConstructor(x[i]);
+    let treeQ = leetCodeBTConstructor(y[i]);
+
+    let equalTrees = isSameTree(treeP, treeQ);
+
+    let color = equalTrees ? "The trees are equal" : "The trees are not equal";
+
+    let proper = equalTrees == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* SAME TREE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
