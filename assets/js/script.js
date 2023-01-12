@@ -11911,7 +11911,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIMUM TIME TO COLLECT ALL APPLES IN A TREE - MEDIUM - START */
+/* MINIMUM TIME TO COLLECT ALL APPLES IN A TREE - MEDIUM - START 
 
 // Given an undirected tree consisting of n vertices numbered from 0 to n-1, which has some apples in their vertices. You spend 1 second to walk
 // over one edge of the tree. Return the minimum time in seconds you have to spend to collect all apples in the tree, starting at vertex 0 and coming
@@ -11991,5 +11991,146 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MINIMUM TIME TO COLLECT ALL APPLES IN A TREE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NUMBER OF NODES IN THE SUB-TREE WITH THE SAME LABEL - MEDIUM - START */
+
+// You are given a tree (i.e. a connected, undirected graph that has no cycles) consisting of n nodes numbered from 0 to n - 1 and exactly n - 1
+// edges. The root of the tree is the node 0, and each node of the tree has a label which is a lower-case character given in the string labels (i.e.
+// The node with the number i has the label labels[i]).
+
+// The edges array is given on the form edges[i] = [ai, bi], which means there is an edge between nodes ai and bi in the tree.
+
+// Return an array of size n where ans[i] is the number of nodes in the subtree of the ith node which have the same label as node i.
+
+// A subtree of a tree T is the tree consisting of a node in T and all of its descendant nodes.
+
+var countSubTrees = function (n, edges, labels) {
+
+    /*let subTreeConstructor = function (n, nodes) { //Leetcode's premise does not match what they were actually looking for so, while this works for what they asked for, it doesn't work for what they actually wanted
+
+        let helper = function (root) { //creating the subtrees (not really, just an array of the contents of the subtree)
+
+            let helperQueue = [root];
+            let subTree = []
+
+            while (helperQueue.length > 0) {
+                if (nodes[helperQueue[0]].children.length > 0) {
+                    helperQueue = helperQueue.concat(nodes[helperQueue[0]].children)
+                }
+                subTree.push(nodes[helperQueue[0]].label);
+                helperQueue.shift();
+            }
+
+            return subTree;
+
+        }
+
+        let trees = [];
+
+        for (let i = 0; i < n; i++) {//cycle through the nodes, putting each through the process of creating a subTree
+
+            let tree = [];
+
+            tree = tree.concat(helper(i));
+
+            trees.push(tree);
+
+        }
+
+        return trees;
+
+    }
+
+    let nodes = { label: "", children: [] };
+
+    for (let i = 0; i < n; i++) { //create an object that is the node, key is the number of the node, label the letter, children the child node numbers
+
+        let subs = [];
+
+        for (let j = 0; j < edges.length; j++) {
+            if (edges[j][0] == i) subs.push(edges[j][1])
+        }
+
+        nodes[i] = { label: labels[i], children: subs };
+
+    }
+
+    let occurences = new Array(n).fill(1); //placeholder for eventual return
+    let subTrees = subTreeConstructor(n, nodes); //constructing arrays of the contents of the subtrees of each node
+
+    for (let i = 0; i < occurences.length; i++) { //filling the placeholder with the number of occurences in each subtree of the root nodes' label
+
+        if (subTrees[i].length !== 1) {
+
+            for (let j = 1; j <= subTrees[i].length; j++) {
+
+                if (subTrees[i][j] == subTrees[i][0]) {
+                    occurences[i] += 1;
+                }
+            }
+        }
+    }
+
+    return occurences;*/
+
+let occurences = new Array(n);  //output array
+
+    // creating adjacency list
+    let adj = new Array(n);
+    for (let i = 0; i < n; i++) {
+        adj[i] = [];
+    }
+    for (let x of edges) {
+        adj[x[0]].push(x[1]);
+        adj[x[1]].push(x[0]);
+    }
+
+    dfs(-1, 0, adj, labels,occurences);
+    return occurences;
+}
+
+function dfs(prev, curr, adj, labels,occurences) {
+    const ans = new Array(26).fill(0);
+
+    for (let x of adj[curr]) {
+        if (prev !== x) {
+        // array return by the children node
+            const res = dfs(curr, x, adj, labels, occurences);  
+        // combining the frequencies of left and right subtrees into one array
+            for (let i = 0; i < 26; i++)  
+                ans[i] += res[i];
+        }
+    }
+    // incrementing the freq of curr node label and storing in output array
+    occurences[curr] = ++ans[labels.charCodeAt(curr) - 'a'.charCodeAt(0)];
+    return ans;
+
+};
+
+let x = [7, 4, 5, 7, 4];
+let y = [[[0, 1], [0, 2], [1, 4], [1, 5], [2, 3], [2, 6]], [[0, 1], [1, 2], [0, 3]], [[0, 1], [0, 2], [1, 3], [0, 4]], [[0, 1], [1, 2], [2, 3], [2, 4], [3, 5], [0, 6]], [[0, 2], [0, 3], [1, 2]]];
+let z = ["abaedcd", "bbbb", "aabab", "cdcecff", "aeed"];
+let correct = [[2, 1, 1, 1, 1, 1, 1], [4, 2, 1, 1], [3, 2, 1, 1, 1], [3, 1, 2, 1, 1, 1, 1], [1, 1, 2, 1]];
+
+answerExplainationEl.textContent = "Given a series of apple trees with n spots of apples to form, edges that connect them that take a minute to traverse, and a list of which of those n spots have apples, return the length of time to collect all apples";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let sameLabels = countSubTrees(x[i], y[i], z[i]);
+
+    let color = "Given the tree of nodes with the labels '" + z[i] + "', the number of sub trees with the same label as the root of those sub trees is [" + sameLabels + "]";
+
+    let proper = compareArrays(sameLabels, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* NUMBER OF NODES IN THE SUB-TREE WITH THE SAME LABEL - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
