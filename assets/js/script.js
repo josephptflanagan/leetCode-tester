@@ -11994,7 +11994,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NUMBER OF NODES IN THE SUB-TREE WITH THE SAME LABEL - MEDIUM - START */
+/* NUMBER OF NODES IN THE SUB-TREE WITH THE SAME LABEL - MEDIUM - START 
 
 // You are given a tree (i.e. a connected, undirected graph that has no cycles) consisting of n nodes numbered from 0 to n - 1 and exactly n - 1
 // edges. The root of the tree is the node 0, and each node of the tree has a label which is a lower-case character given in the string labels (i.e.
@@ -12073,7 +12073,7 @@ var countSubTrees = function (n, edges, labels) {
         }
     }
 
-    return occurences;*/
+    return occurences;
 
 let occurences = new Array(n);  //output array
 
@@ -12132,5 +12132,85 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* NUMBER OF NODES IN THE SUB-TREE WITH THE SAME LABEL - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST PATH WITH DIFFERENT ADJACENT CHARACTERS - HARD - START */
+
+// You are given a tree (i.e. a connected, undirected graph that has no cycles) rooted at node 0 consisting of n nodes numbered from 0 to
+// n - 1. The tree is represented by a 0-indexed array parent of size n, where parent[i] is the parent of node i. Since node 0 is the root,
+// parent[0] == -1.
+
+// You are also given a string s of length n, where s[i] is the character assigned to node i.
+
+// Return the length of the longest path in the tree such that no pair of adjacent nodes on the path have the same character assigned to them.
+
+var longestPath = function(parent, s) {
+
+    //create an adjacency list
+    let adjacent = new Array(parent.length) //create an array with the same number of elements as there are nodes
+
+    for (let i = 0; i < parent.length; i++) {
+
+        adjacent[i] = new Array() //fill that array with empty arrays
+
+    }
+
+    for (let i = 1; i < parent.length; i++) {
+
+        adjacent[parent[i]].push(i) //fill those arrays with the locations of adjacent nodes
+
+    }
+
+    s = s.split(""); //convert s to an array
+    let longestPath = 0; //comparator, return value
+
+    let dfs = function(node) { //depth first search
+
+        let longest1 = 0;
+        let longest2 = 0;
+
+        for (let adj of adjacent[node]) {
+            let lengthPath = dfs(adj)
+            if (s[node] == s[adj]) continue
+            if (longest1 < lengthPath) {
+                longest2 = longest1
+                longest1 = lengthPath
+            }
+            else if (longest2 < lengthPath) {
+                longest2 = lengthPath
+            }
+        }
+        longestPath = Math.max(longestPath, longest1 + longest2 + 1)
+        return longest1 + 1
+
+    }
+
+    dfs(0);
+    return longestPath;
+};
+
+let x = [[-1,0,0,1,1,2], [-1,0,0,0]];
+let y = ["abacbe", "aabc"];
+let correct = [3,3];
+
+answerExplainationEl.textContent = "Given a tree of nodes of different characters, return the length of the longest path through those nodes in which each adjacent node has a different character";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let longest = longestPath(x[i], y[i]);
+
+    let color = "The longest path through the given tree contains " + longest + " nodes";
+
+    let proper = longest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* LONGEST PATH WITH DIFFERENT ADJACENT CHARACTERS - HARD - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
