@@ -12165,24 +12165,32 @@ var longestPath = function(parent, s) {
     s = s.split(""); //convert s to an array
     let longestPath = 0; //comparator, return value
 
-    let dfs = function(node) { //depth first search
+    let dfs = function(node) { 
 
         let longest1 = 0;
         let longest2 = 0;
 
         for (let adj of adjacent[node]) {
-            let lengthPath = dfs(adj)
-            if (s[node] == s[adj]) continue
-            if (longest1 < lengthPath) {
-                longest2 = longest1
-                longest1 = lengthPath
-            }
-            else if (longest2 < lengthPath) {
-                longest2 = lengthPath
+
+            let lengthPath = dfs(adj);
+
+            if (s[node] == s[adj]) continue; //if the adjacent node has the same character, move on
+
+            if (longest1 < lengthPath) { 
+
+                longest2 = longest1;
+                longest1 = lengthPath;
+
+            } else if (longest2 < lengthPath) {
+
+                longest2 = lengthPath;
+
             }
         }
-        longestPath = Math.max(longestPath, longest1 + longest2 + 1)
-        return longest1 + 1
+
+        longestPath = Math.max(longestPath, longest1 + longest2 + 1); 
+
+        return longest1 + 1;
 
     }
 
