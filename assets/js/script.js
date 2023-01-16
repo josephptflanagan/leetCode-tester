@@ -12135,7 +12135,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST PATH WITH DIFFERENT ADJACENT CHARACTERS - HARD - START */
+/* LONGEST PATH WITH DIFFERENT ADJACENT CHARACTERS - HARD - START 
 
 // You are given a tree (i.e. a connected, undirected graph that has no cycles) rooted at node 0 consisting of n nodes numbered from 0 to
 // n - 1. The tree is represented by a 0-indexed array parent of size n, where parent[i] is the parent of node i. Since node 0 is the root,
@@ -12220,5 +12220,176 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* LONGEST PATH WITH DIFFERENT ADJACENT CHARACTERS - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* INSERT INTERVAL - MEDIUM - START */
+
+// You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the
+// ith interval and intervals is sorted in ascending order by start i. You are also given an interval newInterval = [start, end] that
+// represents the start and end of another interval.
+
+// Insert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any
+// overlapping intervals (merge overlapping intervals if necessary).
+
+// Return intervals after the insertion.
+
+var insert = function (intervals, newInterval) {
+    
+    //Time limit exceeded - START
+    // newInterval = [newInterval]; //convert to nested array for future use
+
+    // if (intervals.length == 0) { //quick catch for empty intervals
+    //     return newInterval;
+    // }
+
+    // let insertIdx; //store the insert index for the purpose of curing the final intervals
+
+    // for (let i = 0; i < intervals.length; i++) { //INSERTION
+
+    //     if (newInterval[0][0] <= intervals[i][0]) { // new interval insert location found
+
+    //         if (newInterval[0][0] == intervals[i][0]) { //if newInterval is equal to an existing interval, or contained within an existing interval no need to insert it;
+    //             if (newInterval[0][1] <= intervals[i][1]) {
+    //                 return intervals;
+    //             }
+    //         }
+
+    //         insertIdx = i; //update insert index for curing purposes
+
+    //         if (i == 0) {
+
+    //             intervals.unshift(newInterval[0]); //if newInterval is less than the lowest interval of intervals, insert at the front
+
+    //         } else {
+
+    //             let preSlice = intervals.slice(0, i); //if the spot for newInterval is within intervals, not before or at the end, slice intervals and reassemble
+    //             let postSlice = intervals.slice(i);
+
+    //             intervals = preSlice.concat(newInterval).concat(postSlice);
+
+    //         }
+
+    //         break;
+
+    //     } else if (i == intervals.length - 1) { //final index, no proper insert location found, add to end
+    //         intervals.push(newInterval[0]);
+    //         insertIdx = intervals.length - 1;
+    //         break;
+    //     }
+    // }
+
+    // if (insertIdx == intervals.length - 1) { //insert @ end
+
+    //     if (intervals[intervals.length - 2][1] >= intervals[intervals.length - 1][0]) { //if the end and second to end overlap, combine them
+
+    //         if (intervals[intervals.length - 2][1] < intervals[intervals.length - 1][1]) { // if the end of the second to end is less than the end of the end
+
+    //             intervals[intervals.length - 2][1] = intervals[intervals.length - 1][1]; // replace the end of the second to end with the end of the end
+
+    //         }
+    //         intervals.pop();
+    //     }
+
+
+    // } else if (insertIdx == 0) { //insert @ start
+    //     while (true) {
+    //         if (intervals.length == 1) break;
+    //         if (intervals[0][1] >= intervals[1][0]) {
+    //             intervals[1][0] = intervals[0][0];
+    //             if (intervals[0][1] > intervals[1][1]) {
+    //                 intervals[1][1] = [intervals[0][1]];
+    //             }
+    //             intervals.shift();
+
+    //         } else {
+    //             break;
+    //         }
+    //     }
+    // } else { //insert within
+
+    //     //eliminate pre insert location issues
+    //     if (intervals[insertIdx - 1][1] >= intervals[insertIdx][0]) { //if the end of the preceding interval is greater than or equal to the start of the inserted interval
+
+    //         if (intervals[insertIdx - 1][1] < intervals[insertIdx][1]) { //if the end of the preceding interval is less than the start of the inserted interval
+    //             intervals[insertIdx - 1][1] = intervals[insertIdx][1];
+    //         }
+
+    //         intervals = intervals.slice(0, insertIdx).concat(intervals.slice(insertIdx + 1));
+    //         insertIdx--;
+    //     }
+
+    //     //eliminate post insert location issues
+    //     while (true) {
+
+    //         if (intervals.length == 1 || insertIdx == intervals.length-1) break; //catch of single interval intervals, removal of all post intervals
+
+    //         if (intervals[insertIdx][1] >= intervals[insertIdx + 1][0]) { //if the end of the current item is greater than or equal to the start of the next
+
+    //             intervals[insertIdx + 1][0] = intervals[insertIdx][0]; //change the start of the next to be the start of the current item
+
+    //             if (intervals[insertIdx][1] > intervals[insertIdx + 1][1]) {  //if the end of the current item greater than the end of the next
+
+    //                 intervals[insertIdx + 1][1] = [intervals[insertIdx][1]]; //change the end of the next into the end of the current
+
+    //             }
+
+    //             intervals = intervals.slice(0, insertIdx).concat(intervals.slice(insertIdx + 1));
+
+    //         } else {
+    //             break;
+    //         }
+    //     }
+
+
+    // }
+    // return intervals;
+
+    //Time limit exceeded - END
+
+    let newArr = [...intervals] //copying the intervals array
+    newArr.push(newInterval) //adding the new interval
+    newArr.sort((a,b)=>a[0]-b[0]) //sorting the array by the start elements
+    
+    let res = []; //response array for return
+
+    for(let [x,y] of newArr){ //for each element of the array
+
+        if(!res.length || res[res.length-1][1] < x){ //if the response array is empty or if the loop has reached the last element, and it's smaller than that element
+            res.push([x,y]) //push the first or last element in
+        }else{
+            res[res.length-1][1] = Math.max(res[res.length-1][1],y) //otherwise add a newly constructed array to the response array
+        }
+    }
+
+    return res;
+
+};
+
+let x = [[[1, 3], [6, 9]], [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [[1, 3], [6, 9]], [[2, 3], [6, 9]], [[2, 3], [6, 9]], [[2, 3], [6, 9]], [[1, 5]], [[1, 5]], [[1, 5], [6, 8]], [[0, 5], [8, 9]],[[0,5],[9,12]]];
+let y = [[2, 5], [4, 8], [10, 12], [0, 1], [0, 2], [0, 7], [2, 3], [5, 7], [5, 6], [3, 4], [7,16]];
+let correct = [[[1, 5], [6, 9]], [[1, 2], [3, 10], [12, 16]], [[1, 3], [6, 9], [10, 12]], [[0, 1], [2, 3], [6, 9]], [[0, 3], [6, 9]], [[0, 9]], [[1, 5]], [[1, 7]], [[1, 8]], [[0, 5], [8, 9]],[[0,5],[7,16]]];
+
+answerExplainationEl.textContent = "";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+    let yCopy = [y[i].slice()];
+
+    let resultingInterval = insert(x[i], y[i]);
+
+    let color = "Inserting [" + yCopy + "] into " + displayNestedArray(xCopy) + " results in the creation of " + displayNestedArray(resultingInterval);
+
+    let proper = compareNestedArrays(resultingInterval, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* INSERT INTERVAL - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
