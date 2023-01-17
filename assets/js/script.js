@@ -12223,7 +12223,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* INSERT INTERVAL - MEDIUM - START */
+/* INSERT INTERVAL - MEDIUM - START 
 
 // You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the
 // ith interval and intervals is sorted in ascending order by start i. You are also given an interval newInterval = [start, end] that
@@ -12370,7 +12370,7 @@ let x = [[[1, 3], [6, 9]], [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [[1, 3],
 let y = [[2, 5], [4, 8], [10, 12], [0, 1], [0, 2], [0, 7], [2, 3], [5, 7], [5, 6], [3, 4], [7,16]];
 let correct = [[[1, 5], [6, 9]], [[1, 2], [3, 10], [12, 16]], [[1, 3], [6, 9], [10, 12]], [[0, 1], [2, 3], [6, 9]], [[0, 3], [6, 9]], [[0, 9]], [[1, 5]], [[1, 7]], [[1, 8]], [[0, 5], [8, 9]],[[0,5],[7,16]]];
 
-answerExplainationEl.textContent = "";
+answerExplainationEl.textContent = "Given a series of intervals in ascending order and a new interval, add the new interval and combine any overlapping intervals into single intervals";
 
 for (let i = 0; i < x.length; i++) {
 
@@ -12391,5 +12391,119 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* INSERT INTERVAL - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* FLIP STRING TO MONOTONE INCREASING - MEDIUM - START */
+
+// A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly
+// none).
+
+// You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0.
+
+// Return the minimum number of flips to make s monotone increasing.
+
+var minFlipsMonoIncr = function (s) {
+
+    //Didn't work, but I like this sort
+    // let binarySort = function (arr) { //I'm fairly certain this is O(n) time complexity, if so it's faster than the standard js sort
+    //     let zeros = [];
+    //     let ones = [];
+    //     for (let i = 0; i < arr.length; i++) {
+    //         if (arr[i] == "0") {
+    //             zeros.push("0");
+    //         } else {
+    //             ones.push("1");
+    //         }
+    //     }
+    //     zeros = zeros.concat(ones);
+    //     return zeros;
+    // }
+
+    // if (s == binarySort(s)) return 0; //quick return for already sorted strings
+
+    // let zeroCount = 0;
+    // let oneCount = 0;
+
+    // //zero side sort
+    // let zeroArr = s.slice().split("");
+    // for (let j = 0; j < s.length; j++) {
+    //     if (zeroArr[j] == "1") {
+    //         zeroArr[j] = "0";
+    //         zeroCount++;
+    //     }
+    //     if (zeroArr.join("") == binarySort(zeroArr).join("")) break;
+    // }
+
+    // //one side sort
+    // let oneArr = s.slice().split("");
+    // for (let k = s.length - 1; k >= 0; k--) {
+    //     if (oneArr[k] == "0") {
+    //         oneArr[k] = "1";
+    //         oneCount++;
+    //     }
+    //     if (oneArr.join("") == binarySort(oneArr).join("")) break;
+    // }
+
+    // //minor flip (when one side greatly outnumbers the)
+    // let zeroChars = 0;
+    // let oneChars = 0;
+    // for (let l = 0; l < s.length; l++) {
+    //     if (s[l] == "0") {
+    //         zeroChars++;
+    //     } else {
+    //         oneChars++;
+    //     }
+    // }
+    // let minFlip = Math.min(zeroChars, oneChars);
+
+
+    // return Math.min(zeroCount, oneCount, minFlip);
+
+    let result = 0; 
+    let count = 0;
+
+    for (const str of s) {
+
+        if(str== '1') {
+
+            count++
+
+        }else if(str =='0' && count> 0){
+
+            result++
+            count--
+
+        }
+
+    }
+
+    return result;
+
+};
+
+let x = ["00110", "010110", "00011000", "10011111110010111011"];
+let correct = [1, 2, 2, 5];
+
+answerExplainationEl.textContent = "Given a binary string, flip as few characters as possible to make the values ascending";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let xCopy = x[i].slice();
+
+    let minFlips = minFlipsMonoIncr(x[i]);
+
+    let color = minFlips == 0 ? "The string is already sorted, no flips are required" : "It takes " + minFlips + " flips to turn the string ascending";
+
+    let proper = minFlips == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* FLIP STRING TO MONOTONE INCREASING - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
