@@ -12394,7 +12394,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* FLIP STRING TO MONOTONE INCREASING - MEDIUM - START */
+/* FLIP STRING TO MONOTONE INCREASING - MEDIUM - START 
 
 // A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly
 // none).
@@ -12491,8 +12491,6 @@ for (let i = 0; i < x.length; i++) {
 
     let listEl = document.createElement('li');
 
-    let xCopy = x[i].slice();
-
     let minFlips = minFlipsMonoIncr(x[i]);
 
     let color = minFlips == 0 ? "The string is already sorted, no flips are required" : "It takes " + minFlips + " flips to turn the string ascending";
@@ -12505,5 +12503,69 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* FLIP STRING TO MONOTONE INCREASING - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM SUB CIRCULAR ARRAY - MEDIUM - START */
+
+// Given a circular integer array nums of length n, return the maximum possible sum of a non-empty subarray of nums.
+
+// A circular array means the end of the array connects to the beginning of the array. Formally, the next element of nums[i] is nums[(i + 1) %
+// n] and the previous element of nums[i] is nums[(i - 1 + n) % n].
+
+// A subarray may only include each element of the fixed buffer nums at most once. Formally, for a subarray nums[i], nums[i + 1], ...,
+// nums[j], there does not exist i <= k1, k2 <= j with k1 % n == k2 % n.
+
+var maxSubarraySumCircular = function(nums) {
+    
+    let preMin = nums[0]; //intermediary variables used to find the highest high and lowest low
+    let preMax = nums[0]; 
+
+    let max = nums[0]; //serves to hold the greatest possible sum
+    let min = nums[0]; //serves to hold the least possible sum
+
+    let total = nums[0]; //serves as a sum of the entire array
+
+    for (let i = 1; i < nums.length; i++) {
+
+        let n = nums[i]; //quick refence for the current element of nums
+        
+        preMax = Math.max(n, n+preMax); //sets preMax to the greater of the current number, or the current number and the previous maximum
+
+        max = Math.max(max,preMax) //sets max to the greater of the maximum, or the previous maximum
+
+        preMin = Math.min(n,preMin+n); //sets preMin to the lesser of the current number or the previous minimum and the current number
+
+        min = Math.min(min,preMin);   //sets min to the lesser of the minium or the previous minimum
+
+        total+=n; //adds the current mumber to the overall sum
+
+    }
+
+    return max < 0 ? max : Math.max(max ,total - min) //if max is negative, return it, otherwise return the greater of the max or total - min
+
+};
+
+let x = [[1,-2,3,-2],[5,-3,5],[-3,-2,-3]];
+let correct = [3,10,-2];
+
+answerExplainationEl.textContent = "Given a circular array of varying values, return the maximum possible value attainable by summing the elements of a sub array of those values";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let maxSum = maxSubarraySumCircular(x[i]);
+
+    let color = "The greatest sum that can be extracted from a subarray of [" + x[i] + "] is " + maxSum;
+
+    let proper = maxSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MAXIMUM SUB CIRCULAR ARRAY - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
