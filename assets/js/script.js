@@ -421,6 +421,10 @@ let pluralize = function (val) {
 
 }
 
+let isAre = function(num){
+    return num <= 1 ? "is" : "are"; 
+}
+
 function suffix(num) {
 
     let numString = num.toString();
@@ -12506,7 +12510,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM SUB CIRCULAR ARRAY - MEDIUM - START */
+/* MAXIMUM SUB CIRCULAR ARRAY - MEDIUM - START 
 
 // Given a circular integer array nums of length n, return the maximum possible sum of a non-empty subarray of nums.
 
@@ -12567,5 +12571,68 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MAXIMUM SUB CIRCULAR ARRAY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* NON-DECREASING SUBSEQUENCES - MEDIUM - START */
+
+// Given an integer array nums, return all the different possible non-decreasing subsequences of the given array with at least two elements. You may
+// return the answer in any order.
+
+var findSubsequences = function(nums) {
+
+    if (nums.length < 2) return [[]]; //quick rejection of rule breaking input
+
+    let subs = []; //return array to hold subsequences
+    let map = {}; //stores flags for already found subsequences, prevents duplication
+
+    let iterate = (idx, temp) => {
+
+        if(map[temp])return; //if the subsequence is already in the return array, move to the next item 
+
+        if(temp.length>=2){ //makes sure that the currently examined sub array of nums is long enough to potentially add to the return array
+
+            subs.push(temp);
+
+        }
+
+        for(let i =idx;i<nums.length;i++){
+
+            if(temp[temp.length-1]>nums[i]) continue;
+
+            map[temp] = true; //sets the map value for the sub array being added to true, allowing for rejection of duplicates
+
+            iterate(i+1,[...temp,nums[i]]); //continue the cycle
+
+        }
+
+    }
+
+    iterate(0,[]); //begin the cycle of nums
+
+    return subs;
+};
+
+let x = [[4,6,7,7], [4,4,3,2,1],[0]];
+let correct = [[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]], [[4,4]],[[]]];
+
+answerExplainationEl.textContent = "Given an array of integers, return all the non-decreasing subarrays with at least 2 elements";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let subArrays = findSubsequences(x[i]);
+
+    let color = "The non decreasing subsequence" + pluralize(subArrays.length) +" within [" + x[i] + "] " + isAre(subArrays.length) + " " + displayNestedArray(subArrays);
+
+    let proper = compareNestedArrays(subArrays, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* NON-DECREASING SUBSEQUENCES - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
