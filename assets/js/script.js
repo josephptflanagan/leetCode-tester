@@ -421,8 +421,8 @@ let pluralize = function (val) {
 
 }
 
-let isAre = function(num){
-    return num <= 1 ? "is" : "are"; 
+let isAre = function (num) {
+    return num <= 1 ? "is" : "are";
 }
 
 function suffix(num) {
@@ -12574,7 +12574,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* NON-DECREASING SUBSEQUENCES - MEDIUM - START */
+/* NON-DECREASING SUBSEQUENCES - MEDIUM - START 
 
 // Given an integer array nums, return all the different possible non-decreasing subsequences of the given array with at least two elements. You may
 // return the answer in any order.
@@ -12634,5 +12634,73 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* NON-DECREASING SUBSEQUENCES - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* CONSTRUCT STRING FROM BINARY TREE - EASY - START */
+
+// Given the root of a binary tree, construct a string consisting of parenthesis and integers from a binary tree with the preorder traversal way, and return it.
+
+// Omit all the empty parenthesis pairs that do not affect the one-to-one mapping relationship between the string and the original binary tree.
+
+
+
+var tree2str = function (root) {
+
+    let ans = '';
+
+    function helper(root) { // Pre Order Traversal
+       
+        if (root === null) { // Base case
+            return; 
+        }
+
+        // Append the current node's value to the string
+        ans += root.val.toString();
+
+        // If the current node has a left child or a right child, include parentheses
+        if (root.left !== null || root.right !== null) {
+            ans += '(';
+            helper(root.left); // Recursive call to process the left subtree
+            ans += ')';
+        }
+
+        // If the current node has a right child, include parentheses
+        if (root.right !== null) {
+            ans += '(';
+            helper(root.right); // Recursive call to process the right subtree
+            ans += ')';
+        }
+    }
+
+    helper(root);
+
+    return ans;
+
+};
+
+let x = [[1, 2, 3, 4], [1, 2, 3, null, 4]];
+let correct = ["1(2(4))(3)", "1(2()(4))(3)"];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, return a string consisting of parenthesis and integers from a binary tree with pre-order traversal, omitting all empty parenthesis pairs";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let newRoot = x[i].slice();
+
+    let treeString = tree2str(leetCodeBTConstructor(newRoot));
+
+    let color = "The tree [" + x[i] + "] becomes the string '" + treeString + "'";
+
+    let proper = treeString == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* CONSTRUCT STRING FROM BINARY TREE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
