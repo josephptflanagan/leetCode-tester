@@ -12637,7 +12637,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* CONSTRUCT STRING FROM BINARY TREE - EASY - START */
+/* CONSTRUCT STRING FROM BINARY TREE - EASY - START 
 
 // Given the root of a binary tree, construct a string consisting of parenthesis and integers from a binary tree with the preorder traversal way, and return it.
 
@@ -12702,5 +12702,77 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* CONSTRUCT STRING FROM BINARY TREE - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM PRODUCT OF TWO ELEMENTS IN AN ARRAY - EASY - START */
+
+// Given the array of integers nums, you will choose two different indices i and j of that array. Return the maximum value of (nums[i]-1)*(nums[j]-1).
+
+var maxProduct = function(nums) {
+    
+    let first, second = 0;
+
+    if (nums[0] > nums[1]){
+
+        first = nums[0];
+        second = nums[1];
+
+    } else{
+        
+        first = nums[1];
+        second = nums[0];
+    }
+
+    if (nums.length !== 2){
+
+        for (let i = 2; i < nums.length; i++){
+
+            if (nums[i] > second){
+
+                if (nums[i] > first){
+
+                    let temp = first;
+                    first = nums[i];
+                    second = temp;
+
+                } else {
+
+                    second = nums [i];
+
+                }
+            }
+
+        }
+
+    }
+
+    return (first - 1) * (second - 1);
+
+};
+
+let x = [[3,4,5,2], [1,5,4,5], [3,7]];
+let correct = [12, 16, 12];
+
+answerExplainationEl.textContent = "Given the array of integers nums, you will choose two different indices i and j of that array. Return the maximum value of (nums[i]-1)*(nums[j]-1).";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let numsArray = x[i].slice();
+
+    let reportedProduct = maxProduct(numsArray);
+
+    let color = "The maximum product that can be attained from the elements of the array [" + x[i] + "] is " + reportedProduct;
+
+    let proper = reportedProduct == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MAXIMUM PRODUCT OF TWO ELEMENTS IN AN ARRAY - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
