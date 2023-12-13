@@ -12705,7 +12705,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM PRODUCT OF TWO ELEMENTS IN AN ARRAY - EASY - START */
+/* MAXIMUM PRODUCT OF TWO ELEMENTS IN AN ARRAY - EASY - START 
 
 // Given the array of integers nums, you will choose two different indices i and j of that array. Return the maximum value of (nums[i]-1)*(nums[j]-1).
 
@@ -12774,5 +12774,118 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MAXIMUM PRODUCT OF TWO ELEMENTS IN AN ARRAY - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* SPECIAL POSITIONS IN A BINARY MATRIX - EASY - START */
+
+// Given an m x n binary matrix mat, return the number of special positions in mat.
+
+// A position (i, j) is called special if mat[i][j] == 1 and all other elements in row i and column j are 0 (rows and columns are 0-indexed).
+
+// Works, but VERY INEFFICIENT
+// var numSpecial = function(mat) {
+
+//     let potentials = [];
+
+//     let matX = mat[0].length;
+//     let matY = mat.length;
+
+//     for (let i = 0; i < matY; i++){
+//         for (let j = 0; j < matX; j++){
+//             if (mat[i][j] == 1){
+//                 potentials.push([j,i]);
+//             }
+//         }
+//     }
+
+//     let specialCount = 0;
+
+//     for (let i = 0; i < potentials.length; i++){
+
+//         let x = potentials[i][0];
+//         let y = potentials[i][1];
+//         let triggered = false;
+
+//         for (let j = 0;j < potentials.length;j++){
+
+//             if(i == j){
+//                 continue;
+//             }
+
+//             if(potentials[j][0] == x || potentials[j][1] == y){
+//                 triggered = true;
+//             }
+
+//         }
+
+//         if (!triggered){
+//             specialCount++;
+//         }
+
+//     }
+
+//     return specialCount;
+
+// };
+
+
+
+var numSpecial = function(mat) {
+    let specials = 0;
+
+    for (let i = 0; i < mat.length; i++) {
+        let index = checkRow(mat, i);
+        if (index >= 0 && checkColumn(mat, i, index))
+            specials++;
+    }
+
+    return specials;
+
+    function checkRow(mat, i) {
+        let index = -1;
+        for (let j = 0; j < mat[0].length; j++) {
+            if (mat[i][j] === 1) {
+                if (index >= 0)
+                    return -1;
+                else
+                    index = j;
+            }
+        }
+        return index;
+    }
+
+    function checkColumn(mat, i, index) {
+        for (let j = 0; j < mat.length; j++) {
+            if (mat[j][index] === 1 && j !== i)
+                return false;
+        }
+        return true;
+    }
+};
+
+let x = [[[1, 0, 0], [0, 0, 1], [1, 0, 0]], [[1, 0, 0], [0, 1, 0], [0, 0, 1]]];
+let correct = [1, 3];
+
+answerExplainationEl.textContent = "Given an m x n binary matrix mat, return the number of special positions in mat.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentMatrix = x[i].slice();
+
+    let specialCount = numSpecial(currentMatrix);
+
+    let color = "The number of special positions in the matrix [" + x[i] + "] is " + specialCount;
+
+    let proper = specialCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* SPECIAL POSITIONS IN A BINARY MATRIX - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
