@@ -12777,7 +12777,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* SPECIAL POSITIONS IN A BINARY MATRIX - EASY - START */
+/* SPECIAL POSITIONS IN A BINARY MATRIX - EASY - START 
 
 // Given an m x n binary matrix mat, return the number of special positions in mat.
 
@@ -12828,8 +12828,6 @@ for (let i = 0; i < x.length; i++) {
 //     return specialCount;
 
 // };
-
-
 
 var numSpecial = function(mat) {
     let specials = 0;
@@ -12887,5 +12885,85 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* SPECIAL POSITIONS IN A BINARY MATRIX - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DIFFERENCE BETWEEN ONES AND ZEROS IN ROW AND COLUMN - MEDIUM - START */
+
+// You are given a 0-indexed m x n binary matrix grid.
+
+// A 0-indexed m x n difference matrix diff is created with the following procedure:
+
+// Let the number of ones in the ith row be onesRowi.
+// Let the number of ones in the jth column be onesColj.
+// Let the number of zeros in the ith row be zerosRowi.
+// Let the number of zeros in the jth column be zerosColj.
+// diff[i][j] = onesRowi + onesColj - zerosRowi - zerosColj
+
+// Return the difference matrix diff.
+
+var onesMinusZeros = function (grid) {
+
+    let x = grid[0].length;
+    let y = grid.length;
+
+    let rowOnes = new Array(y).fill(0);
+    let colOnes = new Array(x).fill(0);
+
+    let difference = [];
+
+    for (let i = 0; i < y; i++) {
+
+        for (let j = 0; j < x; j++) {
+            rowOnes[i] += grid[i][j];
+            colOnes[j] += grid[i][j];
+        }
+
+    }
+
+    // Final Compilation
+    for (let i = 0; i < y; i++) {
+
+        let diffRow = [];
+
+        for (let j = 0; j < x; j++) {
+
+            //assemble difference row while creating each element
+            diffRow.push(2 * (rowOnes[i] + colOnes[j]) - x - y);
+
+        }
+        
+        //assemble difference matrix from newly constructed row
+        difference.push(diffRow);
+
+    }
+
+    return difference;
+
+};
+
+let x = [[[0, 1, 1], [1, 0, 1], [0, 0, 1]], [[1, 1, 1], [1, 1, 1]]];
+let correct = [[[0, 0, 4], [0, 0, 4], [-2, -2, 2]], [[5, 5, 5], [5, 5, 5]]];
+
+answerExplainationEl.textContent = "Given a 0-indexed m x n binary matrix grid, return a difference matrix.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentMatrix = x[i].slice();
+
+    let differenceMatrix = onesMinusZeros(currentMatrix);
+
+    let color = "the matrix [" + x[i] + "] yields a difference matrix of [" + differenceMatrix + "]";
+
+    let proper = compareNestedArrays(differenceMatrix, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* DIFFERENCE BETWEEN ONES AND ZEROS IN ROW AND COLUMN - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
