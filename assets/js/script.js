@@ -12888,7 +12888,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* DIFFERENCE BETWEEN ONES AND ZEROS IN ROW AND COLUMN - MEDIUM - START */
+/* DIFFERENCE BETWEEN ONES AND ZEROS IN ROW AND COLUMN - MEDIUM - START 
 
 // You are given a 0-indexed m x n binary matrix grid.
 
@@ -12965,5 +12965,84 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* DIFFERENCE BETWEEN ONES AND ZEROS IN ROW AND COLUMN - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM PRODUCT DIFFERENCE BETWEEN TWO PAIRS - EASY - START */
+
+// The product difference between two pairs (a, b) and (c, d) is defined as (a * b) - (c * d).
+
+// For example, the product difference between (5, 6) and (2, 7) is (5 * 6) - (2 * 7) = 16.
+// Given an integer array nums, choose four distinct indices w, x, y, and z such that the product
+// difference between pairs (nums[w], nums[x]) and (nums[y], nums[z]) is maximized.
+
+// Return the maximum such product difference.
+
+var maxProductDifference = function(nums) {
+
+    //Version 1 (58ms 44.22MB)
+    let firstSet = nums.slice(0,4).sort((a,b) => a - b);
+
+    let firstLow = firstSet[0];
+    let secondLow = firstSet[1];
+    let secondHigh = firstSet[2];
+    let firstHigh = firstSet[3];
+
+    if (nums.length > 4){
+
+        for (let i = 4; i < nums.length; i++){
+
+            if (nums[i] < secondLow){
+                if (nums[i] < firstLow){
+                    let temp = firstLow;
+                    firstLow = nums[i];
+                    secondLow = temp;
+                } else {
+                    secondLow = nums[i];
+                }
+            } else if (nums[i] > secondHigh){
+                if (nums[i] > firstHigh){
+                    let temp = firstHigh;
+                    firstHigh = nums[i];
+                    secondHigh = temp;
+                } else {
+                    secondHigh = nums[i];
+                }
+            }
+        }
+
+    }
+
+    return (firstHigh * secondHigh) - (firstLow * secondLow);
+
+    //Version 2 (71ms 44.86MB)
+    // let sortedSet = nums.sort((a,b) => a - b);
+
+    // return (sortedSet[sortedSet.length-1] * sortedSet[sortedSet.length-2]) - (sortedSet[0] * sortedSet[1]);
+};
+
+let x = [[5,6,2,7,4], [4,2,5,9,7,4,8]];
+let correct = [34, 64];
+
+answerExplainationEl.textContent = "Given an array of integers, return the maximum product difference between two pairs of those numbers.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentSet = x[i].slice();
+
+    let maximumProductDifference = maxProductDifference(currentSet);
+
+    let color = "the maximum product difference between the elements of [" + x[i] + "] is " + maximumProductDifference;
+
+    let proper = maximumProductDifference == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MAXIMUM PRODUCT DIFFERENCE BETWEEN TWO PAIRS - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
