@@ -12968,7 +12968,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM PRODUCT DIFFERENCE BETWEEN TWO PAIRS - EASY - START */
+/* MAXIMUM PRODUCT DIFFERENCE BETWEEN TWO PAIRS - EASY - START 
 
 // The product difference between two pairs (a, b) and (c, d) is defined as (a * b) - (c * d).
 
@@ -13044,5 +13044,78 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MAXIMUM PRODUCT DIFFERENCE BETWEEN TWO PAIRS - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* BUY TWO CHOCOLATES - EASY - START */
+
+// You are given an integer array 'prices' representing the prices of various chocolates in a store. You are also given a single integer 'money',
+//  which represents your initial amount of money.
+
+// You must buy exactly two chocolates in such a way that you still have some non-negative leftover money. You would like to minimize the
+//  sum of the prices of the two chocolates you buy.
+
+// Return the amount of money you will have leftover after buying the two chocolates. If there is no way for you to buy two chocolates without
+//  ending up in debt, return money. Note that the leftover must be non-negative.
+
+var buyChoco = function (prices, money) {
+
+
+    //option 1: 95 ms, 45.48 MB
+    // let sums = [];
+
+    // for (let i = 0; i < prices.length - 1; i++) {
+    //     for (let j = i + 1; j < prices.length; j++) {
+
+    //         let tempSum = prices[i] + prices[j];
+
+    //         if (sums.indexOf(tempSum) && tempSum <= money){
+    //             sums.push(tempSum);
+    //         }
+    //     }
+    // }
+
+    // let lowestSum = sums.length ? Infinity : 0;
+
+    // for (let i = 0; i < sums.length;i++){
+    //     lowestSum = sums[i] < lowestSum ? sums[i] : lowestSum;
+    // }
+
+    // return money - lowestSum;
+
+    //option 2: 79 ms, 46.94 MB
+    prices = prices.sort((a, b) => a - b);
+
+    return money - (prices[0] + prices[1]) > -1 ? money - (prices[0] + prices[1]) : money;
+
+
+};
+
+let x = [[1, 2, 2], [3, 2, 3]];
+let y = [3, 3];
+let correct = [0, 3];
+
+answerExplainationEl.textContent = "You are given an integer array of cholocate prices and a sum of money, and must buy exactly two chocolates in a way to return non-negative left over money.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentSet = x[i].slice();
+
+    let currentCash = y[i];
+
+    let remainingCash = buyChoco(currentSet, currentCash);
+
+    let color = remainingCash == y[i] ? "There is no possible combination of chocolates that can be purchased in accordance with the rules" : "the maximum cash remaining from the chocolate purchase is " + remainingCash;
+
+    let proper = remainingCash == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* BUY TWO CHOCOLATES - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
