@@ -13047,7 +13047,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* BUY TWO CHOCOLATES - EASY - START */
+/* BUY TWO CHOCOLATES - EASY - START 
 
 // You are given an integer array 'prices' representing the prices of various chocolates in a store. You are also given a single integer 'money',
 //  which represents your initial amount of money.
@@ -13110,6 +13110,56 @@ for (let i = 0; i < x.length; i++) {
     let color = remainingCash == y[i] ? "There is no possible combination of chocolates that can be purchased in accordance with the rules" : "the maximum cash remaining from the chocolate purchase is " + remainingCash;
 
     let proper = remainingCash == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* BUY TWO CHOCOLATES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* WIDEST VERTICAL AREA BETWEEN TWO POINTS CONTAINING NO POINTS - MEDIUM - START */
+
+// Given n points on a 2D plane where points[i] = [xi, yi], Return the widest vertical area between two points such that no points are inside the area.
+
+// A vertical area is an area of fixed-width extending infinitely along the y-axis (i.e., infinite height). The widest vertical area is the one with the maximum width.
+
+// Note that points on the edge of a vertical area are not considered included in the area.
+
+var maxWidthOfVerticalArea = function(points) {
+
+    
+    points.sort((a, b) => a[0] - b[0]);
+
+    let greatest = 0;
+
+    for (let i = 1; i < points.length; i++){
+
+        greatest = points[i][0] - points[i-1][0] > greatest ? points[i][0] - points[i-1][0] : greatest;
+    }
+
+    return greatest;
+
+};
+
+let x = [[[8,7],[9,9],[7,4],[9,7]], [[3,1],[9,0],[1,0],[1,4],[5,3],[8,8]]];
+let correct = [1, 3];
+
+answerExplainationEl.textContent = "Given n points on a 2D plane, return the widest vertical area between two points such that no points are inside the area.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentSet = x[i].slice();
+
+    let maxWidth = maxWidthOfVerticalArea(currentSet);
+
+    let color = "Given the points: " + displayNestedArray(x[i]) + ", the widest possible vertical area is " + maxWidth + " wide";
+
+    let proper = maxWidth == correct[i] ? ", this is correct" : ", this is wrong";
 
     listEl.textContent = color + proper;
 
