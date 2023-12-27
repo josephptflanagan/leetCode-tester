@@ -327,6 +327,20 @@ let arrayItemRemoval = function (idx, array) {
 
 }
 
+let stringElementRemover = function(str, i){
+
+    if (i == 0){
+        str = str.slice(1);
+    } else if (i < str.length-1){
+        str = str.slice(0,i) + str.slice(i+1);
+    } else {
+        str = str.slice(0,i);
+    }
+
+    return str;
+
+}
+
 function ListNode(val, next) {
     this.val = (val === undefined ? 0 : val)
     this.next = (next === undefined ? null : next)
@@ -13120,7 +13134,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* WIDEST VERTICAL AREA BETWEEN TWO POINTS CONTAINING NO POINTS - MEDIUM - START */
+/* WIDEST VERTICAL AREA BETWEEN TWO POINTS CONTAINING NO POINTS - MEDIUM - START 
 
 // Given n points on a 2D plane where points[i] = [xi, yi], Return the widest vertical area between two points such that no points are inside the area.
 
@@ -13166,6 +13180,91 @@ for (let i = 0; i < x.length; i++) {
     answerListEl.appendChild(listEl);
 
 }
-/* BUY TWO CHOCOLATES - EASY - END */
+/* WIDEST VERTICAL AREA BETWEEN TWO POINTS CONTAINING NO POINTS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/*  MINIMUM TIME TO MAKE ROPE COLORFUL - MEDIUM - START */
+
+// Alice has n balloons arranged on a rope. You are given a 0-indexed string colors where colors[i] is the color of the ith balloon.
+
+// Alice wants the rope to be colorful. She does not want two consecutive balloons to be of the same color, so she asks Bob for help. 
+// Bob can remove some balloons from the rope to make it colorful. You are given a 0-indexed integer array neededTime where neededTime[i]
+// is the time (in seconds) that Bob needs to remove the ith balloon from the rope.
+
+// Return the minimum time Bob needs to make the rope colorful.
+
+var minCost = function(colors, neededTime) {
+    
+    // First Solution 187ms 89.69MB
+    let time = 0;
+    let adjElements = []; 
+    let currentItem = colors[0];
+    let currentRun = [neededTime[0]];
+
+    for (let i = 1; i < colors.length; i++){
+
+        if (colors[i] !== currentItem){
+
+            if (currentRun.length > 1){
+
+                adjElements.push(currentRun.sort((a,b) => b-a));
+
+            }
+
+            currentItem = colors[i];
+            currentRun = [neededTime[i]];
+
+        } else {
+
+            currentRun.push(neededTime[i]);
+
+        }
+
+        if (i == colors.length-1 && currentRun.length > 1){
+
+            adjElements.push(currentRun.sort((a,b) => b-a));
+
+        }
+
+    }
+   
+    for (let i = 0; i < adjElements.length;i++){
+
+        while (adjElements[i].length > 1){
+            time += adjElements[i].pop();
+        }
+
+    }
+
+    return time;
+
+};
+
+let x = ["abaac", "abc", "aabaa", "aaabbbabbbb"];
+let y = [[1,2,3,4,5], [1,2,3], [1,2,3,4,1], [3,5,10,7,5,3,5,5,4,8,1]];
+let correct = [3, 0, 2, 26];
+
+answerExplainationEl.textContent = "Given a rope with a series of balloons of various colors, return the time to make the rope 'colorful' (remove same color adjacent balloons).";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentPattern = x[i].slice();
+    let currentTimeContraints = y[i].slice();
+
+    let colorTime = minCost(currentPattern, currentTimeContraints);
+
+    let color = "Given the balloons represented by: " + x[i] + ", the time to make the rope colorful is " + colorTime;
+
+    let proper = colorTime == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MINIMUM TIME TO MAKE ROPE COLORFUL - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
