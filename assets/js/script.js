@@ -327,14 +327,14 @@ let arrayItemRemoval = function (idx, array) {
 
 }
 
-let stringElementRemover = function(str, i){
+let stringElementRemover = function (str, i) {
 
-    if (i == 0){
+    if (i == 0) {
         str = str.slice(1);
-    } else if (i < str.length-1){
-        str = str.slice(0,i) + str.slice(i+1);
+    } else if (i < str.length - 1) {
+        str = str.slice(0, i) + str.slice(i + 1);
     } else {
-        str = str.slice(0,i);
+        str = str.slice(0, i);
     }
 
     return str;
@@ -13184,7 +13184,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/*  MINIMUM TIME TO MAKE ROPE COLORFUL - MEDIUM - START */
+/*  MINIMUM TIME TO MAKE ROPE COLORFUL - MEDIUM - START 
 
 // Alice has n balloons arranged on a rope. You are given a 0-indexed string colors where colors[i] is the color of the ith balloon.
 
@@ -13266,5 +13266,171 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MINIMUM TIME TO MAKE ROPE COLORFUL - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/*  MINIMUM DIFFICULTY OF A JOB SCHEDULE - HARD - START 
+
+// You want to schedule a list of jobs in d days. Jobs are dependent (i.e To work on the ith job, you have to finish all the jobs j where 0 <= j < i).
+
+// You have to finish at least one task every day. The difficulty of a job schedule is the sum of difficulties of each day of the d days.
+// The difficulty of a day is the maximum difficulty of a job done on that day.
+
+// You are given an integer array jobDifficulty and an integer d. The difficulty of the ith job is jobDifficulty[i].
+
+// Return the minimum difficulty of a job schedule. If you cannot find a schedule for the jobs return -1.
+
+var minDifficulty = function (jobDifficulty, d) {
+
+    if (d > jobDifficulty.length) {
+        return -1;
+    }
+    
+    let helper = function (jobDifficulty, d, position) {
+
+        let minSum = 0;
+        if (position == 0) {
+            let mainBody = jobDifficulty.slice(0, (jobDifficulty.length - d + 1))
+            minSum += Math.max(...mainBody);
+            for (let i = 1; i < d; i++) {
+                minSum += jobDifficulty[mainBody.length -1 + i];
+            }
+
+        } else if (position > 0 && position < d - 1) {
+
+            //left
+            for (let i = 0; i < position; i++) {
+                minSum += jobDifficulty[i];
+            }
+
+            //main
+            let middle = jobDifficulty.slice(position, position + (jobDifficulty.length - d + 1));
+            minSum += Math.max(...middle)
+
+            //right
+            for (let i = position + 1; i < d; i++) {
+                minSum += jobDifficulty[i];
+            }
+        } else {
+            
+
+            for (let i = 0; i < position; i++) {
+                minSum += jobDifficulty[i];
+            }
+            let mainBody = jobDifficulty.slice(jobDifficulty.length - d + 1);
+            minSum += Math.max(...mainBody);
+
+        }
+
+        return minSum;
+    }
+
+    let minDiff = []
+
+    for (let i = 0; i < d; i++) {
+        
+        minDiff.push(helper(jobDifficulty, d, i));
+
+    }
+
+    return Math.min(...minDiff);
+
+};
+
+let x = [[6, 5, 4, 3, 2, 1], [9, 9, 9], [1, 1, 1], [4, 3, 6, 2, 9], [7, 1, 7, 1, 7, 1], [11, 111, 22, 222, 33, 333, 44, 444]];
+let y = [2, 4, 3, 1, 3, 6];
+let correct = [7, -1, 3, 9, 15, 843];
+
+answerExplainationEl.textContent = "Given a series of jobs and a number of days, return the minimum difficulty of a job schedule";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let jobs = x[i].slice();
+    let days = y[i];
+
+    let minSchedule = minDifficulty(jobs, days);
+
+    let color = minSchedule == -1 ? "There is no way to schedule those jobs according to the rules" :
+        "Given a series of jobs with difficulty levels of [" + x[i] + "] and " + y[i] + " days, the minimum difficulty of the schedule is " + minSchedule;
+
+    let proper = minSchedule == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MINIMUM DIFFICULTY OF A JOB SCHEDULE - HARD - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/*  CONVERT AN ARRAY INTO A 2D ARRAY WITH CONDITIONS - MEDIUM - START */
+
+// You are given an integer array nums. You need to create a 2D array from nums satisfying the following conditions:
+
+// The 2D array should contain only the elements of the array nums.
+// Each row in the 2D array contains distinct integers.
+// The number of rows in the 2D array should be minimal.
+// Return the resulting array. If there are multiple answers, return any of them.
+
+// Note that the 2D array can have a different number of elements on each row.
+
+var findMatrix = function(nums) {
+
+    let twoD = [[nums.shift()]];
+
+    while (nums.length > 0){
+
+        let currentNum = nums.shift();
+
+        for (let i = 0; i < twoD.length; i++){
+
+            if (twoD[i].indexOf(currentNum) == -1){
+
+                twoD[i].push(currentNum);
+                currentNum = -1
+                break;
+
+            }
+            
+        }
+
+        if (currentNum != -1){
+            twoD.push([currentNum]);
+        }
+
+    }
+
+    console.log (twoD)
+
+    return twoD;
+
+};
+
+let x = [[1,3,4,1,2,3,1], [1,2,3,4], [1]];
+let correct = [[[1,3,4,2],[1,3],[1]], [[1,2,3,4]], [[1]] ];
+
+answerExplainationEl.textContent = "Given a series of jobs and a number of days, return the minimum difficulty of a job schedule";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentNums= x[i].slice();
+
+    let twoDArray = findMatrix(currentNums);
+
+    let color = "Given the integer array [" + x[i] + "], and the conditions given, the 2D array " + displayNestedArray(twoDArray) + " can be created"
+
+    let proper = compareNestedArrays(twoDArray, correct[i]) ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* CONVERT AN ARRAY INTO A 2D ARRAY WITH CONDITIONS - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
