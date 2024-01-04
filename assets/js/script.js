@@ -13474,7 +13474,7 @@ var minOperations = function(nums) {
             return -1;
         } 
 
-        if (currentNumCount == 2 || currentNumCount == 4){ //early versions that don't match later patterns
+        if (currentNumCount == 2 || currentNumCount == 4){ //early versions that match later patterns, but can quickly be eliminated here (removal slows the program slightly)
             operationCount += (currentNumCount / 2);
             continue;
         }
@@ -13484,12 +13484,12 @@ var minOperations = function(nums) {
             continue;
         }
 
-        if ((currentNumCount - 4) / 3 == Math.round((currentNumCount - 4) / 3)){
+        if ((currentNumCount - 4) / 3 == Math.round((currentNumCount - 4) / 3)){ //remove 4 to get to multiples of 3
             operationCount += ((currentNumCount - 4) / 3) + 2;
             continue;
         }
 
-        if ((currentNumCount - 2) / 3 == Math.round((currentNumCount - 2) / 3)){
+        if ((currentNumCount - 2) / 3 == Math.round((currentNumCount - 2) / 3)){ //remove 2 to get to multiples of 3
             operationCount += ((currentNumCount - 2) / 3) + 1;
             continue;
         }
