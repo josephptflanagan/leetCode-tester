@@ -13366,7 +13366,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/*  CONVERT AN ARRAY INTO A 2D ARRAY WITH CONDITIONS - MEDIUM - START */
+/*  CONVERT AN ARRAY INTO A 2D ARRAY WITH CONDITIONS - MEDIUM - START 
 
 // You are given an integer array nums. You need to create a 2D array from nums satisfying the following conditions:
 
@@ -13379,6 +13379,7 @@ for (let i = 0; i < x.length; i++) {
 
 var findMatrix = function(nums) {
 
+    // 280ms, 50.81MB
     let twoD = [[nums.shift()]];
 
     while (nums.length > 0){
@@ -13388,13 +13389,11 @@ var findMatrix = function(nums) {
         for (let i = 0; i < twoD.length; i++){
 
             if (twoD[i].indexOf(currentNum) == -1){
-
                 twoD[i].push(currentNum);
                 currentNum = -1
                 break;
-
             }
-            
+
         }
 
         if (currentNum != -1){
@@ -13412,7 +13411,7 @@ var findMatrix = function(nums) {
 let x = [[1,3,4,1,2,3,1], [1,2,3,4], [1]];
 let correct = [[[1,3,4,2],[1,3],[1]], [[1,2,3,4]], [[1]] ];
 
-answerExplainationEl.textContent = "Given a series of jobs and a number of days, return the minimum difficulty of a job schedule";
+answerExplainationEl.textContent = "Given an array of numbers, return a 2D array where each sub array has no elements in common";
 
 for (let i = 0; i < x.length; i++) {
 
@@ -13432,5 +13431,100 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* CONVERT AN ARRAY INTO A 2D ARRAY WITH CONDITIONS - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MINIMUM NUMBER OF OPERATIONS TO MAKE ARRAY EMPTY - MEDIUM - START */
+
+// You are given a 0-indexed array nums consisting of positive integers.
+
+// There are two types of operations that you can apply on the array any number of times:
+
+// Choose two elements with equal values and delete them from the array.
+// Choose three elements with equal values and delete them from the array.
+// Return the minimum number of operations required to make the array empty, or -1 if it is not possible.
+
+var minOperations = function(nums) {
+    
+    //135ms 53.29MB
+    let numCount = {};
+    let keys = [];
+    let operationCount = 0;
+
+    for (let i = 0; i < nums.length; i++){
+
+        if (nums[i] in numCount){
+
+            numCount[nums[i]]++;
+
+        } else {
+
+            numCount[nums[i]] = 1;
+            keys.push(nums[i]);
+
+        }
+
+    }
+
+    for (let i = 0; i < keys.length; i++){
+
+        let currentNumCount = numCount[keys[i]]
+
+        if (currentNumCount == 1){ //impossible to use
+            return -1;
+        } 
+
+        if (currentNumCount == 2 || currentNumCount == 4){ //early versions that don't match later patterns
+            operationCount += (currentNumCount / 2);
+            continue;
+        }
+
+        if (currentNumCount / 3 == Math.round(currentNumCount / 3)){ //multiples of 3
+            operationCount += currentNumCount / 3;
+            continue;
+        }
+
+        if ((currentNumCount - 4) / 3 == Math.round((currentNumCount - 4) / 3)){
+            operationCount += ((currentNumCount - 4) / 3) + 2;
+            continue;
+        }
+
+        if ((currentNumCount - 2) / 3 == Math.round((currentNumCount - 2) / 3)){
+            operationCount += ((currentNumCount - 2) / 3) + 1;
+            continue;
+        }
+
+    }
+
+    return operationCount;
+
+};
+
+let x = [[2,3,3,2,2,4,2,3,4], [2,1,2,2,3,3], [14,12,14,14,12,14,14,12,12,12,12,14,14,12,14,14,14,12,12]];
+let correct = [4,-1, 7];
+answerExplainationEl.textContent = "Given an array of integers, what is the minimum number of operations must be performed to reduce the element count to zero, given that you can remove two identical, or three identical elements at a time";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentNums= x[i].slice();
+
+    let opCount = minOperations(currentNums);
+
+    let colorOne = "Given the array [" + x[i] + "], "
+
+    let colorTwo = opCount == -1 ? "there is no possible set of operations with the given conditions"  : " it takes " + opCount + " operations";
+
+    let colorThree = " to reduce the array element count to zero";
+  
+    let proper = opCount == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = colorOne + colorTwo + colorThree + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MINIMUM NUMBER OF OPERATIONS TO MAKE ARRAY EMPTY - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
