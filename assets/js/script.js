@@ -13434,7 +13434,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MINIMUM NUMBER OF OPERATIONS TO MAKE ARRAY EMPTY - MEDIUM - START */
+/* MINIMUM NUMBER OF OPERATIONS TO MAKE ARRAY EMPTY - MEDIUM - START 
 
 // You are given a 0-indexed array nums consisting of positive integers.
 
@@ -13526,5 +13526,52 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MINIMUM NUMBER OF OPERATIONS TO MAKE ARRAY EMPTY - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LONGEST INCREASING SUBSEQUENCE - MEDIUM - START */
+
+// Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+var lengthOfLIS = function(nums) {
+
+    let lISArr = new Array(nums.length).fill(1);
+    
+    for (let i = 1; i < nums.length; ++i) {
+
+        for (let j = 0; j < i; ++j) {
+
+            if (nums[i] > nums[j]) {
+
+                lISArr[i] = Math.max(lISArr[i], lISArr[j] + 1);
+
+            }
+        }
+    }
+    return Math.max(...lISArr);
+};
+
+let x = [[10,9,2,5,3,7,101,18], [0,1,0,3,2,3], [7,7,7,7,7,7,7]];
+let correct = [4, 4, 1];
+answerExplainationEl.textContent = "Given an integer array nums, return the length of the longest strictly increasing subsequence.";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentNums= x[i].slice();
+
+    let longest = lengthOfLIS(currentNums);
+
+    let color = "The longest strictly increasing subsequence of the integer array [" + x[i] + "]  is " + longest + " integers long";
+  
+    let proper = longest == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* LONGEST INCREASING SUBSEQUENCE - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
