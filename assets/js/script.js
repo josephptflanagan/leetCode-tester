@@ -13529,7 +13529,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LONGEST INCREASING SUBSEQUENCE - MEDIUM - START */
+/* LONGEST INCREASING SUBSEQUENCE - MEDIUM - START 
 
 // Given an integer array nums, return the length of the longest strictly increasing subsequence.
 
@@ -13573,5 +13573,74 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* LONGEST INCREASING SUBSEQUENCE - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* RANGE SUM OF BST - EASY - START */
+
+// Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].
+
+var rangeSumBST = function (root, low, high) {
+
+    //153ms 93.61MB
+    if (!root) {
+        return null;
+    }
+
+    let queue = [];
+    let sum = 0;
+
+    queue.push(root);
+
+    while (queue.length > 0) {
+
+        if (queue[0].left) {
+            queue.push(queue[0].left)
+        }
+
+        if (queue[0].right) {
+            queue.push(queue[0].right)
+        }
+
+        let num = queue.shift().val
+
+        if (num >= low && num <= high) {
+            sum += num;
+        }
+
+    }
+
+    return sum;
+
+};
+
+let x = [[10, 5, 15, 3, 7, null, 18], [10, 5, 15, 3, 7, 13, 18, 1, null, 6]];
+let y = [7, 6];
+let z = [15, 10];
+let correct = [32, 23];
+answerExplainationEl.textContent = "Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high]";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let currentTree = x[i].slice();
+    let currentLow = y[i];
+    let currentHigh = z[i];
+
+    currentTree = leetCodeBTConstructor(currentTree);
+
+    let inclusiveSum = rangeSumBST(currentTree, currentLow, currentHigh);
+
+    let color = "The sum of the elements of the binary search tree " + x[i] + " within the range of " + currentLow + " and " + currentHigh + " is " + inclusiveSum;
+
+    let proper = inclusiveSum == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* RANGE SUM OF BST - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
