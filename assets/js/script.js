@@ -13576,7 +13576,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* RANGE SUM OF BST - EASY - START */
+/* RANGE SUM OF BST - EASY - START 
 
 // Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].
 
@@ -13642,5 +13642,71 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* RANGE SUM OF BST - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* LEAF-SIMILAR TREES - EASY - START */
+
+// Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
+
+// For example, in the given tree above, the leaf value sequence is (6, 7, 4, 9, 8).
+
+// Two binary trees are considered leaf-similar if their leaf value sequence is the same.
+
+// Return true if and only if the two given trees with head nodes root1 and root2 are leaf-similar.
+
+var leafSimilar = function (root1, root2) {
+
+    //60ms 44.52MB
+    let traverse = function(node, leaves){
+
+        if (!node) return null
+
+        let left = traverse(node.left, leaves)
+        let right = traverse(node.right, leaves)
+      
+        let isLeaf = !left && !right
+        if (isLeaf) leaves.push(node.val)
+      
+        return leaves
+      }
+
+    let root1leaves = traverse(root1, [])
+    let root2leaves = traverse(root2, [])
+  
+    if (root1leaves.length !== root2leaves.length) return false
+  
+    return root1leaves.every((val, i) => val === root2leaves[i])
+
+};
+
+let x = [[3, 5, 1, 6, 2, 9, 8, null, null, 7, 4], [1, 2, 3]];
+let y = [[3, 5, 1, 6, 7, 4, 2, null, null, null, null, null, null, 9, 8], [1, 3, 2]];
+let correct = [true, false];
+answerExplainationEl.textContent = "Given the root nodes of two binary trees, determine if they are leaf similar";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let rootOne = leetCodeBTConstructor(x[i].slice());
+    let rootTwo = leetCodeBTConstructor(y[i].slice());
+
+    console.log (rootOne);
+
+    let similar = leafSimilar(rootOne, rootTwo);
+
+    let colorOne = "Tree one : [" + x[i].slice() + "], and tree two: [" + y[i].slice() + "], are ";
+
+    let colorTwo = similar ? "leaf similar" : "not leaf similar"
+
+    let proper = similar == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = colorOne + colorTwo + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* LEAF-SIMILAR TREES - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
