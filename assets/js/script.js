@@ -13645,7 +13645,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* LEAF-SIMILAR TREES - EASY - START */
+/* LEAF-SIMILAR TREES - EASY - START 
 
 // Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
 
@@ -13708,5 +13708,79 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* LEAF-SIMILAR TREES - EASY - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* AMOUNT OF TIME FOR BINARY TREE TO BE INFECTED - MEDIUM - START */
+
+// You are given the root of a binary tree with unique values, and an integer start. At minute 0, an infection starts from the node with value start.
+
+// Each minute, a node becomes infected if:
+// The node is currently uninfected.
+// The node is adjacent to an infected node.
+
+// Return the number of minutes needed for the entire tree to be infected.
+
+var amountOfTime = function (root, start) {
+
+    //194ms 121.60MB
+    let time = 0;
+
+        function traverse(root) {
+
+            if (!root) return 0;
+
+            let left = traverse (root.left);
+            let right = traverse(root.right);
+
+            if (root.val === start){
+                time = Math.max(left, right);
+                return -1;
+            } else if (left >= 0 && right >= 0){
+                return Math.max(left, right) + 1;
+            } else {
+                time = Math.max(time, Math.abs(left-right));
+                return Math.min(left, right) -1;
+            }
+
+        }
+
+    if (!root.left && !root.right){
+
+        return time
+
+    } else {
+
+        traverse(root);
+
+        return time;
+
+    }
+
+};
+
+let x = [[1, 5, 3, null, 4, 10, 6, 9, 2], [1]];
+let y = [3, 1];
+let correct = [4, 0];
+answerExplainationEl.textContent = "Given a binary tree and an infection starting point, return how many minutes it takes to infect the entire binary tree";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let root = leetCodeBTConstructor(x[i].slice());
+
+    let infectionTime = amountOfTime(root, y[i]);
+
+    let color = "A tree with the nodes [" + x[i] + "] and an infection starting point of " + y[i] + " takes " + infectionTime + " minutes to become fully infected";
+
+    let proper = infectionTime == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* AMOUNT OF TIME FOR BINARY TREE TO BE INFECTED - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
