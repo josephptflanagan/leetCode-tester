@@ -13711,7 +13711,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* AMOUNT OF TIME FOR BINARY TREE TO BE INFECTED - MEDIUM - START */
+/* AMOUNT OF TIME FOR BINARY TREE TO BE INFECTED - MEDIUM - START 
 
 // You are given the root of a binary tree with unique values, and an integer start. At minute 0, an infection starts from the node with value start.
 
@@ -13782,5 +13782,68 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* AMOUNT OF TIME FOR BINARY TREE TO BE INFECTED - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* MAXIMUM DIFFERENCE BETWEEN NODE AND ANCESTOR - MEDIUM - START */
+
+// Given the root of a binary tree, find the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
+
+// A node a is an ancestor of b if either: any child of a is equal to b or any child of a is an ancestor of b.
+
+var maxAncestorDiff = function (root) {
+
+    // 69ms 45.14MB
+    if (!root){
+        return 0;
+    }
+
+    function helper(root, minVal, maxVal) {
+
+        if (!root){
+            return;
+        }
+
+        diff = Math.max(diff, Math.max(Math.abs(minVal - root.val), Math.abs(maxVal - root.val)));
+
+        minVal = Math.min(minVal, root.val);
+        maxVal = Math.max(maxVal, root.val);
+
+        helper(root.left, minVal, maxVal);
+        helper(root.right, minVal, maxVal);
+
+    }
+
+    let diff = 0;
+
+    helper(root, root.val, root.val);
+
+    return diff;
+
+};
+
+let x = [[8, 3, 10, 1, 6, null, 14, null, null, 4, 7, 13], [1, null, 2, null, 0, 3]];
+let correct = [7, 3];
+
+answerExplainationEl.textContent = "Given the root of a binary tree, find the maximum difference between any node and any of its ancestors";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let root = leetCodeBTConstructor(x[i].slice());
+
+    let greatestDifference = maxAncestorDiff(root);
+
+    let color = "Given a tree with the nodes [" + x[i] + "], the greatest difference between any node and its ancestors is " + greatestDifference;
+
+    let proper = greatestDifference == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = color + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* MAXIMUM DIFFERENCE BETWEEN NODE AND ANCESTOR - MEDIUM - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
