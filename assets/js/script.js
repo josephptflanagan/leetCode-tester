@@ -13785,7 +13785,7 @@ for (let i = 0; i < x.length; i++) {
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
 
-/* MAXIMUM DIFFERENCE BETWEEN NODE AND ANCESTOR - MEDIUM - START */
+/* MAXIMUM DIFFERENCE BETWEEN NODE AND ANCESTOR - MEDIUM - START 
 
 // Given the root of a binary tree, find the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
 
@@ -13845,5 +13845,68 @@ for (let i = 0; i < x.length; i++) {
 
 }
 /* MAXIMUM DIFFERENCE BETWEEN NODE AND ANCESTOR - MEDIUM - END */
+
+/*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
+
+/* DETERMINE IF STRING HALVES ARE ALIKE - EASY - START */
+
+// You are given a string s of even length. Split this string into two halves of equal lengths, and let a be the first half and b be the second half.
+
+// Two strings are alike if they have the same number of vowels ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'). Notice that s contains uppercase and lowercase letters.
+
+// Return true if a and b are alike. Otherwise, return false.
+
+var halvesAreAlike = function(s) {
+
+
+    //70ms 42.98MB
+    let half = s.length/2;
+    let first = s.slice(0,half);
+    let second = s.slice(half);
+
+    let vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+
+    let firstVowelCount = 0;
+    let secondVowelCount = 0;
+
+    for (let i = 0; i < half; i++){
+
+        if (vowels.indexOf(first[i]) !== -1){
+           firstVowelCount++;
+        }
+
+        if (vowels.indexOf(second[i]) !== -1){
+            secondVowelCount++;
+        }
+
+    }
+
+    return firstVowelCount === secondVowelCount;
+
+};
+
+let x = ["book", "textbook", "tkPAdxpMfJiltOerItiv"];
+let correct = [true, false, false];
+
+answerExplainationEl.textContent = "Given a string s of even length. Split this string into two halves of equal lengths, and return whether these two halves have the same number of vowels";
+
+for (let i = 0; i < x.length; i++) {
+
+    let listEl = document.createElement('li');
+
+    let alike = halvesAreAlike(x[i]);
+
+    let colorOne = "Splitting the string '" + x[i] + "' in two "
+
+    let colorTwo = alike ? " produces two alike strings" : "does not produce two alike strings";
+
+    let proper = alike == correct[i] ? ", this is correct" : ", this is wrong";
+
+    listEl.textContent = colorOne + colorTwo + proper;
+
+    answerListEl.appendChild(listEl);
+
+}
+/* DETERMINE IF STRING HALVES ARE ALIKE - EASY - END */
 
 /*<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>*/
